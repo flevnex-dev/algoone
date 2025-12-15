@@ -1,0 +1,762 @@
+:root {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+    --primary: 217 91% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 91% 96%;
+    --secondary-foreground: 217 91% 40%;
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 10% 50%;
+    --accent: 217 91% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 92%;
+    --input: 220 15% 92%;
+    --ring: 217 91% 50%;
+    --radius: .75rem;
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 50%) 0%, hsl(217 91% 60%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(217 91% 98%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(217 91% 50% / .1);
+    --shadow-medium: 0 10px 40px -10px hsl(217 91% 50% / .2);
+    --transition-smooth: all .3s cubic-bezier(.4, 0, .2, 1);
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+/* Global body and background */
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Scrolling background effect - Enhanced Blue and Black Theme */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300%;
+    background: 
+        /* Enhanced radial gradients for depth and glow */
+        radial-gradient(ellipse 140% 120% at 15% 25%, rgba(11, 100, 244, 0.20) 0%, rgba(11, 100, 244, 0.10) 30%, transparent 60%),
+        radial-gradient(ellipse 120% 140% at 85% 75%, rgba(11, 100, 244, 0.18) 0%, rgba(11, 100, 244, 0.08) 35%, transparent 65%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(11, 100, 244, 0.15) 0%, rgba(11, 100, 244, 0.05) 45%, transparent 70%),
+        radial-gradient(ellipse 80% 100% at 25% 65%, rgba(10, 86, 212, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 80% at 75% 35%, rgba(10, 86, 212, 0.10) 0%, transparent 60%),
+        /* Smooth main vertical gradient - Sophisticated Black to Dark Blue */
+        linear-gradient(180deg, 
+            #000000 0%, 
+            #050810 1.5%, 
+            #0A0E1A 3%, 
+            #0F172A 6%, 
+            #1A1F2E 10%, 
+            #1E293B 15%, 
+            #1E3A8A 22%, 
+            #1E40AF 28%, 
+            #2563EB 32%, 
+            #1E40AF 36%, 
+            #1E3A8A 40%, 
+            #1E293B 45%, 
+            #1E3A8A 50%, 
+            #1E293B 55%, 
+            #1E3A8A 60%, 
+            #1E40AF 65%, 
+            #2563EB 68%, 
+            #1E40AF 72%, 
+            #1E3A8A 78%, 
+            #1E293B 85%, 
+            #1A1F2E 90%, 
+            #0F172A 94%, 
+            #0A0E1A 97%, 
+            #050810 98.5%, 
+            #000000 100%);
+    background-size: 100% 100%;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    z-index: -2;
+    will-change: transform, background-position;
+    transform: translateZ(0);
+}
+
+/* Animated bubble circles with enhanced gradients - Blue on Black */
+.bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        rgba(11, 100, 244, 0.30) 0%, 
+        rgba(11, 100, 244, 0.22) 20%, 
+        rgba(11, 100, 244, 0.15) 35%, 
+        rgba(10, 86, 212, 0.10) 50%, 
+        rgba(37, 99, 235, 0.06) 65%, 
+        transparent 80%);
+    pointer-events: none;
+    z-index: -1;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+    filter: blur(1.5px);
+    box-shadow: 0 0 60px rgba(11, 100, 244, 0.15);
+}
+
+.bubble-1 {
+    width: 400px;
+    height: 400px;
+    top: 35%;
+    left: 25%;
+}
+
+.bubble-2 {
+    width: 350px;
+    height: 350px;
+    top: 48%;
+    right: 25%;
+}
+
+.bubble-3 {
+    width: 300px;
+    height: 300px;
+    top: 42%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bubble-4 {
+    width: 280px;
+    height: 280px;
+    top: 52%;
+    left: 35%;
+}
+
+.bubble-5 {
+    width: 320px;
+    height: 320px;
+    top: 50%;
+    right: 35%;
+}
+
+/* Alternative scrolling background with parallax - Enhanced Blue and Black Theme */
+.scrolling-bg {
+    position: fixed;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 300%;
+    background: 
+        /* Enhanced multiple radial gradients for depth and glow */
+        radial-gradient(ellipse 160% 130% at 12% 22%, rgba(11, 100, 244, 0.25) 0%, rgba(11, 100, 244, 0.12) 25%, transparent 60%),
+        radial-gradient(ellipse 130% 160% at 88% 78%, rgba(11, 100, 244, 0.22) 0%, rgba(11, 100, 244, 0.10) 30%, transparent 65%),
+        radial-gradient(ellipse 110% 110% at 50% 50%, rgba(11, 100, 244, 0.18) 0%, rgba(11, 100, 244, 0.08) 40%, transparent 70%),
+        radial-gradient(ellipse 90% 110% at 28% 58%, rgba(10, 86, 212, 0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 110% 90% at 72% 42%, rgba(10, 86, 212, 0.13) 0%, transparent 60%),
+        /* Smooth sophisticated gradient - Black to Dark Blue */
+        linear-gradient(180deg, 
+            #000000 0%, 
+            #050810 2%, 
+            #0A0E1A 4%, 
+            #0F172A 8%, 
+            #1A1F2E 12%, 
+            #1E293B 18%, 
+            #1E3A8A 25%, 
+            #1E40AF 32%, 
+            #2563EB 36%, 
+            #1E40AF 40%, 
+            #1E3A8A 45%, 
+            #1E293B 50%, 
+            #1E3A8A 55%, 
+            #1E293B 60%, 
+            #1E3A8A 65%, 
+            #1E40AF 68%, 
+            #2563EB 72%, 
+            #1E40AF 75%, 
+            #1E3A8A 82%, 
+            #1E293B 88%, 
+            #1A1F2E 92%, 
+            #0F172A 96%, 
+            #0A0E1A 98%, 
+            #050810 99%, 
+            #000000 100%);
+    background-size: 100% 100%;
+    z-index: -1;
+    will-change: transform;
+    transform: translateZ(0);
+    transition: transform 0.1s ease-out;
+}
+
+/* Header scroll effect - Enhanced Black and Blue */
+header.scrolled {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(11, 100, 244, 0.1);
+    border-bottom: 1px solid rgba(11, 100, 244, 0.2);
+}
+/* Logo wave effect */
+.logo-wave {
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-wave::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: wave 2s infinite;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+}
+
+/* Chart placeholder styling */
+.chart-placeholder {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #1E3A8A 60%, #1E40AF 80%, #2563EB 100%);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(11, 100, 244, 0.5);
+    box-shadow: inset 0 2px 8px rgba(11, 100, 244, 0.2);
+}
+
+.account-chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-placeholder::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(59, 130, 246, 0.1) 49px, rgba(59, 130, 246, 0.1) 50px),
+        repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(59, 130, 246, 0.1) 49px, rgba(59, 130, 246, 0.1) 50px);
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Background color matching original site */
+.bg-background {
+    background-color: transparent;
+}
+
+.bg-background-alt {
+    background-color: transparent;
+}
+
+/* Section backgrounds with subtle gradients - Enhanced */
+section {
+    position: relative;
+    z-index: 1;
+}
+
+section.bg-white,
+section.bg-background {
+    background: transparent !important;
+}
+
+section.bg-black {
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.98) 0%, 
+        rgba(5, 8, 16, 0.96) 25%, 
+        rgba(15, 23, 42, 0.94) 50%, 
+        rgba(5, 8, 16, 0.96) 75%, 
+        rgba(0, 0, 0, 0.98) 100%) !important;
+    position: relative;
+}
+
+section.bg-black::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse 100% 50% at 50% 0%, rgba(11, 100, 244, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 50% at 50% 100%, rgba(11, 100, 244, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+section.bg-black > * {
+    position: relative;
+    z-index: 1;
+}
+
+section.bg-gray-50 {
+    background: linear-gradient(180deg, rgba(5, 8, 16, 0.95) 0%, rgba(15, 23, 42, 0.85) 50%, rgba(30, 41, 59, 0.75) 100%) !important;
+}
+
+section.bg-algo-blue-light {
+    background: linear-gradient(180deg, 
+        rgba(15, 23, 42, 0.95) 0%, 
+        rgba(30, 58, 138, 0.90) 25%, 
+        rgba(30, 64, 175, 0.85) 50%, 
+        rgba(37, 99, 235, 0.80) 75%, 
+        rgba(30, 58, 138, 0.90) 100%) !important;
+}
+
+/* Ensure all text uses Montserrat */
+*,
+*::before,
+*::after {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* HTML and body default font */
+html,
+body {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* All Tailwind text utilities should use Montserrat */
+h1, h2, h3, h4, h5, h6,
+p, span, div, a, button, input, textarea, select,
+label, li, td, th {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Better backdrop blur for header with gradient - Enhanced Black and Blue */
+header {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(5, 8, 16, 0.95) 50%, rgba(15, 23, 42, 0.92) 100%) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(11, 100, 244, 0.4);
+    box-shadow: 0 4px 20px rgba(11, 100, 244, 0.1);
+}
+
+/* Button hover effects with enhanced gradients */
+.btn-primary {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 12px rgba(11, 100, 244, 0.3), 
+        0 2px 6px rgba(11, 100, 244, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #0B64F4 0%, #2563EB 25%, #0A56D4 50%, #2563EB 75%, #0B64F4 100%) !important;
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 12px 24px rgba(11, 100, 244, 0.4), 
+        0 6px 12px rgba(11, 100, 244, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(11, 100, 244, 0.3);
+    background-position: 100% 50%;
+}
+
+/* Card hover effects - Enhanced */
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+        0 20px 40px rgba(11, 100, 244, 0.25), 
+        0 10px 20px rgba(11, 100, 244, 0.15),
+        0 0 0 1px rgba(11, 100, 244, 0.3);
+}
+
+.performance-card {
+    border: 1px solid rgba(11, 100, 244, 0.4);
+    background: linear-gradient(180deg, #0A0E1A 0%, #0F172A 25%, #1E293B 50%, #1E3A8A 75%, #1E40AF 100%);
+    box-shadow: 
+        0 8px 32px rgba(11, 100, 244, 0.2), 
+        0 4px 16px rgba(11, 100, 244, 0.15),
+        inset 0 1px 0 rgba(11, 100, 244, 0.1);
+    transition: all 0.3s ease;
+}
+
+.performance-card:hover {
+    border-color: rgba(11, 100, 244, 0.6);
+    box-shadow: 
+        0 12px 48px rgba(11, 100, 244, 0.3), 
+        0 6px 24px rgba(11, 100, 244, 0.2),
+        inset 0 1px 0 rgba(11, 100, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+.performance-card .metric-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.performance-card .primary-metrics .metric-value {
+    line-height: 1.2;
+}
+
+.performance-card .detail-metrics {
+    font-size: 0.85rem;
+}
+
+.performance-card .detail-metrics div {
+    text-align: left;
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #0B64F4 0%, #0A56D4 50%, #0B64F4 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Section spacing */
+.section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+/* Mobile menu */
+.mobile-menu {
+    display: none;
+    animation: slideDown 0.3s ease-out;
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu:not(.hidden) {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.mobile-menu-toggle:hover {
+    opacity: 0.8;
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.mobile-menu-toggle:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.mobile-menu-toggle:focus-visible {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.mobile-menu-toggle .menu-icon,
+.mobile-menu-toggle .close-icon {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Ensure header is fixed on mobile and tablet */
+@media (max-width: 767px) {
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+    
+    .mobile-menu {
+        position: fixed;
+        top: 73px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 40;
+        max-height: calc(100vh - 73px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Force hide mobile menu on md screens and above */
+@media (min-width: 768px) {
+    .mobile-menu {
+        display: none !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-padding {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    
+    .scrolling-bg {
+        height: 300%;
+    }
+}
+
+/* Performance optimization for scrolling */
+.scrolling-bg {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.backdrop-blur-sm {
+    --tw-backdrop-blur: blur(4px);
+    backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+
+.bg-background\/80 {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(15, 23, 42, 0.80) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(11, 100, 244, 0.2);
+}
+
+.border-border\/50 {
+    border-color: hsl(var(--border) / .5);
+}
+
+/* Additional gradient utilities */
+.bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Enhanced card gradients */
+.bg-white\/70 {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%);
+}
+
+/* Smooth gradient animations */
+@keyframes gradient-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.bg-gradient-animated {
+    background-size: 200% 200%;
+    animation: gradient-flow 5s ease infinite;
+}
+
+/* Enhanced card styles for black theme */
+.bg-black\/90,
+.bg-black\/80,
+.bg-black\/70 {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(11, 100, 244, 0.2);
+    transition: all 0.3s ease;
+}
+
+.bg-black\/90:hover,
+.bg-black\/80:hover,
+.bg-black\/70:hover {
+    border-color: rgba(11, 100, 244, 0.4);
+    box-shadow: 0 8px 24px rgba(11, 100, 244, 0.2);
+}
+
+/* Performance Highlight Card */
+.performance-highlight-card {
+    position: relative;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(15, 23, 42, 0.92) 25%, 
+        rgba(30, 41, 59, 0.90) 50%, 
+        rgba(15, 23, 42, 0.92) 75%, 
+        rgba(0, 0, 0, 0.95) 100%);
+    box-shadow: 
+        0 20px 60px rgba(11, 100, 244, 0.25),
+        0 8px 24px rgba(11, 100, 244, 0.15),
+        inset 0 1px 0 rgba(11, 100, 244, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.performance-highlight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 28px 80px rgba(11, 100, 244, 0.35),
+        0 12px 32px rgba(11, 100, 244, 0.25),
+        inset 0 1px 0 rgba(11, 100, 244, 0.3);
+    border-color: rgba(11, 100, 244, 0.6);
+}
+
+.performance-highlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(11, 100, 244, 0.5), 
+        rgba(37, 99, 235, 0.8), 
+        rgba(11, 100, 244, 0.5), 
+        transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.performance-highlight-card:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced text contrast */
+.text-white\/70 {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.text-white\/80 {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Smooth section transitions */
+section {
+    transition: background 0.5s ease;
+}
+
+/* Week Card Styles */
+.week-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.week-card.active {
+    background: linear-gradient(135deg, #0B64F4 0%, #2563EB 50%, #0A56D4 100%) !important;
+    border-color: #0A56D4 !important;
+    transform: scale(1.05);
+}
+
+.week-card:hover:not(.active) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(11, 100, 244, 0.2);
+}
+
+/* Elite Trading Signals Section Enhancements */
+#signals {
+    position: relative;
+}
+
+#signals::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba(11, 100, 244, 0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 30% at 50% 100%, rgba(11, 100, 244, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#signals > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Chart.js Tooltip Styling */
+.chartjs-tooltip {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(11, 100, 244, 0.3) !important;
+    border-radius: 10px !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.chartjs-tooltip-title {
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+}
+
+.chartjs-tooltip-body {
+    font-weight: 700 !important;
+    font-size: 14px !important;
+}
+
+/* Custom Padding Utilities */
+.py-15 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+}
+
+.py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.py-18 {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+}
+
+.py-25 {
+    padding-top: 6.25rem;
+    padding-bottom: 6.25rem;
+}
+
+@media (min-width: 768px) {
+    .md\:py-25 {
+        padding-top: 6.25rem;
+        padding-bottom: 6.25rem;
+    }
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="font-montserrat">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-admin="pageTitle">Official Myfxbooks - AlgoOne</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ asset('assets/js/tailwind.config.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, #000000 0%, #0f172a 50%, #1e293b 100%);
+            min-height: 100vh;
+        }
+
+        .card-modern {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid rgba(11, 100, 244, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-modern:hover {
+            border-color: rgba(11, 100, 244, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(11, 100, 244, 0.2);
+        }
+
+        .header-blue {
+            background: linear-gradient(135deg, #000000 0%, #0f172a 100%);
+            border-bottom: 2px solid rgba(11, 100, 244, 0.3);
+        }
+
+        .accent-blue {
+            color: #0B64F4;
+        }
+
+        .bg-blue-glow {
+            background: linear-gradient(135deg, rgba(11, 100, 244, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header-blue shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
+                        <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" class="w-8 h-8 object-contain" />
+                    </div>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="{{ route('frontend.index') }}"
+                    class="text-blue-400 hover:text-blue-100 text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+            <button class="md:hidden text-white">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12 relative">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <!-- Verified Badge -->
+            <div class="flex justify-center mb-6">
+                <div
+                    class="inline-flex items-center gap-2 bg-blue-glow border border-blue-500/40 rounded-full px-6 py-2">
+                    <i class="fas fa-check-circle text-blue-400"></i>
+                    <span class="text-blue-300 text-sm font-semibold" data-admin="verifiedBadge">VERIFIED BY
+                        MYFXBOOK</span>
+                </div>
+            </div>
+
+            <!-- Page Title -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4" data-admin="pageTitle">Official
+                    Myfxbooks</h1>
+                <p class="text-blue-200 text-lg md:text-xl max-w-3xl mx-auto" data-admin="pageSubtitle">
+                    Designed Specifically for Prop Firms. 100% Rule Compliant. Never Breaks Trading Guidelines.
+                </p>
+            </div>
+
+            <!-- Average Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
+                <div class="card-modern rounded-2xl p-8 text-center">
+                    <div class="text-blue-200 text-base font-semibold mb-3" data-admin="metricLabel1">Average Gain
+                        Across All Accounts</div>
+                    <div class="text-blue-400 text-5xl md:text-6xl font-extrabold" data-admin="metricValue1">+226.32%
+                    </div>
+                </div>
+                <div class="card-modern rounded-2xl p-8 text-center">
+                    <div class="text-blue-200 text-base font-semibold mb-3" data-admin="metricLabel2">Average Drawdown
+                    </div>
+                    <div class="text-blue-400 text-5xl md:text-6xl font-extrabold" data-admin="metricValue2">4.94%</div>
+                </div>
+            </div>
+
+            <!-- Introduction -->
+            <div class="max-w-4xl mx-auto mb-12 space-y-4 text-center">
+                <p class="text-blue-100 text-lg leading-relaxed" data-admin="introText1">
+                    Myfxbook is the world's most trusted third-party verification platform for trading results.
+                </p>
+                <p class="text-blue-100 text-lg leading-relaxed" data-admin="introText2">
+                    Every account below is independently verified and tracked in real-time. Click any account to view
+                    the official Myfxbook link for complete transparency and detailed performance metrics.
+                </p>
+                <p class="text-blue-300/70 text-sm italic mt-6" data-admin="disclaimerNote">
+                    *All accounts shown are demo accounts. Results do not represent real money trading.
+                </p>
+            </div>
+
+            <!-- Performance Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Account #1 -->
+                <div class="card-modern rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-white font-semibold" data-admin="accountLabel1">Account #1</span>
+                        <div
+                            class="flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/40 rounded-full px-3 py-1">
+                            <i class="fas fa-check-circle text-blue-400 text-xs"></i>
+                            <span class="text-blue-300 text-xs font-semibold">Verified</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span
+                            class="inline-block bg-green-500/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full border border-green-500/30"
+                            data-admin="riskLabel1">Low Risk - High Reward</span>
+                    </div>
+                    <p class="text-blue-200/70 text-sm mb-4 leading-relaxed" data-admin="accountDesc1">
+                        Conservative trading strategy with excellent risk management. Perfect for long-term growth.
+                    </p>
+                    <div class="h-52 bg-blue-600/10 rounded-lg mb-4 border border-blue-500/20 relative p-3">
+                        <canvas class="account-chart" data-chart-id="account1"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <div class="text-blue-300/60 text-xs mb-1">Total Gain</div>
+                            <div class="text-blue-400 text-2xl font-bold" data-admin="gain1">+154.63%</div>
+                        </div>
+                        <div>
+                            <div class="text-blue-300/60 text-xs mb-1">Monthly</div>
+                            <div class="text-white text-lg font-semibold" data-admin="monthly1">14.86%</div>
+                        </div>
+                        <div>
+                            <div class="text-blue-300/60 text-xs mb-1">Drawdown</div>
+                            <div class="text-white text-lg font-semibold" data-admin="drawdown1">3.91%</div>
+                        </div>
+                        <div>
+                            <div class="text-blue-300/60 text-xs mb-1">Balance</div>
+                            <div class="text-white text-lg font-semibold" data-admin="balance1">$252,124.82</div>
+                        </div>
+                    </div>
+                    <a href="#"
+                        class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors">
+                        <span>View on Myfxbook</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Account #2 -->
+                <div class="card-modern rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-white font-semibold" data-admin="accountLabel2">Account #2</span>
+                        <div
+                            class="flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/40 rounded-full px-3 py-1">
+                            <i class="fas fa-check-circle text-blue-400 text-xs"></i>
+                            <span class="text-blue-300 text-xs font-semibold">Verified</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span
+                            class="inline-block bg-orange-500/20 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full border border-orange-500/30"
+                            data-admin="riskLabel2">Medium Risk</span>
+                    </div>
+                    <p class="text-cyan-200/70 text-sm mb-4 leading-relaxed" data-admin="accountDesc2">
+                        Balanced approach with moderate risk exposure. Suitable for traders seeking consistent returns.
+                    </p>
+                    <div class="h-52 bg-blue-600/10 rounded-lg mb-4 border border-blue-500/20 relative p-3">
+                        <canvas class="account-chart" data-chart-id="account2"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Total Gain</div>
+                            <div class="text-cyan-400 text-2xl font-bold" data-admin="gain2">+325.97%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Monthly</div>
+                            <div class="text-white text-lg font-semibold" data-admin="monthly2">2.51%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Drawdown</div>
+                            <div class="text-white text-lg font-semibold" data-admin="drawdown2">3.51%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Balance</div>
+                            <div class="text-white text-lg font-semibold" data-admin="balance2">$136,250.22</div>
+                        </div>
+                    </div>
+                    <a href="#"
+                        class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors">
+                        <span>View on Myfxbook</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Account #3 -->
+                <div class="card-modern rounded-2xl p-6 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-white font-semibold" data-admin="accountLabel3">Account #3</span>
+                        <div
+                            class="flex items-center gap-1.5 bg-blue-600/20 border border-blue-500/40 rounded-full px-3 py-1">
+                            <i class="fas fa-check-circle text-blue-400 text-xs"></i>
+                            <span class="text-blue-300 text-xs font-semibold">Verified</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span
+                            class="inline-block bg-green-500/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full border border-green-500/30"
+                            data-admin="riskLabel3">Low Risk</span>
+                    </div>
+                    <p class="text-cyan-200/70 text-sm mb-4 leading-relaxed" data-admin="accountDesc3">
+                        Ultra-conservative strategy with minimal drawdown. Ideal for risk-averse traders.
+                    </p>
+                    <div class="h-52 bg-blue-600/10 rounded-lg mb-4 border border-blue-500/20 relative p-3">
+                        <canvas class="account-chart" data-chart-id="account3"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Total Gain</div>
+                            <div class="text-cyan-400 text-2xl font-bold" data-admin="gain3">+56.26%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Monthly</div>
+                            <div class="text-white text-lg font-semibold" data-admin="monthly3">4.03%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Drawdown</div>
+                            <div class="text-white text-lg font-semibold" data-admin="drawdown3">2.89%</div>
+                        </div>
+                        <div>
+                            <div class="text-cyan-300/60 text-xs mb-1">Balance</div>
+                            <div class="text-white text-lg font-semibold" data-admin="balance3">$110,904.26</div>
+                        </div>
+                    </div>
+                    <a href="#"
+                        class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors">
+                        <span>View on Myfxbook</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="card-modern rounded-3xl p-12 text-center mb-12 max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4" data-admin="ctaTitle">Want Results Like
+                    These?</h2>
+                <p class="text-blue-200 text-lg md:text-xl mb-8 max-w-2xl mx-auto" data-admin="ctaText">
+                    Join hundreds of traders who trust AlgoOne with their prop firm challenges. We only profit when you
+                    profit.
+                </p>
+                <button
+                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-flex items-center gap-3">
+                    <span data-admin="ctaButton">Get Started Today</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-blue-500/20 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
+                        Policy</a>
+                    <a href="{{ route('frontend.terms-conditions') }}"
+                        class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
+                </div>
+            </div>
+            <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
+                <span class="text-red-400 text-base mt-1">⚠</span>
+                <p data-admin="disclaimer">
+                    <strong class="text-blue-200/80">LEGAL DISCLAIMER</strong> — All quantitative performance
+                    indicators, statistical analyses, trading results, and any associated data visualizations or
+                    informational content displayed are NON-FACTUAL and constitute hypothetical simulations exclusively
+                    for demonstrative purposes. No actual transactions occur on this platform, and past performance is
+                    not indicative of future results.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    <script src="{{ asset('assets/js/charts.js') }}"></script>
+</body>
+
+</html>
+
