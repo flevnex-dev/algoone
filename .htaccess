@@ -1,0 +1,39 @@
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect all requests to the /public folder
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Set PHP version (make sure the specified version is compatible with your app)
+<IfModule mime_module>
+    AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+
+# Increase PHP memory limit, execution time, and file upload sizes
+<IfModule mod_php.c>
+    php_value memory_limit 512M
+    php_value max_execution_time 300
+    php_value upload_max_filesize 20M
+    php_value post_max_size 20M
+</IfModule>
+
+# Compression to Reduce Load Times
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML, and Fonts
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml
+    AddOutputFilterByType DEFLATE text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE application/json application/ld+json application/xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject application/x-font-ttf
+    AddOutputFilterByType DEFLATE font/otf font/ttf font/woff font/woff2
+</IfModule>
+
+# Enable PHP Error Logging
+php_flag log_errors on
+php_value error_log /path/to/your/logs/php_error.log
+
+# Error Pages
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
