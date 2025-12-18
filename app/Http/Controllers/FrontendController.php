@@ -13,7 +13,16 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $topbar = \App\Models\Topbar::where('is_active', true)->latest()->first();
+        $hero = \App\Models\HeroSection::where('is_active', true)->first();
+        $signal = \App\Models\SignalSection::where('is_active', true)->first();
+        $howItWorks = \App\Models\HowItWorksSection::where('is_active', true)->first();
+        $results = \App\Models\ResultsSection::where('is_active', true)->first();
+        $whyChoose = \App\Models\WhyChooseSection::where('is_active', true)->first();
+        $referral = \App\Models\ReferralSection::where('is_active', true)->first();
+        $cta = \App\Models\CtaSection::where('is_active', true)->first();
+        $setting = \App\Models\SiteSetting::first();
+        return view('frontend.index', compact('topbar', 'hero', 'signal', 'howItWorks', 'results', 'whyChoose', 'referral', 'cta', 'setting'));
     }
 
     public function signIn()

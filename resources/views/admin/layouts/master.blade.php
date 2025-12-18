@@ -10,10 +10,18 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+@php
+    $setting = \App\Models\SiteSetting::first();
+@endphp
     <title>@yield('title') | Optimum Meditred Ltd </title>
     <!-- Favicon icon-->
-    <link rel="icon" href="{{ url('/assets') }}/images/icon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ url('/assets') }}/images/icon.png" type="image/x-icon">
+    @if($setting && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ url('/admin/assets') }}/images/icon.png" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ url('/admin/assets') }}/images/icon.png" type="image/x-icon">
+    @endif
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -21,26 +29,26 @@
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&amp;display=swap"
         rel="stylesheet">
     <!-- Flag icon css -->
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/vendors/flag-icon.css">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/vendors/flag-icon.css">
     <!-- iconly-icon-->
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/iconly-icon.css">
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/bulk-style.css">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/iconly-icon.css">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/bulk-style.css">
     <!-- iconly-icon-->
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/themify.css">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/themify.css">
     <!--fontawesome-->
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/fontawesome-min.css">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/fontawesome-min.css">
     <!-- Whether Icon css-->
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/weather-icons/weather-icons.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/dropzone.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/quill.snow.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/slick.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/slick-theme.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets') }}/css/vendors/datatables.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/weather-icons/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/choices.js/public/assets/styles/choices.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/slick.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin/assets') }}/css/vendors/datatables.css">
     <!-- App css -->
-    <link id="color" rel="stylesheet" href="{{ url('/assets') }}/css/color-1.css" media="screen">
-    <link rel="stylesheet" href="{{ url('/assets') }}/css/style.css">
+    <link id="color" rel="stylesheet" href="{{ url('/admin/assets') }}/css/color-1.css" media="screen">
+    <link rel="stylesheet" href="{{ url('/admin/assets') }}/css/style.css">
     
     <!-- Custom CSS Override for Sidebar -->
     <style>
@@ -61,6 +69,14 @@
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
+        }
+        .form-label{
+            color: #000 !important;
+        }
+        .card-header h6{
+            color: #000 !important;
+            font-weight: 600 !important;    
+            font-size: 18px !important;
         }
     </style>
     
@@ -285,42 +301,42 @@
         </div>
     </div>
     <!-- jquery-->
-    <script src="{{ url('/assets') }}/js/vendors/jquery/jquery.min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/jquery/jquery.min.js"></script>
     <!-- bootstrap js-->
-    <script src="{{ url('/assets') }}/js/vendors/bootstrap/dist/js/bootstrap.bundle.min.js" defer=""></script>
-    <script src="{{ url('/assets') }}/js/vendors/bootstrap/dist/js/popper.min.js" defer=""></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/bootstrap/dist/js/bootstrap.bundle.min.js" defer=""></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/bootstrap/dist/js/popper.min.js" defer=""></script>
     <!--fontawesome-->
-    <script src="{{ url('/assets') }}/js/vendors/font-awesome/fontawesome-min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/font-awesome/fontawesome-min.js"></script>
 
     <!-- feather-->
-    <script src="{{ url('/assets') }}/js/vendors/feather-icon/feather.min.js"></script>
-    <script src="{{ url('/assets') }}/js/vendors/feather-icon/custom-script.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/feather-icon/feather.min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/feather-icon/custom-script.js"></script>
 
     <!-- sidebar -->
-    <script src="{{ url('/assets') }}/js/sidebar.js"></script>
-    <script src="{{ url('/assets') }}/js/dropzone/dropzone.js"></script>
-    <script src="{{ url('/assets') }}/js/dropzone/dropzone-script.js"></script>
-    <script src="{{ url('/assets') }}/js/vendors/choices.js/public/assets/scripts/choices.js"></script>
-    <script src="{{ url('/assets') }}/js/editors/quill.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/sidebar.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/dropzone/dropzone.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/dropzone/dropzone-script.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/vendors/choices.js/public/assets/scripts/choices.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/editors/quill.js"></script>
     <!-- scrollbar--> 
-    <script src="{{ url('/assets') }}/js/scrollbar/simplebar.js"></script>
-    <script src="{{ url('/assets') }}/js/scrollbar/custom.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/scrollbar/simplebar.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/scrollbar/custom.js"></script>
     <!-- slick-->
-    <script src="{{ url('/assets') }}/js/slick/slick.min.js"></script>
-    <script src="{{ url('/assets') }}/js/slick/slick.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/slick/slick.min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/slick/slick.js"></script>
     <!-- datatable-->
-    <script src="{{ url('/assets') }}/js/datatable/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/datatable/datatables/jquery.dataTables.min.js"></script>
     <!-- page_datatable-->
-    <script src="{{ url('/assets') }}/js/js-datatables/datatables/datatable.custom.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/js-datatables/datatables/datatable.custom.js"></script>
     <!-- page_datatable-->
-    <script src="{{ url('/assets') }}/js/datatable/datatables/datatable.custom.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/datatable/datatables/datatable.custom.js"></script>
     <!-- theme_customizer-->
-    <script src="{{ url('/assets') }}/js/theme-customizer/customizer.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/theme-customizer/customizer.js"></script>
     <!-- custom script -->
-    <script src="{{ url('/assets') }}/js/script.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/script.js"></script>
     
-    <script src="{{ url('/assets') }}/js/select2/select2.full.min.js"></script>
-    <script src="{{ url('/assets') }}/js/select2/select2-custom.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/select2/select2.full.min.js"></script>
+    <script src="{{ url('/admin/assets') }}/js/select2/select2-custom.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
 

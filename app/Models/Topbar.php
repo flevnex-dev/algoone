@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Topbar extends Model
+{
+    protected $fillable = [
+        'content',
+        'extra_content',
+        'is_active',
+    ];
+}

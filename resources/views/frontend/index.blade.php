@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="site-title">AlgoOne - Professional Prop Firm Trading Management</title>
+    <title data-admin="site-title">{{ $setting->site_title ?? 'AlgoOne - Professional Prop Firm Trading Management' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -112,6 +117,7 @@
     </div>
 
     <!-- Top Banner - Curved Design -->
+    @if(isset($topbar) && $topbar)
     <div class="relative z-10 overflow-hidden">
         <div class="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 text-white py-4 relative">
             <div class="absolute inset-0 bg-black/10"></div>
@@ -119,15 +125,16 @@
                 <div class="flex items-center justify-center gap-3 text-sm font-medium">
                     <img src="{{ asset('assets/image/megaphone.png') }}" alt="megaphone" class="w-5 h-5 animate-bounce">
                     <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-6 h-6">
-                    <span data-admin="banner-text">LIMITED TIME: We're covering <span class="underline font-bold">30% of
-                            fees</span></span>
-                    <span class="hidden md:inline" data-admin="banner-text-extra">+ Most prop firms have BOGO
-                        offers!</span>
+                    <span data-admin="banner-text">{!! $topbar->content !!}</span>
+                    @if($topbar->extra_content)
+                    <span class="hidden md:inline" data-admin="banner-text-extra">{!! $topbar->extra_content !!}</span>
+                    @endif
                 </div>
             </div>
             <div class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-b from-blue-600 to-transparent"></div>
         </div>
     </div>
+    @endif
 
     <!-- Header - Glass Morphism -->
     <header class="glass-effect sticky top-0 z-50 transition-all duration-300 shadow-2xl">
@@ -135,10 +142,10 @@
             <div class="flex items-center space-x-4">
                 <div
                     class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center shadow-xl border border-blue-400/30 transform hover:rotate-12 transition-transform pulse-glow">
-                    <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo"
+                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="AlgoOne Logo"
                         class="block max-w-full max-h-full object-contain p-2" decoding="async" loading="eager" />
                 </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight" data-admin="site-name">AlgoOne</span>
+                <span class="text-2xl font-extrabold text-white tracking-tight" data-admin="site-name">{{ $setting->site_title ?? 'AlgoOne' }}</span>
             </div>
             <div class="hidden md:flex items-center space-x-3">
                 <a href="{{ route('frontend.past-performance') }}"
@@ -215,25 +222,27 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-5xl mx-auto text-center">
                 <!-- Floating Badge -->
+                @if($hero && $hero->badge_text)
                 <div
                     class="inline-flex bg-blue-600/30 border-2 border-blue-500/50 text-blue-400 px-8 py-4 rounded-full text-sm font-bold mb-8 items-center shadow-2xl gap-3 glass-effect float-animation">
                     <img src="{{ asset('assets/image/verified.png') }}" alt="check" class="w-6 h-6" style="object-fit: contain;">
-                    <span data-admin="hero-badge">WE ONLY MAKE MONEY WHEN YOU MAKE MONEY</span>
+                    <span data-admin="hero-badge">{{ $hero->badge_text }}</span>
                 </div>
+                @endif
 
                 <!-- Main Heading -->
+                @if($hero && $hero->title)
                 <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-8 leading-tight" data-admin="hero-title">
-                    <span class="block mb-2">Professional</span>
-                    <span
-                        class="block bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">Prop
-                        Firm Trading</span>
+                    {!! $hero->title !!}
                 </h1>
+                @endif
 
+                @if($hero && $hero->description)
                 <p class="text-2xl md:text-3xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto"
                     data-admin="hero-description">
-                    We pass your prop firm challenges with precision and get you funded. Zero risk - if we fail, we
-                    refund you + $500.
+                    {{ $hero->description }}
                 </p>
+                @endif
 
                 <!-- Rating Stars -->
                 <div class="flex items-center justify-center gap-8 mb-12">
@@ -244,30 +253,35 @@
                         <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
                         <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
                     </div>
+                    @if($hero)
                     <div class="text-left">
-                        <div class="text-white font-bold text-2xl" data-admin="rating">5.0 Rating</div>
-                        <div class="text-white/70 text-base" data-admin="traders-count">500+ traders</div>
+                        <div class="text-white font-bold text-2xl" data-admin="rating">{{ $hero->rating }}</div>
+                        <div class="text-white/70 text-base" data-admin="traders-count">{{ $hero->traders_count }}</div>
                     </div>
+                    @endif
                 </div>
 
                 <!-- CTA Buttons -->
+                @if($hero)
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <button
-                        class="accent-gradient text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/50 flex items-center justify-center gap-3 hover:scale-105 transition-all pulse-glow">
-                        <span data-admin="primary-cta">Start Trading Now</span>
-                        <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-5 h-5 animate-bounce">
-                    </button>
-                    <a href="{{ route('frontend.sign-in') }}">
+                    <a href="{{ $hero->primary_cta_link ?? '#' }}">
+                        <button
+                            class="accent-gradient text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/50 flex items-center justify-center gap-3 hover:scale-105 transition-all pulse-glow">
+                            <span data-admin="primary-cta">{{ $hero->primary_cta_text }}</span>
+                            <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-5 h-5 animate-bounce">
+                        </button>
+                    </a>
+                    <a href="{{ $hero->signin_cta_link ?? route('frontend.sign-in') }}">
                         <button
                             class="glass-effect text-white border-2 border-blue-500/50 px-12 py-5 rounded-2xl font-bold text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl">
-                            <span data-admin="signin-button">Sign In</span>
+                            <span data-admin="signin-button">{{ $hero->signin_cta_text }}</span>
                         </button>
                     </a>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('frontend.official-myfxbooks') }}"
+                    <a href="{{ $hero->myfxbook_link ?? route('frontend.official-myfxbooks') }}"
                         class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
@@ -277,14 +291,15 @@
                                 stroke="#0B64F4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             </path>
                         </svg>
-                        <span data-admin="myfxbook-link">Check Myfxbook</span>
+                        <span data-admin="myfxbook-link">{{ $hero->myfxbook_text }}</span>
                     </a>
-                    <a href="{{ route('frontend.payout') }}"
+                    <a href="{{ $hero->payout_link ?? route('frontend.payout') }}"
                         class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <i class="fas fa-dollar-sign text-blue-400"></i>
-                        <span data-admin="payout-link">Check Payouts</span>
+                        <span data-admin="payout-link">{{ $hero->payout_text }}</span>
                     </a>
                 </div>
+                @endif
             </div>
 
             <!-- Floating Performance Card -->
@@ -322,27 +337,32 @@
     <!-- Elite Trading Signals Section - Hexagon Cards -->
     <section id="signals" class="bg-gradient-to-b from-white via-blue-50/50 to-white py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
+            @if($signal && $signal->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-20">
+                    @if($signal->badge_text)
                     <div
                         class="inline-flex items-center justify-center px-10 py-5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-sm mb-10 shadow-2xl gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                             <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                         </svg>
-                        <span data-admin="signals-badge">FREE SIGNALS CHANNEL</span>
+                        <span data-admin="signals-badge">{{ $signal->badge_text }}</span>
                     </div>
-                    <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 mb-8 leading-tight"
+                    @endif
+
+                    @if($signal->title)
+                    <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight"
                         data-admin="signals-title">
-                        Elite Trading Signals<br>
-                        <span
-                            class="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Completely
-                            Free</span>
+                        {!! $signal->title !!}
                     </h2>
+                    @endif
+
+                    @if($signal->description)
                     <p class="text-xl md:text-2xl text-gray-700 mb-16 max-w-3xl mx-auto"
                         data-admin="signals-description">
-                        Join our exclusive signals channel where we share professional GBPJPY trades with an exceptional
-                        track record.
+                        {!! $signal->description !!}
                     </p>
+                    @endif
                 </div>
 
                 <!-- Stats Cards - Hexagon Style -->
@@ -352,7 +372,7 @@
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
                             <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4" data-admin="win-rate">
-                                80%</div>
+                                {{ $signal->win_rate }}</div>
                             <div class="text-xl font-bold text-gray-800">Win Rate</div>
                         </div>
                     </div>
@@ -361,7 +381,7 @@
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
                             <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4"
-                                data-admin="risk-reward">1:3</div>
+                                data-admin="risk-reward">{{ $signal->risk_reward }}</div>
                             <div class="text-xl font-bold text-gray-800">Risk-Reward Ratio</div>
                         </div>
                     </div>
@@ -370,7 +390,7 @@
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
                             <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4" data-admin="market">
-                                GBPJPY</div>
+                                {{ $signal->primary_market }}</div>
                             <div class="text-xl font-bold text-gray-800">Primary Market</div>
                         </div>
                     </div>
@@ -384,40 +404,38 @@
                     <div
                         class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-12 rounded-3xl shadow-2xl">
                         <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center"
-                            data-admin="why-different-title">Why We're Different</h3>
+                            data-admin="why-different-title">{{ $signal->why_different_title }}</h3>
                         <p class="leading-relaxed text-xl md:text-2xl text-center text-gray-700"
                             data-admin="why-different-text">
-                            While others charge hundreds or thousands for signal services, we believe everyone deserves
-                            a fair opportunity to start somewhere with trading. Our consistently profitable signals are
-                            shared completely free because we know that success in trading shouldn't be locked behind
-                            paywalls. Join thousands of traders who trust our analysis and execution on GBPJPY – one of
-                            the most reliable currency pairs with excellent volatility and liquidity.
+                            {!! $signal->why_different_text !!}
                         </p>
                     </div>
                 </div>
 
                 <div class="text-center">
-                    <button
-                        class="accent-gradient text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center gap-4 mx-auto hover:scale-105 pulse-glow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
-                            <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
-                        </svg>
-                        <span data-admin="join-signals-button">Join Free Signals Now</span>
-                    </button>
+                    <a href="{{ $signal->join_button_link ?? '#' }}">
+                        <button
+                            class="accent-gradient text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center gap-4 mx-auto hover:scale-105 pulse-glow">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                                <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
+                            </svg>
+                            <span data-admin="join-signals-button">{{ $signal->join_button_text }}</span>
+                        </button>
+                    </a>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 
     <!-- How It Works Section - Circular Timeline -->
     <section class="py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
+            @if($howItWorks && $howItWorks->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
-                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="how-it-works-title">How
-                        It Works</h2>
-                    <p class="text-3xl md:text-4xl text-white/70" data-admin="how-it-works-subtitle">Three simple steps
-                        to success</p>
+                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
+                    <p class="text-3xl md:text-4xl text-white/70" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
                 </div>
 
                 <!-- Circular Timeline Layout -->
@@ -430,17 +448,15 @@
                                 <div class="flex flex-col items-center text-center mb-6">
                                     <div
                                         class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-14 h-14">
+                                        <img src="{{ asset($howItWorks->step1_image ?? 'assets/image/check-mark.png') }}" alt="Step 1 Icon" class="w-14 h-14">
                                     </div>
                                     <div class="text-8xl font-black text-blue-600/20 mb-4">01</div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step1-title">Get
-                                    Your Challenge</h3>
-                                <p class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step1-title">{{ $howItWorks->step1_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-lg text-center"
                                     data-admin="step1-description">
-                                    Purchase a prop firm challenge from a trusted firm. We cover 30% of the challenge
-                                    fee to reduce your upfront cost.
-                                </p>
+                                    {!! $howItWorks->step1_description !!}
+                                </div>
                             </div>
                         </div>
 
@@ -452,16 +468,14 @@
                                     <div class="text-8xl font-black text-blue-600/20 mb-4">02</div>
                                     <div
                                         class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset('assets/image/trend.png') }}" alt="trend icon" class="w-14 h-14">
+                                        <img src="{{ asset($howItWorks->step2_image ?? 'assets/image/trend.png') }}" alt="Step 2 Icon" class="w-14 h-14">
                                     </div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step2-title">We
-                                    Pass It</h3>
-                                <p class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step2-title">{{ $howItWorks->step2_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-lg text-center"
                                     data-admin="step2-description">
-                                    Our expert traders pass your challenge with precision and discipline. If we fail,
-                                    you get a full refund + $500 guarantee.
-                                </p>
+                                    {!! $howItWorks->step2_description !!}
+                                </div>
                             </div>
                         </div>
 
@@ -472,43 +486,42 @@
                                 <div class="flex flex-col items-center text-center mb-6">
                                     <div
                                         class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset('assets/image/security.png') }}" alt="security icon" class="w-14 h-14">
+                                        <img src="{{ asset($howItWorks->step3_image ?? 'assets/image/security.png') }}" alt="Step 3 Icon" class="w-14 h-14">
                                     </div>
                                     <div class="text-8xl font-black text-blue-600/20 mb-4">03</div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step3-title">Get
-                                    Your Payout</h3>
-                                <p class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step3-title">{{ $howItWorks->step3_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-lg text-center"
                                     data-admin="step3-description">
-                                    You receive your payout from the prop firm. We take 30% of what you take home – only
-                                    when you profit.
-                                </p>
+                                    {!! $howItWorks->step3_description !!}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 
-    <!-- Proven Track Record Section - Card Grid with Hover Effects -->
+    <!-- Proven Track Record Section - Card Grid with    <!-- Results Section -->
     <section id="results" class="bg-gradient-to-br from-blue-900/40 via-black to-black py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
+            @if($results && $results->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <div
                         class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-8 py-4 rounded-full text-sm font-bold mb-10 shadow-xl glass-effect">
                         <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-7 h-7">
-                        <span data-admin="performance-badge">Performance Tracking</span>
+                        <span data-admin="performance-badge">{{ $results->badge_text }}</span>
                     </div>
                     <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="track-record-title">
-                        Proven Track Record</h2>
+                        {{ $results->title }}</h2>
                     <p class="text-2xl md:text-3xl text-white/70 mb-6" data-admin="track-record-subtitle">
-                        Real accounts, real results. All our trading performance is third-party tracked and monitored.
+                        {{ $results->subtitle }}
                     </p>
                     <p class="text-sm text-white/60 italic" data-admin="track-record-disclaimer">
-                        "All results shown are from virtual demo accounts and do not represent real profits or
-                        guaranteed returns."
+                        {{ $results->disclaimer }}
                     </p>
                 </div>
 
@@ -525,7 +538,7 @@
                                             d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
                                     </svg>
                                 </div>
-                                <span class="text-white font-bold text-lg">Account #1</span>
+                                <span class="text-white font-bold text-lg">{{ $results->acc1_name }}</span>
                             </div>
                             <div
                                 class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
@@ -533,7 +546,7 @@
                                     <path fill-rule="evenodd"
                                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
                                 </svg>
-                                <span class="text-blue-400 text-xs font-bold">Verified</span>
+                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc1_subtext }}</span>
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
@@ -592,7 +605,7 @@
                                             d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
                                     </svg>
                                 </div>
-                                <span class="text-white font-bold text-lg">Account #2</span>
+                                <span class="text-white font-bold text-lg">{{ $results->acc2_name }}</span>
                             </div>
                             <div
                                 class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
@@ -600,7 +613,7 @@
                                     <path fill-rule="evenodd"
                                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
                                 </svg>
-                                <span class="text-blue-400 text-xs font-bold">Verified</span>
+                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc2_subtext }}</span>
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
@@ -659,7 +672,7 @@
                                             d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
                                     </svg>
                                 </div>
-                                <span class="text-white font-bold text-lg">Account #3</span>
+                                <span class="text-white font-bold text-lg">{{ $results->acc3_name }}</span>
                             </div>
                             <div
                                 class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
@@ -667,7 +680,7 @@
                                     <path fill-rule="evenodd"
                                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
                                 </svg>
-                                <span class="text-blue-400 text-xs font-bold">Verified</span>
+                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc3_subtext }}</span>
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
@@ -733,28 +746,25 @@
                             </div>
                             <h3 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight"
                                 data-admin="performance-summary-title">
-                                Over <span
-                                    class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">$815K</span>
-                                in Demo Performance
+                                {!! $results->summary_title !!}
                             </h3>
-                            <p class="text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl"
+                            <div class="text-xl md:text-2xl text-white/80 leading-relaxed max-w-2xl"
                                 data-admin="performance-summary-description">
-                                Our algorithms have generated consistent returns across multiple virtual demo accounts.
-                                Track our verified performance and see real results.
-                            </p>
+                                {!! $results->summary_description !!}
+                            </div>
                         </div>
-                        <button
+                        <a href="{{ $results->view_results_link }}"
                             class="accent-gradient text-white px-12 py-5 rounded-2xl font-bold text-lg md:text-xl shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-3 group hover:scale-105 pulse-glow">
-                            <span data-admin="view-results-button">View All Results</span>
+                            <span data-admin="view-results-button">{{ $results->view_results_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow"
                                 class="w-5 h-5 group-hover:translate-x-1 transition-transform">
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
-                    <a href="{{ route('frontend.official-myfxbooks') }}"
+                    <a href="{{ $results->myfxbook_link }}"
                         class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
@@ -764,227 +774,103 @@
                                 stroke="#0B64F4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             </path>
                         </svg>
-                        <span data-admin="myfxbook-link-bottom">Check Myfxbook</span>
+                        <span data-admin="myfxbook-link-bottom">{{ $results->myfxbook_text }}</span>
                     </a>
-                    <a href="{{ route('frontend.payout') }}"
+                    <a href="{{ $results->payout_link }}"
                         class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <i class="fas fa-dollar-sign text-blue-400 text-xl"></i>
-                        <span data-admin="payout-link-bottom">Check Payouts</span>
+                        <span data-admin="payout-link-bottom">{{ $results->payout_text }}</span>
                     </a>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 
-    <!-- Why Choose AlgoOne Section - Asymmetric Grid -->
+    <!-- Why Choose AlgoOne Section - Feature Grid -->
     <section class="py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
+            @if($whyChoose && $whyChoose->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
-                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="why-choose-title">Why
-                        Choose AlgoOne?</h2>
-                    <p class="text-3xl md:text-4xl text-white/70" data-admin="why-choose-subtitle">Risk-free trading
-                        management you can trust</p>
+                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="why-choose-title">{{ $whyChoose->title }}</h2>
+                    <p class="text-3xl md:text-4xl text-white/70" data-admin="why-choose-subtitle">{{ $whyChoose->subtitle }}</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 1: Zero Risk Guarantee -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
+                    @for($i = 1; $i <= 6; $i++)
+                        <!-- Card {{ $i }} -->
                         <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
+                            class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
+                            <div
+                                class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
+                                <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-12 h-12">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature{{ $i }}-title">{{ $whyChoose->{"card{$i}_title"} }}
+                            </h3>
+                            <p class="text-base text-white/70 leading-relaxed" data-admin="feature{{ $i }}-description">
+                                {{ $whyChoose->{"card{$i}_description"} }}
+                            </p>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature1-title">Zero Risk Guarantee
-                        </h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature1-description">
-                            We cover 30% of your challenge fee. If we fail to pass, we refund everything plus $500.
-                        </p>
-                    </div>
-
-                    <!-- Card 2: MYFXBook Verified -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                        <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature2-title">MYFXBook Verified
-                        </h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature2-description">
-                            All our trading results are third-party tracked with full transparency and accountability on
-                            demo accounts.
-                        </p>
-                    </div>
-
-                    <!-- Card 3: Real-Time Tracking -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                        <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature3-title">Real-Time Tracking
-                        </h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature3-description">
-                            Monitor your account performance 24/7 through our intuitive dashboard.
-                        </p>
-                    </div>
-
-                    <!-- Card 4: Educational Resources -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                        <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature4-title">Educational Resources
-                        </h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature4-description">
-                            Access exclusive trading education videos and materials to learn alongside us.
-                        </p>
-                    </div>
-
-                    <!-- Card 5: Performance-Based Model -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                        <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature5-title">Performance-Based
-                            Model</h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature5-description">
-                            We only take 30% of your profits. No profits? No fees. Our interests are perfectly aligned.
-                        </p>
-                    </div>
-
-                    <!-- Card 6: Institutional Grade Trading -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                        <div
-                            class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                            <img src="{{ asset('assets/image/check-mark.png') }}" alt="check icon" class="w-12 h-12">
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature6-title">Institutional Grade
-                            Trading</h3>
-                        <p class="text-base text-white/70 leading-relaxed" data-admin="feature6-description">
-                            Hedge fund quality algorithms and risk management systems protecting every trade.
-                        </p>
-                    </div>
+                    @endfor
                 </div>
             </div>
+            @endif
         </div>
     </section>
 
-    <!-- Referral Program Section - Gradient Cards -->
+    @if($referral && $referral->is_active)
+    <!-- Referral Program Section -->
     <section class="relative py-32 md:py-40 bg-gradient-to-br from-white via-blue-50/50 to-white overflow-hidden">
-        <div
-            class="absolute right-0 top-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl opacity-60 pointer-events-none">
-        </div>
+        <div class="absolute right-0 top-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <h2 class="text-6xl md:text-8xl font-extrabold text-gray-900 mb-8" data-admin="referral-title">
-                        Referral Program</h2>
-                    <p class="text-2xl md:text-3xl text-gray-700" data-admin="referral-subtitle">Earn free funding and
-                        revenue share by referring traders.</p>
+                        {{ $referral->title }}</h2>
+                    <p class="text-2xl md:text-3xl text-gray-700" data-admin="referral-subtitle">{{ $referral->subtitle }}</p>
                 </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Basic Tier -->
-                    <article
-                        class="bg-white/80 backdrop-blur-xl border-2 border-gray-300 rounded-3xl shadow-2xl px-10 py-12 hover:shadow-3xl transition-all transform hover:scale-105">
-                        <div class="flex items-center gap-5 mb-8">
-                            <div
-                                class="w-20 h-20 rounded-2xl bg-blue-100 flex items-center justify-center border-2 border-blue-200">
-                                <img src="{{ asset('assets/image/group.png') }}" alt="" class="w-12 h-12">
+                    @foreach($referral->tiers ?? [] as $tier)
+                        <article class="relative bg-white/80 backdrop-blur-xl border-2 border-gray-300 rounded-3xl shadow-2xl px-10 py-12 hover:shadow-3xl transition-all transform hover:scale-105">
+                            
+                            <!-- Dynamic Badge -->
+                            @if(!empty($tier['badge_text']))
+                            <span class="absolute -top-5 right-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 text-sm font-bold rounded-full shadow-xl flex items-center gap-2">
+                                @if(!empty($tier['badge_icon']))
+                                    <img src="{{ asset($tier['badge_icon']) }}" alt="" class="w-6 h-6">
+                                @endif
+                                {{ $tier['badge_text'] }}
+                            </span>
+                            @endif
+
+                            <div class="flex items-center gap-5 mb-8">
+                                <div class="w-20 h-20 rounded-2xl bg-blue-100 flex items-center justify-center border-2 border-blue-200">
+                                    <img src="{{ asset($tier['icon'] ?? '') }}" alt="" class="w-12 h-12">
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900">{{ $tier['name'] ?? '' }}</h3>
+                                    <p class="text-sm text-gray-600 font-medium">{{ $tier['range'] ?? '' }}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-900" data-admin="tier1-name">Basic Tier</h3>
-                                <p class="text-sm text-gray-600 font-medium" data-admin="tier1-range">0-2 referrals</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-6 text-gray-700 font-medium">
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/gift (2).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier1-benefit1">Get the same account size your referral
-                                    receives</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/trend (4).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier1-benefit2">Earn 10% of every payout</span>
-                            </li>
-                        </ul>
-                    </article>
-                    <!-- Premium Tier -->
-                    <article
-                        class="relative bg-gradient-to-br from-blue-50 to-white border-2 border-blue-500 rounded-3xl shadow-2xl px-10 py-12 hover:scale-105 transition-all">
-                        <span
-                            class="absolute -top-5 right-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 text-sm font-bold rounded-full shadow-xl">
-                            POPULAR
-                        </span>
-                        <div class="flex items-center gap-5 mb-8">
-                            <div
-                                class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
-                                <img src="{{ asset('assets/image/crown (1).png') }}" alt="" class="w-12 h-12">
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-900" data-admin="tier2-name">Premium Tier</h3>
-                                <p class="text-sm text-gray-600 font-medium" data-admin="tier2-range">2-5 referrals</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-6 text-gray-700 font-medium">
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/gift (1).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier2-benefit1">FREE <span
-                                        class="text-blue-600 font-bold">$100K</span> account bonus</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/trend (3).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier2-benefit2">Earn <span class="text-blue-600 font-bold">15%</span>
-                                    of every payout</span>
-                            </li>
-                        </ul>
-                    </article>
-                    <!-- Platinum Tier -->
-                    <article
-                        class="relative bg-white/80 backdrop-blur-xl border-2 border-amber-400 rounded-3xl shadow-2xl px-10 py-12 hover:shadow-3xl transition-all transform hover:scale-105">
-                        <span
-                            class="absolute -top-5 right-6 bg-gradient-to-r from-amber-400 to-orange-500 text-amber-900 px-6 py-3 text-sm font-bold rounded-full shadow-xl flex items-center gap-2">
-                            <img src="{{ asset('assets/image/diamond.png') }}" alt="" class="w-6 h-6"> ELITE
-                        </span>
-                        <div class="flex items-center gap-5 mb-8">
-                            <div
-                                class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center shadow-lg">
-                                <img src="{{ asset('assets/image/flash (1).png') }}" alt="" class="w-12 h-12">
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-900" data-admin="tier3-name">Platinum</h3>
-                                <p class="text-sm text-gray-600 font-medium" data-admin="tier3-range">5+ referrals</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-6 text-gray-700 font-medium">
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/wallet (1).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier3-benefit1"><span class="font-bold text-amber-600">50% off</span>
-                                    funding increases</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/gift (1).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier3-benefit2">FREE <span
-                                        class="font-bold text-amber-600">$200K</span> account</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <img src="{{ asset('assets/image/crown (1).png') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
-                                <span data-admin="tier3-benefit3">Priority managed accounts</span>
-                            </li>
-                        </ul>
-                    </article>
+                            
+                            <ul class="space-y-6 text-gray-700 font-medium">
+                                @foreach($tier['benefits'] ?? [] as $benefit)
+                                <li class="flex items-start gap-4">
+                                    <img src="{{ asset($benefit['icon'] ?? '') }}" alt="" class="w-8 h-8 mt-1 flex-shrink-0">
+                                    <span>{!! $benefit['text'] ?? '' !!}</span>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </article>
+                    @endforeach
                 </div>
+
                 <div class="text-center mt-20">
-                    <a href="{{ route('frontend.referrals-public') }}">
+                    <a href="{{ $referral->button_link }}">
                         <button
                             class="inline-flex items-center gap-3 bg-black text-white border-2 border-gray-700 px-14 py-6 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all">
-                            <span data-admin="learn-referrals-button">Learn More About Referrals</span>
+                            <span data-admin="learn-referrals-button">{{ $referral->button_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-6 h-6">
                         </button>
                     </a>
@@ -992,32 +878,34 @@
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Ready to Start Trading Section - Full Width Banner -->
+    @if($cta && $cta->is_active)
     <section class="py-32 md:py-40 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600"></div>
         <div class="absolute inset-0 bg-black/20"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-5xl mx-auto text-center">
-                <h2 class="text-5xl md:text-7xl font-extrabold text-white mb-8" data-admin="cta-section-title">Ready to
-                    Start Trading?</h2>
+                <h2 class="text-5xl md:text-7xl font-extrabold text-white mb-8" data-admin="cta-section-title">{{ $cta->title }}</h2>
                 <p class="text-2xl md:text-3xl text-white/90 mb-12" data-admin="cta-section-description">
-                    Join hundreds of traders who trust AlgoOne with their prop firm accounts.
+                    {{ $cta->description }}
                 </p>
-                <a href="#"
+                <a href="{{ $cta->button_link }}"
                     class="inline-flex items-center gap-3 bg-black text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all border-2 border-white/20 pulse-glow">
-                    <span data-admin="create-account-button">Create Free Account</span>
+                    <span data-admin="create-account-button">{{ $cta->button_text }}</span>
                     <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-6 h-6">
                 </a>
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Footer -->
     <footer class="bg-black py-12 border-t-2 border-blue-500/20">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-white/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-white/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-8">
                     <a href="{{ route('frontend.privacy') }}"
                         class="text-white/60 text-sm hover:text-blue-400 transition-colors font-medium">Privacy
@@ -1030,14 +918,9 @@
             <div class="bg-black/50 px-6 py-8 mt-10 rounded-2xl border border-blue-500/20">
                 <div class="max-w-5xl mx-auto flex items-start gap-4 text-xs text-white/60 leading-relaxed">
                     <span class="text-red-400 text-xl mt-1">⚠</span>
-                    <p data-admin="legal-disclaimer">
-                        <strong class="text-white/80">LEGAL DISCLAIMER</strong> — Notwithstanding any representations,
-                        warranties, or statements to the contrary contained herein or elsewhere, all quantitative
-                        performance indicators, statistical analyses, trading results, and any associated data
-                        visualizations or informational content displayed are NON-FACTUAL and constitute hypothetical
-                        simulations exclusively for demonstrative purposes. No actual transactions occur on this
-                        platform, and past performance is not indicative of future results.
-                    </p>
+                    <div data-admin="legal-disclaimer">
+                        {!! $setting->legal_disclaimer ?? '' !!}
+                    </div>
                 </div>
             </div>
         </div>

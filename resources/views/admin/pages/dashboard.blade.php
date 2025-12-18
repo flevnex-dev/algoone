@@ -8,7 +8,7 @@
             <div class="col-12 d-flex justify-content-between align-items-center">
                 <h2 class="mb-0">Dashboard</h2>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="iconly-Home icli svg-color"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="iconly-Home icli svg-color"></i></a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </div>

@@ -1,11 +1,15 @@
+@php
+    $setting = \App\Models\SiteSetting::first();
+@endphp
 <header class="page-header row">
     <div class="logo-wrapper d-flex align-items-center col-auto"><a href="{{ url('/admin/dashboard') }}"><img
-                class="light-logo img-fluid" src="{{ url('/assets') }}/images/logo/logo-sm.png"
-                alt="logo"><img class="dark-logo img-fluid"
-                src="{{ url('/assets') }}/images/logo/logo-sm.png" alt="logo"></a><a
+                class="light-logo img-fluid" style="height: 50px;" src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('admin/assets/image/logo.png') }}"
+                alt="logo">
+                <img class="dark-logo img-fluid" 
+                src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('admin/assets/image/logo.png') }}" alt="logo"></a><a
             class="close-btn toggle-sidebar" href="javascript:void(0)">
             <svg class="svg-color">
-                <use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Category"></use>
+                <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Category"></use>
             </svg></a></div>
     <div class="page-main-header col">
         <div class="header-left">
@@ -60,17 +64,17 @@
                 </li>  --}}
                 {{--  <li class="search d-lg-none d-flex"> <a href="javascript:void(0)">
                         <svg>
-                            <use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Search"></use>
+                            <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Search"></use>
                         </svg></a></li>  --}}
-                <li> <a class="dark-mode" href="javascript:void(0)">
+                <!-- <li> <a class="dark-mode" href="javascript:void(0)">
                     <svg>
-                        <use href="{{ url('/assets') }}/svg/iconly-sprite.svg#moondark"></use>
-                    </svg></a></li>
+                        <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#moondark"></use>
+                    </svg></a></li> -->
             
                     <li class="profile-nav custom-dropdown">
                         <div class="user-wrap">
                             <div class="user-img">
-                                <img src="{{ asset('assets/images/profile.png') }}" alt="user">
+                                <img src="{{ asset('admin/assets/images/profile.png') }}" alt="user">
                             </div>
                             <div class="user-content">
                                 <h6>{{ Auth::user()->name ?? 'Guest' }}</h6>
@@ -84,7 +88,7 @@
                             <ul class="profile-body">
                                 {{--  <li class="d-flex">
                                     <svg class="svg-color">
-                                        <use href="{{ asset('assets/svg/iconly-sprite.svg#Profile') }}"></use>
+                                        <use href="{{ asset('admin/assets/svg/iconly-sprite.svg#Profile') }}"></use>
                                     </svg>
                                     <a class="ms-2" href="
                                     
@@ -92,7 +96,7 @@
                                 </li>  --}}
                                 <li class="d-flex">
                                     <svg class="svg-color">
-                                        <use href="{{ asset('assets/svg/iconly-sprite.svg#Login') }}"></use>
+                                        <use href="{{ asset('admin/assets/svg/iconly-sprite.svg#Login') }}"></use>
                                     </svg>
                                     <form action="{{ route('logout') }}" method="POST" class="ms-2">
                                         @csrf
