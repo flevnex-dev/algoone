@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Referral Program - AlgoOne</title>
+    <title data-admin="pageTitle">Referral Program - {{ $setting->site_title ?? 'AlgoOne' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -115,12 +115,14 @@
                         <i class="fas fa-users text-blue-400 text-xl"></i>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-extrabold text-white" data-admin="pageTitle">
-                        Referral Program
+                        {{ $referral->title ?? 'Referral Program' }}
                     </h1>
                 </div>
+                @if($referral->subtitle ?? null)
                 <p class="text-blue-200/80 text-lg max-w-2xl mx-auto" data-admin="pageSubtitle">
-                    Earn while your referrals succeed. Share your link and start building passive income!
+                    {{ $referral->subtitle }}
                 </p>
+                @endif
             </div>
 
             <!-- Key Metrics Section -->
@@ -136,7 +138,7 @@
                         </div>
                         <div class="text-blue-200/70 text-sm font-medium mb-1" data-admin="metricClicksLabel">Total
                             Clicks</div>
-                        <div class="text-3xl font-bold text-white" data-admin="metricClicksValue">2</div>
+                        <div class="text-3xl font-bold text-white" data-admin="metricClicksValue">{{ $referralStat->total_clicks ?? 0 }}</div>
                     </div>
 
                     <!-- Unique Visitors -->
@@ -149,7 +151,7 @@
                         </div>
                         <div class="text-blue-200/70 text-sm font-medium mb-1" data-admin="metricVisitorsLabel">Unique
                             Visitors</div>
-                        <div class="text-3xl font-bold text-white" data-admin="metricVisitorsValue">1</div>
+                        <div class="text-3xl font-bold text-white" data-admin="metricVisitorsValue">{{ $referralStat->unique_visitors ?? 0 }}</div>
                     </div>
 
                     <!-- Conversions -->
@@ -162,7 +164,7 @@
                         </div>
                         <div class="text-blue-200/70 text-sm font-medium mb-1" data-admin="metricConversionsLabel">
                             Conversions</div>
-                        <div class="text-3xl font-bold text-white" data-admin="metricConversionsValue">0</div>
+                        <div class="text-3xl font-bold text-white" data-admin="metricConversionsValue">{{ $referralStat->conversions ?? 0 }}</div>
                     </div>
 
                     <!-- Conversion Rate -->
@@ -175,7 +177,7 @@
                         </div>
                         <div class="text-blue-200/70 text-sm font-medium mb-1" data-admin="metricRateLabel">Conversion
                             Rate</div>
-                        <div class="text-3xl font-bold text-white" data-admin="metricRateValue">0%</div>
+                        <div class="text-3xl font-bold text-white" data-admin="metricRateValue">{{ number_format($referralStat->conversion_rate ?? 0, 2) }}%</div>
                     </div>
                 </div>
             </section>
@@ -186,13 +188,13 @@
                     <div>
                         <h2 class="text-xl font-bold text-white mb-2" data-admin="statusTitle">Your Status</h2>
                         <p class="text-blue-200/80" data-admin="statusText">You have referred <span
-                                class="font-bold text-white">0</span> people</p>
+                                class="font-bold text-white">{{ $referralStat->referral_count ?? 0 }}</span> people</p>
                     </div>
                     <button
                         class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all shadow-md flex items-center gap-2"
                         data-admin="statusTier">
                         <i class="fas fa-bolt"></i>
-                        <span>Basic Tier</span>
+                        <span>{{ $tierName ?? 'Basic Tier' }}</span>
                     </button>
                 </div>
             </section>
@@ -202,7 +204,7 @@
                 <div class="card-blue rounded-xl p-6">
                     <h2 class="text-xl font-bold text-white mb-4" data-admin="linkTitle">Your Referral Link</h2>
                     <div class="flex flex-col sm:flex-row gap-3 mb-4">
-                        <input type="text" readonly value="https://algoone-dashboard.com/?ref=4F375FD7"
+                        <input type="text" readonly value="{{ $referralLink ?? route('frontend.referrals-public') . '?ref=' . ($user->referral_code ?? '') }}"
                             class="flex-1 px-4 py-3 bg-slate-800/50 border border-blue-500/30 rounded-lg text-blue-200 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             id="referralLink" data-admin="linkInput">
                         <button
@@ -242,86 +244,80 @@
             </section>
 
             <!-- Referral Tiers Section -->
+            @if(isset($referral) && $referral && !empty($referral->tiers))
             <section class="mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Basic Tier -->
+                    @foreach($referral->tiers as $tierIndex => $tier)
+                    @php
+                        $isFeatured = ($tierIndex == 1); // Premium tier
+                        $isElite = ($tierIndex == 2); // Platinum tier
+                    @endphp
+                    <div class="card-blue rounded-xl p-6 {{ $isElite ? 'border-2 border-yellow-500/40' : ($isFeatured ? 'border-2 border-amber-500/40' : '') }}">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 {{ $isElite ? 'bg-yellow-600/20 border-yellow-500/30' : ($isFeatured ? 'bg-amber-600/20 border-amber-500/30' : 'bg-blue-600/20 border-blue-500/30') }} rounded-lg flex items-center justify-center border">
+                                @if($tier['icon'] ?? null)
+                                <img src="{{ asset($tier['icon']) }}" alt="" class="w-8 h-8">
+                                @elseif($isElite)
+                                <i class="fas fa-gem {{ $isElite ? 'text-yellow-400' : '' }} text-xl"></i>
+                                @elseif($isFeatured)
+                                <i class="fas fa-crown {{ $isFeatured ? 'text-amber-400' : '' }} text-xl"></i>
+                                @else
+                                <i class="fas fa-bolt text-blue-400 text-xl"></i>
+                                @endif
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white" data-admin="tier{{ $tierIndex + 1 }}Name">{{ $tier['name'] ?? 'Tier ' . ($tierIndex + 1) }}</h3>
+                                @if($tier['range'] ?? null)
+                                <p class="text-blue-200/70 text-sm" data-admin="tier{{ $tierIndex + 1 }}Range">{{ $tier['range'] }}</p>
+                                @endif
+                            </div>
+                        </div>
+                        @if(!empty($tier['benefits']))
+                        <ul class="space-y-3 text-blue-200/90">
+                            @foreach($tier['benefits'] as $benefit)
+                            <li class="flex items-start gap-3">
+                                @if($benefit['icon'] ?? null)
+                                <img src="{{ asset($benefit['icon']) }}" alt="" class="w-5 h-5 mt-1">
+                                @else
+                                <i class="fas fa-gift {{ $isElite ? 'text-yellow-400' : ($isFeatured ? 'text-amber-400' : 'text-blue-400') }} mt-1"></i>
+                                @endif
+                                <span data-admin="tier{{ $tierIndex + 1 }}Benefit{{ $loop->index + 1 }}">{!! $benefit['text'] ?? '' !!}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            </section>
+            @else
+            <!-- Fallback: Default tiers if no data -->
+            <section class="mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="card-blue rounded-xl p-6">
                         <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
+                            <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
                                 <i class="fas fa-bolt text-blue-400 text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-white" data-admin="tier1Name">Basic Tier</h3>
-                                <p class="text-blue-200/70 text-sm" data-admin="tier1Range">0-2 referrals</p>
+                                <h3 class="text-xl font-bold text-white">Basic Tier</h3>
+                                <p class="text-blue-200/70 text-sm">0-2 referrals</p>
                             </div>
                         </div>
                         <ul class="space-y-3 text-blue-200/90">
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-gift text-blue-400 mt-1"></i>
-                                <span data-admin="tier1Benefit1">Get the same account size your referral receives for
-                                    FREE</span>
+                                <span>Get the same account size your referral receives for FREE</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-chart-line text-blue-400 mt-1"></i>
-                                <span data-admin="tier1Benefit2">Earn 10% of every payout your referral receives</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Premium Tier -->
-                    <div class="card-blue rounded-xl p-6 border-2 border-amber-500/40">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-12 h-12 bg-amber-600/20 rounded-lg flex items-center justify-center border border-amber-500/30">
-                                <i class="fas fa-crown text-amber-400 text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white" data-admin="tier2Name">Premium Tier</h3>
-                                <p class="text-blue-200/70 text-sm" data-admin="tier2Range">2-5 referrals</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-3 text-blue-200/90">
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-gift text-amber-400 mt-1"></i>
-                                <span data-admin="tier2Benefit1">PLUS a FREE $100K account on top!</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-chart-line text-amber-400 mt-1"></i>
-                                <span data-admin="tier2Benefit2">Earn 15% of every payout</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Platinum Tier -->
-                    <div class="card-blue rounded-xl p-6 border-2 border-yellow-500/40">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div
-                                class="w-12 h-12 bg-yellow-600/20 rounded-lg flex items-center justify-center border border-yellow-500/30">
-                                <i class="fas fa-gem text-yellow-400 text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white" data-admin="tier3Name">Platinum Tier</h3>
-                                <p class="text-blue-200/70 text-sm" data-admin="tier3Range">5+ referrals</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-3 text-blue-200/90">
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-gift text-yellow-400 mt-1"></i>
-                                <span data-admin="tier3Benefit1">FREE $200K account + matched accounts</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-chart-line text-yellow-400 mt-1"></i>
-                                <span data-admin="tier3Benefit2">Earn 15% of every payout</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-crown text-yellow-400 mt-1"></i>
-                                <span data-admin="tier3Benefit3">Priority for all managed accounts</span>
+                                <span>Earn 10% of every payout your referral receives</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </section>
+            @endif
 
             <!-- How Referral Tracking Works Section -->
             <section class="mb-8">
@@ -376,7 +372,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -384,17 +380,14 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-red-500">LEGAL DISCLAIMER</strong> — All quantitative performance
-                    indicators, statistical analyses, financial metrics, trading results, and associated data are
-                    <strong>NON-FACTUAL</strong> and constitute hypothetical simulations exclusively for demonstrative,
-                    illustrative, and presentational purposes. No bona fide securities transactions, investment
-                    activities,
-                    or monetary exchanges are executed through the platform.
-                </p>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
             </div>
+            @endif
         </div>
     </footer>
 

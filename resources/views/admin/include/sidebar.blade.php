@@ -11,7 +11,7 @@
             </li>
             <li class="sidebar-list">
                 <a class="sidebar-link " href="{{ route('admin.dashboard') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Home-dashboard"></use></svg>
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Home-dashboard"></use></svg>
                     <h6 class="f-w-600">Dashboard</h6>
                 </a>
             </li>
@@ -19,46 +19,88 @@
             <li class="sidebar-main-title">
                 <div><h5 class="lan-11 f-w-700 sidebar-title">Site Management</h5></div>
             </li>
+            <li class="sidebar-list"> <i class="fa-solid fa-thumbtack"></i><a class="sidebar-link" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                  <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Home"></use>
+                </svg>
+                <h6 class="f-w-600">Home</h6><i class="iconly-Arrow-Right-2 icli"></i></a>
+              <ul class="sidebar-submenu">
+                <li class="">
+                    <a class="" href="{{ route('admin.topbars.index') }}">Topbars</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.hero.index') }}">Hero Section</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.signals.index') }}">Signals Section</a>
+                </li>
+                 <li class="">
+                    <a class="" href="{{ route('admin.how-it-works.index') }}">How It Works</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.results.index') }}">Results Section</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.why-choose.index') }}">Why Choose Us</a>
+                </li>
+                 <li class="">
+                    <a class="" href="{{ route('admin.cta.index') }}">CTA Section</a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-list"> <i class="fa-solid fa-thumbtack"></i><a class="sidebar-link" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                  <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Home"></use>
+                </svg>
+                <h6 class="f-w-600">Past Performance</h6><i class="iconly-Arrow-Right-2 icli"></i></a>
+              <ul class="sidebar-submenu">
+                <li class="">
+                    <a class="" href="{{ route('admin.past-performance.index') }}">Past Performance Sections</a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-list"> <i class="fa-solid fa-thumbtack"></i><a class="sidebar-link" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                  <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Home"></use>
+                </svg>
+                <h6 class="f-w-600">Official Myfxbooks</h6><i class="iconly-Arrow-Right-2 icli"></i></a>
+              <ul class="sidebar-submenu">
+                <li class="">
+                    <a class="" href="{{ route('admin.official-myfxbooks.index') }}">Official Myfxbooks Sections</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.myfxbook-accounts.index') }}">Myfxbook Accounts</a>
+                </li>
+              </ul>
+            </li>
             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.topbars.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Star"></use></svg>
-                    <h6 class="f-w-600">Topbars</h6>
+                <a class="sidebar-link" href="{{ route('admin.progress-guidelines.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Progress Guidelines</h6>
                 </a>
             </li>
             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.hero.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Home"></use></svg>
-                    <h6 class="f-w-600">Hero Section</h6>
+                <a class="sidebar-link" href="{{ route('admin.masterclass.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Masterclass</h6>
                 </a>
             </li>
             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.signals.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Activity"></use></svg>
-                    <h6 class="f-w-600">Signals Section</h6>
-                </a>
-            </li>
-             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.how-it-works.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Info-Circle"></use></svg>
-                    <h6 class="f-w-600">How It Works</h6>
+                <a class="sidebar-link" href="{{ route('admin.buy-funding.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Buy Funding</h6>
                 </a>
             </li>
             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.results.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Graph"></use></svg>
-                    <h6 class="f-w-600">Results Section</h6>
+                <a class="sidebar-link" href="{{ route('admin.privacy-policy.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Privacy Policy</h6>
                 </a>
             </li>
             <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.why-choose.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Star"></use></svg>
-                    <h6 class="f-w-600">Why Choose Us</h6>
-                </a>
-            </li>
-            <li class="sidebar-list">
-                <a class="sidebar-link" href="{{ route('admin.cta.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Tick-square"></use></svg>
-                    <h6 class="f-w-600">CTA Section</h6>
+                <a class="sidebar-link" href="{{ route('admin.terms-conditions.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Terms & Conditions</h6>
                 </a>
             </li>
 
@@ -70,7 +112,7 @@
 
             <li class="sidebar-list">
                 <a class="sidebar-link" href="{{ route('admin.site-settings.index') }}">
-                    <svg class="stroke-icon"><use href="{{ url('/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
                     <h6 class="f-w-600">Site Settings</h6>
                 </a>
             </li>

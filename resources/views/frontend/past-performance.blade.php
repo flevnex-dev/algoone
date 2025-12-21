@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Past Performance - AlgoOne</title>
+    <title data-admin="pageTitle">Past Performance - {{ $setting->site_title ?? '' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -51,13 +56,14 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
                 <button
+                    onclick="window.location.reload()"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2">
                     <i class="fas fa-sync-alt"></i>
                     <span data-admin="refreshButton">Refresh</span>
@@ -86,23 +92,22 @@
             </h1>
 
             <!-- Transparency Section -->
+            @if($pastPerformanceSection)
             <section class="mb-12">
                 <div class="card-blue rounded-2xl p-8 shadow-xl">
                     <h2 class="text-2xl md:text-3xl font-bold text-white mb-4" data-admin="transparencyTitle">
-                        Transparency in Trading</h2>
+                        {{ $pastPerformanceSection->transparency_title ?? 'Transparency in Trading' }}</h2>
                     <p class="text-blue-100 text-lg leading-relaxed mb-4" data-admin="transparencyText">
-                        At AlgoOne, we believe in complete transparency. The data you see here represents real prop firm
-                        trading performance—no exaggeration, no hidden metrics. Our goal is to empower traders with the
-                        tools and transparency they need to make informed decisions. All performance data is from actual
-                        prop firm accounts, demonstrating our consistent, reliable trading strategies.
+                        {{ $pastPerformanceSection->transparency_text ?? 'At AlgoOne, we believe in complete transparency. The data you see here represents real prop firm trading performance—no exaggeration, no hidden metrics. Our goal is to empower traders with the tools and transparency they need to make informed decisions. All performance data is from actual prop firm accounts, demonstrating our consistent, reliable trading strategies.' }}
                     </p>
-                    <a href="#"
+                    <a href="{{ $pastPerformanceSection->view_reports_link ?? '#' }}"
                         class="text-blue-400 hover:text-blue-300 font-semibold text-base inline-flex items-center gap-2 transition-colors">
-                        <span data-admin="viewReports">View detailed MyFxBook reports</span>
+                        <span data-admin="viewReports">{{ $pastPerformanceSection->view_reports_text ?? 'View detailed MyFxBook reports' }}</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </section>
+            @endif
 
             <!-- Select Trading Week -->
             <section class="mb-12">
@@ -249,17 +254,17 @@
             </section>
 
             <!-- Week Overview -->
+            @if($pastPerformanceSection)
             <section class="mb-12">
                 <div class="card-blue rounded-2xl p-8 shadow-xl">
-                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4" data-admin="overviewTitle">Week Overview
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4" data-admin="overviewTitle">{{ $pastPerformanceSection->overview_title ?? 'Week Overview' }}
                     </h2>
                     <p class="text-blue-100 text-lg leading-relaxed" data-admin="overviewText">
-                        The week unfolded with dynamic price action that demanded both agility and confidence. Strategic
-                        scaling into momentum plays and calculated position management resulted in a strong weekly
-                        performance.
+                        {{ $pastPerformanceSection->overview_text ?? 'The week unfolded with dynamic price action that demanded both agility and confidence. Strategic scaling into momentum plays and calculated position management resulted in a strong weekly performance.' }}
                     </p>
                 </div>
             </section>
+            @endif
 
             <!-- Performance Breakdown -->
             <section class="mb-12">
@@ -360,38 +365,29 @@
             </section>
 
             <!-- Outlook & Notices -->
+            @if($pastPerformanceSection)
             <section class="mb-12">
                 <div class="card-blue rounded-2xl p-8 shadow-xl space-y-6">
                     <div class="border border-blue-500/20 rounded-2xl p-6 bg-blue-900/10">
-                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3" data-admin="outlookTitle">Outlook for
-                            Next Week</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3" data-admin="outlookTitle">{{ $pastPerformanceSection->outlook_title ?? 'Outlook for Next Week' }}</h2>
                         <p class="text-blue-100 text-lg leading-relaxed" data-admin="outlookText">
-                            Expecting GBPUSD to show strength with key economic data releases this week. XAUUSD could
-                            see
-                            profit-taking but maintain overall uptrend. EURUSD projected to remain range-bound pending
-                            central bank commentary.
+                            {{ $pastPerformanceSection->outlook_text ?? 'Expecting GBPUSD to show strength with key economic data releases this week. XAUUSD could see profit-taking but maintain overall uptrend. EURUSD projected to remain range-bound pending central bank commentary.' }}
                         </p>
                     </div>
 
                     <div class="border border-blue-500/20 rounded-2xl p-6 bg-blue-900/10 space-y-3">
                         <p class="text-white text-sm leading-relaxed">
-                            <span class="font-semibold text-blue-200" data-admin="nextUpdateLabel">Next Weekly
-                                Update:</span>
-                            <span class="text-blue-100" data-admin="nextUpdateText">New performance data is published
-                                every
-                                Friday at 3:00 PM UTC after the trading week concludes.</span>
+                            <span class="font-semibold text-blue-200" data-admin="nextUpdateLabel">{{ $pastPerformanceSection->next_update_label ?? 'Next Weekly Update:' }}</span>
+                            <span class="text-blue-100" data-admin="nextUpdateText">{{ $pastPerformanceSection->next_update_text ?? 'New performance data is published every Friday at 3:00 PM UTC after the trading week concludes.' }}</span>
                         </p>
                         <p class="text-white/90 text-sm leading-relaxed">
-                            <span class="font-semibold text-blue-200" data-admin="noticeLabel">Note:</span>
-                            <span class="text-blue-100" data-admin="noticeText">Performance data prior to these weeks
-                                was not
-                                tracked on this platform. All future trading results will continue to be published here
-                                for
-                                full transparency.</span>
+                            <span class="font-semibold text-blue-200" data-admin="noticeLabel">{{ $pastPerformanceSection->notice_label ?? 'Note:' }}</span>
+                            <span class="text-blue-100" data-admin="noticeText">{{ $pastPerformanceSection->notice_text ?? 'Performance data prior to these weeks was not tracked on this platform. All future trading results will continue to be published here for full transparency.' }}</span>
                         </p>
                     </div>
                 </div>
             </section>
+            @endif
         </div>
     </main>
 
@@ -399,7 +395,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -407,16 +403,15 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-blue-200/80">LEGAL DISCLAIMER</strong> — All quantitative performance
-                    indicators, statistical analyses, trading results, and any associated data visualizations or
-                    informational content displayed are NON-FACTUAL and constitute hypothetical simulations exclusively
-                    for demonstrative purposes. No actual transactions occur on this platform, and past performance is
-                    not indicative of future results.
-                </p>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
             </div>
+            
+            @endif
         </div>
     </footer>
 

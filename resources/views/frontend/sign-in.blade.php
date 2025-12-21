@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Sign In - AlgoOne</title>
+    <title data-admin="pageTitle">Sign In - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -48,10 +53,10 @@
             <div class="text-center mb-12">
                 <div class="inline-flex items-center justify-center gap-4 mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-500 rounded-3xl flex items-center justify-center shadow-2xl border-2 border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-14 h-14 object-contain" />
+                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-14 h-14 object-contain" />
                     </div>
                 </div>
-                <h2 class="text-5xl font-extrabold text-white mb-2" data-admin="brandName">AlgoOne</h2>
+                <h2 class="text-5xl font-extrabold text-white mb-2" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</h2>
                 <p class="text-blue-400/80 font-medium">Welcome back, trader</p>
             </div>
 
@@ -68,15 +73,30 @@
                 </div>
 
                 <!-- Sign In Form -->
-                <form class="space-y-6">
+                <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                    @csrf
+                    
+                    @if($errors->any())
+                        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-4">
+                            <ul class="text-red-300 text-sm">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                     <!-- Email Field -->
                     <div>
                         <label for="email" class="block text-blue-300/90 font-semibold mb-3 text-sm uppercase tracking-wide" data-admin="emailLabel">
                             <i class="fas fa-envelope mr-2 text-blue-400"></i>Email Address
                         </label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com"
-                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all"
-                            required data-admin="emailInput" />
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com"
+                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all @error('email') border-red-500/50 @enderror"
+                            required autocomplete="email" autofocus data-admin="emailInput" />
+                        @error('email')
+                            <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Password Field -->
@@ -85,17 +105,24 @@
                             <i class="fas fa-lock mr-2 text-blue-400"></i>Password
                         </label>
                         <input type="password" id="password" name="password" placeholder="Enter your password"
-                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all"
-                            required data-admin="passwordInput" />
+                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all @error('password') border-red-500/50 @enderror"
+                            required autocomplete="current-password" data-admin="passwordInput" />
+                        @error('password')
+                            <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Remember Me & Forgot Password -->
                     <div class="flex items-center justify-between">
+                        @if(($setting->remember_me_enabled ?? true))
                         <label class="flex items-center gap-2 text-blue-300/70 text-sm">
-                            <input type="checkbox" class="w-4 h-4 rounded border-blue-500/30 bg-black/50 text-blue-600 focus:ring-blue-500">
-                            <span>Remember me</span>
+                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-blue-500/30 bg-black/50 text-blue-600 focus:ring-blue-500" {{ old('remember') ? 'checked' : '' }}>
+                            <span data-admin="rememberMeText">{{ $setting->remember_me_text ?? 'Remember me' }}</span>
                         </label>
-                        <a href="#" class="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors">
+                        @else
+                        <div></div>
+                        @endif
+                        <a href="{{ route('password.request') }}" class="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors">
                             Forgot password?
                         </a>
                     </div>
@@ -134,7 +161,7 @@
     <footer class="bg-black/50 backdrop-blur-sm border-t border-blue-500/20 py-6 mt-12 relative z-10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs md:text-sm text-blue-300/60" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-xs md:text-sm text-blue-300/60" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6 text-sm text-blue-300/60">
                     <a href="{{ route('frontend.privacy') }}" class="hover:text-blue-400 transition">Privacy Policy</a>
                     <a href="{{ route('frontend.terms-conditions') }}" class="hover:text-blue-400 transition">Terms & Conditions</a>

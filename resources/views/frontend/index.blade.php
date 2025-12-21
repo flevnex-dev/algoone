@@ -166,10 +166,17 @@
                     <span
                         class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all"></span>
                 </a>
+                @auth
+                <a href="{{ route('frontend.progress') }}"
+                    class="text-white/90 hover:text-blue-400 text-sm font-semibold transition-all px-4 py-2 rounded-lg hover:bg-blue-600/20">
+                    Progress
+                </a>
+                @else
                 <a href="{{ route('frontend.sign-in') }}"
                     class="text-white/90 hover:text-blue-400 text-sm font-semibold transition-all px-4 py-2 rounded-lg hover:bg-blue-600/20">
                     Sign In
                 </a>
+                @endauth
                 <button
                     class="accent-gradient text-white px-6 py-2 rounded-lg text-sm font-bold hover:shadow-2xl hover:shadow-blue-500/50 transition-all shadow-xl hover:scale-105 border border-blue-400/30">
                     <span data-admin="cta-button">Get Started</span>

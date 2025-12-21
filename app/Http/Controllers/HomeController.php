@@ -18,11 +18,20 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
+     * Redirect based on user role
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return redirect()->route('admin.dashboard');
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'trader') {
+                return redirect()->route('frontend.progress');
+            }
+        }
+        return redirect()->route('frontend.index');
     }
 }

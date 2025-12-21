@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Progress - AlgoOne</title>
+    <title data-admin="pageTitle">Progress - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -93,15 +98,19 @@
 
 <body>
     <!-- Top Banner -->
+    @if(isset($topbar) && $topbar)
     <div class="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 text-white py-3 relative">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex items-center justify-center gap-2 text-sm font-medium">
-                <span data-admin="banner-text">LIMITED TIME: We're covering 30% of fees + BOGO offers! This is the
-                    perfect time to increase funding!</span>
+                <span data-admin="banner-text">{!! $topbar->content !!}</span>
+                @if($topbar->extra_content)
+                <span class="hidden md:inline" data-admin="banner-text-extra">{!! $topbar->extra_content !!}</span>
+                @endif
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Header -->
     <header class="header-blue shadow-xl sticky top-0 z-50">
@@ -110,9 +119,9 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
@@ -122,7 +131,7 @@
                 <a href="{{ route('frontend.payout') }}"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all"
                     data-admin="navPayouts">Payouts</a>
-                <a href="{{ route('frontend.referrals-public') }}"
+                <a href="{{ route('frontend.referrals') }}"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all"
                     data-admin="navReferrals">Referrals</a>
                 <a href="{{ route('frontend.masterclass') }}"
@@ -137,12 +146,15 @@
                     <i class="fas fa-bolt"></i>
                     <span>Join Signals</span>
                 </button>
-                <a href="{{ route('frontend.sign-in') }}"
-                    class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2"
-                    data-admin="navSignOut">
-                    <span>Sign Out</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit"
+                        class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2"
+                        data-admin="navSignOut">
+                        <span>Sign Out</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
             </div>
             <button class="md:hidden text-white">
                 <i class="fas fa-bars text-2xl"></i>
@@ -156,7 +168,7 @@
             <!-- Welcome Section -->
             <div class="mb-8">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2" data-admin="welcomeTitle">
-                    Welcome back, Jonathan Sven!
+                    Welcome back, {{ auth()->user()->name ?? 'Trader' }}!
                 </h1>
                 <p class="text-blue-200/70 text-lg" data-admin="welcomeSubtitle">
                     Track your progress and see community payouts.
@@ -164,6 +176,7 @@
             </div>
 
             <!-- Important Information Section -->
+            @if(isset($guideline) && $guideline)
             <section class="mb-12">
                 <div class="card-light-blue rounded-2xl p-8 shadow-xl">
                     <div class="flex items-center gap-3 mb-6">
@@ -173,108 +186,54 @@
                         </div>
                         <div>
                             <h2 class="text-2xl md:text-3xl font-bold text-white" data-admin="importantTitle">
-                                Important Information
+                                {{ $guideline->title ?? 'Important Information' }}
                             </h2>
-                            <p class="text-blue-200/70 text-sm" data-admin="importantSubtitle">Please read carefully</p>
+                            @if($guideline->subtitle)
+                            <p class="text-blue-200/70 text-sm" data-admin="importantSubtitle">{{ $guideline->subtitle }}</p>
+                            @endif
                         </div>
                     </div>
 
+                    @if($guideline->warning_text)
                     <!-- Warning Box -->
                     <div class="bg-blue-600/20 border border-blue-500/40 rounded-xl p-6 mb-8">
                         <div class="flex items-start gap-4">
                             <i class="fas fa-exclamation-triangle text-yellow-400 text-2xl mt-1"></i>
                             <p class="text-white font-bold text-lg" data-admin="warningText">
-                                YOU NEVER DO A SINGLE THING - WE DO ALL THE TRADING FOR YOU.
+                                {!! $guideline->warning_text !!}
                             </p>
                         </div>
                     </div>
+                    @endif
 
                     <!-- Guidelines List -->
                     <ol class="space-y-4 text-white/90">
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                1
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline1Title">Do NOT log into the MT5
-                                    account:</p>
-                                <p class="text-blue-200/80" data-admin="guideline1Text">We may face IP issues. You can
-                                    log into the prop firm dashboard, but never the MT5 platform.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                2
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline2Title">Be patient with realistic
-                                    gains:</p>
-                                <p class="text-blue-200/80" data-admin="guideline2Text">We make realistic gains, not
-                                    unrealistic ones. We will take our time. Please do not stress us out.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                3
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline3Title">Phase 1 → Phase 2 transition:
-                                </p>
-                                <p class="text-blue-200/80" data-admin="guideline3Text">After passing Phase 1, we go to
-                                    Phase 2 which requires 5% to pass.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                4
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline4Title">Complete KYC verification:
-                                </p>
-                                <p class="text-blue-200/80" data-admin="guideline4Text">Try to complete KYC with the
-                                    prop firm at this point (after Phase 1).</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                5
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline5Title">Live Phase requirement:</p>
-                                <p class="text-blue-200/80" data-admin="guideline5Text">Once Phase 2 is passed, 35
-                                    trading days are needed on the Live Phase.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                6
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline6Title">Request your payout:</p>
-                                <p class="text-blue-200/80" data-admin="guideline6Text">After 35 trading days on Live
-                                    Phase are complete, you can request a payout from the prop firm.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <span
-                                class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                7
-                            </span>
-                            <div>
-                                <p class="font-semibold mb-1" data-admin="guideline7Title">Send us our share:</p>
-                                <p class="text-blue-200/80" data-admin="guideline7Text">Once you get the payout, send us
-                                    30% through whichever method is best for you.</p>
-                            </div>
-                        </li>
+                        @for($i = 1; $i <= 7; $i++)
+                            @php
+                                $title = $guideline->{"guideline{$i}_title"};
+                                $text = $guideline->{"guideline{$i}_text"};
+                            @endphp
+                            @if($title || $text)
+                            <li class="flex items-start gap-4">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
+                                    {{ $i }}
+                                </span>
+                                <div>
+                                    @if($title)
+                                    <p class="font-semibold mb-1" data-admin="guideline{{ $i }}Title">{!! $title !!}</p>
+                                    @endif
+                                    @if($text)
+                                    <p class="text-blue-200/80" data-admin="guideline{{ $i }}Text">{!! $text !!}</p>
+                                    @endif
+                                </div>
+                            </li>
+                            @endif
+                        @endfor
                     </ol>
                 </div>
             </section>
+            @endif
 
             <!-- Your Progress Section -->
             <section class="mb-12">
@@ -290,7 +249,7 @@
                     <div class="mb-8">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-gray-700 font-semibold" data-admin="progressLabel">Progress</span>
-                            <span class="text-blue-600 font-bold text-lg" data-admin="progressPercentage">19%</span>
+                            <span class="text-blue-600 font-bold text-lg" data-admin="progressPercentage">{{ $userProgress->progress_percentage ?? 33 }}%</span>
                         </div>
                         <div class="relative" style="height: 24px;">
                             <!-- The blue progress bar, ending under the thumb (ball) -->
@@ -298,16 +257,16 @@
                             <div id="progressFillBar"
                                 class="absolute left-0 top-1/2 -translate-y-1/2 h-3 rounded-full"
                                 style="background: linear-gradient(90deg, #3577F5 0%, #0B64F4 100%);
-                                        width: 19%; min-width: 0; max-width: 100%;">
+                                        width: {{ $userProgress->progress_percentage ?? 33 }}%; min-width: 0; max-width: 100%;">
                             </div>
                             <!-- Custom thumb (ball) -->
                             <div id="progressThumb"
                                 class="absolute top-1/2 -translate-y-1/2"
-                                style="left: calc(19% - 12px); z-index:20;">
+                                style="left: calc({{ $userProgress->progress_percentage ?? 33 }}% - 12px); z-index:20;">
                                 <div style="width: 24px; height: 24px; background: #fff; border: 3px solid #3577F5; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 2px 8px 0 rgba(53,119,245,0.13);"></div>
                             </div>
                             <!-- Actual range slider (for accessibility/interaction) -->
-                            <input type="range" min="0" max="100" value="19"
+                            <input type="range" min="0" max="100" value="{{ $userProgress->progress_percentage ?? 33 }}"
                                 class="absolute top-0 left-0 w-full h-6 opacity-0 cursor-pointer z-30"
                                 id="progressSlider"
                                 style="appearance:none; background: transparent;">
@@ -315,38 +274,42 @@
                         <p class="text-gray-500 text-xs mt-2" data-admin="sliderInstruction">
                             Drag the slider to explore different progress levels.
                         </p>
-                        <script>
-                            const slider = document.getElementById('progressSlider');
-                            const fillBar = document.getElementById('progressFillBar');
-                            const thumb = document.getElementById('progressThumb');
-                            const percent = document.querySelector('[data-admin="progressPercentage"]');
-                            slider.addEventListener('input', function () {
-                                const value = parseInt(this.value, 10);
-                                fillBar.style.width = value + '%';
-                                thumb.style.left = `calc(${value}% - 12px)`;
-                                percent.textContent = value + '%';
-                            });
-                        </script>
                     </div>
 
                     <!-- Phase Steps -->
                     <div class="space-y-6">
+                        @php
+                            // Ensure minimum 33% progress (Step 1 completed by default)
+                            $progress = max($userProgress->progress_percentage ?? 33, 33);
+                            $step1Completed = $progress >= 33; // Step 1 completes at 33% (default completed)
+                            $step2Completed = $progress >= 66; // Step 2 completes at 66%
+                            $step3Completed = $progress >= 100; // Step 3 completes at 100%
+                            $step3InProgress = $progress >= 66 && $progress < 100; // Step 3 in progress between 66-100%
+                        @endphp
+                        
                         <!-- Step 1: Pass Phase 1 -->
                         <div
-                            class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-400 transition-all">
+                            class="bg-white border-2 {{ $step1Completed ? 'border-green-300' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
                             <div class="flex items-start gap-4">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-check text-white text-xl"></i>
+                                    class="flex-shrink-0 w-12 h-12 {{ $step1Completed ? 'bg-green-500' : 'bg-gray-300 border-2 border-gray-400' }} rounded-full flex items-center justify-center">
+                                    @if($step1Completed)
+                                        <i class="fas fa-check text-white text-xl"></i>
+                                    @else
+                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                    @endif
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex items-center gap-3 mb-2">
                                         <h3 class="text-xl font-bold text-gray-900" data-admin="step1Title">Step 1: Pass
                                             Phase 1</h3>
-                                        <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full"
-                                            data-admin="step1Completed">Completed</span>
-                                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full"
-                                            data-admin="step1InProgress">In Progress</span>
+                                        @if($step1Completed)
+                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step1-completed"
+                                                data-admin="step1Completed">Completed</span>
+                                        @elseif($progress > 0 && $progress < 33)
+                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step1-in-progress"
+                                                data-admin="step1InProgress">In Progress</span>
+                                        @endif
                                     </div>
                                     <p class="text-gray-600 text-sm" data-admin="step1Subtitle">Achieve 10% profit
                                         target.</p>
@@ -356,15 +319,28 @@
 
                         <!-- Step 2: Pass Phase 2 -->
                         <div
-                            class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-400 transition-all">
+                            class="bg-white border-2 {{ $step2Completed ? 'border-green-300' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
                             <div class="flex items-start gap-4">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400">
-                                    <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                    class="flex-shrink-0 w-12 h-12 {{ $step2Completed ? 'bg-green-500' : 'bg-gray-300 border-2 border-gray-400' }} rounded-full flex items-center justify-center">
+                                    @if($step2Completed)
+                                        <i class="fas fa-check text-white text-xl"></i>
+                                    @else
+                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                    @endif
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2" data-admin="step2Title">Step 2:
-                                        Pass Phase 2</h3>
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <h3 class="text-xl font-bold text-gray-900" data-admin="step2Title">Step 2:
+                                            Pass Phase 2</h3>
+                                        @if($step2Completed)
+                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step2-completed"
+                                                data-admin="step2Completed">Completed</span>
+                                        @elseif($progress >= 33 && $progress < 66)
+                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step2-in-progress"
+                                                data-admin="step2InProgress">In Progress</span>
+                                        @endif
+                                    </div>
                                     <p class="text-gray-600 text-sm" data-admin="step2Subtitle">Achieve 5% profit
                                         target.</p>
                                 </div>
@@ -373,15 +349,31 @@
 
                         <!-- Step 3: Live Phase -->
                         <div
-                            class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-400 transition-all">
+                            class="bg-white border-2 {{ $step3Completed || $step3InProgress ? 'border-blue-400' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
                             <div class="flex items-start gap-4">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400">
-                                    <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                    class="flex-shrink-0 w-12 h-12 {{ $step3Completed ? 'bg-green-500' : ($step3InProgress ? 'bg-blue-500' : 'bg-gray-300 border-2 border-gray-400') }} rounded-full flex items-center justify-center">
+                                    @if($step3Completed)
+                                        <i class="fas fa-check text-white text-xl"></i>
+                                    @elseif($step3InProgress)
+                                        <i class="fas fa-spinner fa-spin text-white text-xl"></i>
+                                    @else
+                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                    @endif
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2" data-admin="step3Title">Step 3:
-                                        Live Phase</h3>
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <h3 class="text-xl font-bold text-gray-900" data-admin="step3Title">Step 3:
+                                            Live Phase</h3>
+                                        @if($step3Completed)
+                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step3-completed"
+                                                data-admin="step3Completed">Completed</span>
+                                        @endif
+                                        @if($step3InProgress || $step3Completed)
+                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step3-in-progress"
+                                                data-admin="step3InProgress">In Progress</span>
+                                        @endif
+                                    </div>
                                     <p class="text-gray-600 text-sm mb-2" data-admin="step3Subtitle">First payout
                                         requires 35 trading days</p>
                                     <p class="text-gray-500 text-xs" data-admin="step3Requirement">Complete 35 trading
@@ -399,7 +391,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -407,32 +399,163 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-red-500">LEGAL DISCLAIMER</strong> — All quantitative performance
-                    indicators, statistical analyses, financial metrics, trading results, and associated data are
-                    <strong>NON-FACTUAL</strong> and constitute hypothetical simulations exclusively for demonstrative,
-                    illustrative, and presentational purposes. No bona fide securities transactions, investment
-                    activities,
-                    or monetary exchanges are executed through the platform.
-                </p>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
             </div>
+            @endif
         </div>
     </footer>
 
     <script src="{{ asset('assets/js/admin-config.js') }}"></script>
     <script>
-        // Progress slider functionality
+        // Progress slider functionality with dynamic step updates
         const progressSlider = document.getElementById('progressSlider');
-        const progressBarFill = document.querySelector('.progress-bar-fill');
+        const progressFillBar = document.getElementById('progressFillBar');
+        const progressThumb = document.getElementById('progressThumb');
         const progressPercentage = document.querySelector('[data-admin="progressPercentage"]');
 
-        if (progressSlider && progressBarFill && progressPercentage) {
+        function updateStepStatus(progress) {
+            const progressValue = parseInt(progress, 10);
+            
+            // Step 1: Pass Phase 1 (completes at 33%)
+            const step1Icon = document.querySelector('.step1-icon') || document.querySelector('[data-admin="step1Title"]')?.closest('.rounded-xl')?.querySelector('.rounded-full');
+            const step1Card = document.querySelector('[data-admin="step1Title"]')?.closest('.rounded-xl');
+            const step1Completed = step1Card?.querySelector('.step1-completed');
+            const step1InProgress = step1Card?.querySelector('.step1-in-progress');
+            const step1IconDiv = step1Card?.querySelector('.rounded-full');
+            
+            // Step 1: Always completed by default (33%+)
+            if (progressValue >= 33) {
+                // Step 1 Completed
+                if (step1IconDiv) {
+                    step1IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
+                    step1IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
+                }
+                if (step1Card) {
+                    step1Card.classList.remove('border-gray-200');
+                    step1Card.classList.add('border-green-300');
+                }
+                if (step1Completed) step1Completed.style.display = 'inline-block';
+                if (step1InProgress) step1InProgress.style.display = 'none';
+            } else {
+                // Step 1 should not be below 33% (default completed), but handle edge case
+                if (step1IconDiv) {
+                    step1IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
+                    step1IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
+                }
+                if (step1Card) {
+                    step1Card.classList.remove('border-gray-200');
+                    step1Card.classList.add('border-green-300');
+                }
+                if (step1Completed) step1Completed.style.display = 'inline-block';
+                if (step1InProgress) step1InProgress.style.display = 'none';
+            }
+            
+            // Step 2: Pass Phase 2 (completes at 66%)
+            const step2Card = document.querySelector('[data-admin="step2Title"]')?.closest('.rounded-xl');
+            const step2Completed = step2Card?.querySelector('.step2-completed');
+            const step2InProgress = step2Card?.querySelector('.step2-in-progress');
+            const step2IconDiv = step2Card?.querySelector('.rounded-full');
+            
+            if (progressValue >= 66) {
+                // Step 2 Completed
+                if (step2IconDiv) {
+                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
+                    step2IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
+                }
+                if (step2Card) {
+                    step2Card.classList.remove('border-gray-200');
+                    step2Card.classList.add('border-green-300');
+                }
+                if (step2Completed) step2Completed.style.display = 'inline-block';
+                if (step2InProgress) step2InProgress.style.display = 'none';
+            } else if (progressValue >= 33) {
+                // Step 2 In Progress
+                if (step2IconDiv) {
+                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
+                    step2IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
+                }
+                if (step2Card) {
+                    step2Card.classList.remove('border-green-300');
+                    step2Card.classList.add('border-gray-200');
+                }
+                if (step2Completed) step2Completed.style.display = 'none';
+                if (step2InProgress) step2InProgress.style.display = 'inline-block';
+            } else {
+                // Step 2 Not Started (shouldn't happen as Step 1 is default completed at 33%)
+                if (step2IconDiv) {
+                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
+                    step2IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
+                }
+                if (step2Card) {
+                    step2Card.classList.remove('border-green-300');
+                    step2Card.classList.add('border-gray-200');
+                }
+                if (step2Completed) step2Completed.style.display = 'none';
+                if (step2InProgress) step2InProgress.style.display = 'none';
+            }
+            
+            // Step 3: Live Phase (completes at 100%)
+            const step3Card = document.querySelector('[data-admin="step3Title"]')?.closest('.rounded-xl');
+            const step3Completed = step3Card?.querySelector('.step3-completed');
+            const step3InProgress = step3Card?.querySelector('.step3-in-progress');
+            const step3IconDiv = step3Card?.querySelector('.rounded-full');
+            
+            if (progressValue >= 100) {
+                // Step 3 Completed
+                if (step3IconDiv) {
+                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
+                    step3IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
+                }
+                if (step3Card) {
+                    step3Card.classList.remove('border-gray-200', 'border-blue-400');
+                    step3Card.classList.add('border-blue-400');
+                }
+                if (step3Completed) step3Completed.style.display = 'inline-block';
+                if (step3InProgress) step3InProgress.style.display = 'inline-block';
+            } else if (progressValue >= 66) {
+                // Step 3 In Progress
+                if (step3IconDiv) {
+                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center';
+                    step3IconDiv.innerHTML = '<i class="fas fa-spinner fa-spin text-white text-xl"></i>';
+                }
+                if (step3Card) {
+                    step3Card.classList.remove('border-gray-200');
+                    step3Card.classList.add('border-blue-400');
+                }
+                if (step3Completed) step3Completed.style.display = 'none';
+                if (step3InProgress) step3InProgress.style.display = 'inline-block';
+            } else {
+                // Step 3 Not Started
+                if (step3IconDiv) {
+                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
+                    step3IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
+                }
+                if (step3Card) {
+                    step3Card.classList.remove('border-blue-400');
+                    step3Card.classList.add('border-gray-200');
+                }
+                if (step3Completed) step3Completed.style.display = 'none';
+                if (step3InProgress) step3InProgress.style.display = 'none';
+            }
+        }
+
+        if (progressSlider && progressFillBar && progressThumb && progressPercentage) {
+            // Initialize step status on page load
+            updateStepStatus(progressSlider.value);
+            
             progressSlider.addEventListener('input', function () {
-                const value = this.value;
-                progressBarFill.style.width = value + '%';
+                const value = parseInt(this.value, 10);
+                progressFillBar.style.width = value + '%';
+                progressThumb.style.left = `calc(${value}% - 12px)`;
                 progressPercentage.textContent = value + '%';
+                
+                // Update step statuses dynamically
+                updateStepStatus(value);
             });
         }
     </script>

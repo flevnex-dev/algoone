@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Sign Up - AlgoOne</title>
+    <title data-admin="pageTitle">Sign Up - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -47,10 +52,10 @@
             <!-- Logo and Company Name - Side by Side Layout -->
             <div class="flex items-center justify-center gap-4 mb-12">
                 <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl border-2 border-blue-500/30">
-                    <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-12 h-12 object-contain" />
+                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-12 h-12 object-contain" />
                 </div>
                 <div>
-                    <span class="text-4xl font-extrabold text-white block" data-admin="brandName">AlgoOne</span>
+                    <span class="text-4xl font-extrabold text-white block" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                     <span class="text-sm text-blue-400/80 font-medium">Professional Trading</span>
                 </div>
             </div>
@@ -68,15 +73,30 @@
                 </div>
 
                 <!-- Sign Up Form -->
-                <form class="space-y-6">
+                <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                    @csrf
+                    
+                    @if($errors->any())
+                        <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-4">
+                            <ul class="text-red-300 text-sm">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                     <!-- Full Name Field -->
                     <div>
                         <label for="name" class="block text-blue-300/90 font-semibold mb-3 text-sm uppercase tracking-wide" data-admin="nameLabel">
                             <i class="fas fa-user mr-2 text-blue-400"></i>Full Name
                         </label>
-                        <input type="text" id="name" name="name" placeholder="Enter your full name"
-                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all"
-                            data-admin="nameInput" />
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter your full name"
+                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all @error('name') border-red-500/50 @enderror"
+                            required autocomplete="name" autofocus data-admin="nameInput" />
+                        @error('name')
+                            <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Email Field -->
@@ -84,9 +104,12 @@
                         <label for="email" class="block text-blue-300/90 font-semibold mb-3 text-sm uppercase tracking-wide" data-admin="emailLabel">
                             <i class="fas fa-envelope mr-2 text-blue-400"></i>Email Address
                         </label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com"
-                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all"
-                            required data-admin="emailInput" />
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com"
+                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all @error('email') border-red-500/50 @enderror"
+                            required autocomplete="email" data-admin="emailInput" />
+                        @error('email')
+                            <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Password Field -->
@@ -94,9 +117,12 @@
                         <label for="password" class="block text-blue-300/90 font-semibold mb-3 text-sm uppercase tracking-wide" data-admin="passwordLabel">
                             <i class="fas fa-lock mr-2 text-blue-400"></i>Password
                         </label>
-                        <input type="password" id="password" name="password" placeholder="Create a strong password"
-                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all"
-                            required data-admin="passwordInput" />
+                        <input type="password" id="password" name="password" placeholder="Create a strong password (min 6 characters)"
+                            class="input-field w-full px-5 py-4 rounded-xl text-white placeholder-blue-400/40 focus:outline-none transition-all @error('password') border-red-500/50 @enderror"
+                            required autocomplete="new-password" data-admin="passwordInput" />
+                        @error('password')
+                            <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Sign Up Button -->
@@ -133,7 +159,7 @@
     <footer class="bg-black/50 backdrop-blur-sm border-t border-blue-500/20 py-6 mt-12 relative z-10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs md:text-sm text-blue-300/60" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-xs md:text-sm text-blue-300/60" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6 text-sm text-blue-300/60">
                     <a href="{{ route('frontend.privacy') }}" class="hover:text-blue-400 transition">Privacy Policy</a>
                     <a href="{{ route('frontend.terms-conditions') }}" class="hover:text-blue-400 transition">Terms & Conditions</a>

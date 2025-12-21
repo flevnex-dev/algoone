@@ -29,6 +29,14 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    
+    /**
+     * Determine where to redirect users after registration
+     */
+    protected function redirectTo()
+    {
+        return '/home';
+    }
 
     /**
      * Create a new controller instance.
@@ -51,7 +59,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => ['required', 'string', 'min:6'],
         ]);
     }
 
@@ -63,10 +71,44 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'trader', // Default role for frontend registrations
+            'status' => 'active',
         ]);
+        
+        // Track referral conversion if user came from referral link
+        if (session()->has('referrer_id')) {
+            $referrerId = session()->get('referrer_id');
+            $referralStat = \App\Models\ReferralStat::where('user_id', $referrerId)->first();
+            
+            if ($referralStat) {
+                // Increment conversions and referral count
+                $referralStat->increment('conversions');
+                $referralStat->increment('referral_count');
+                
+                // Calculate conversion rate
+                if ($referralStat->unique_visitors > 0) {
+                    $referralStat->conversion_rate = ($referralStat->conversions / $referralStat->unique_visitors) * 100;
+                    $referralStat->save();
+                }
+            }
+            
+            // Clear referrer from session
+            session()->forget('referrer_id');
+        }
+        
+        // Send welcome email
+        try {
+            $emailService = new \App\Services\EmailService();
+            $emailService->sendWelcomeEmail($user);
+        } catch (\Exception $e) {
+            // Log error but don't fail registration
+            \Log::error('Failed to send welcome email: ' . $e->getMessage());
+        }
+        
+        return $user;
     }
 }

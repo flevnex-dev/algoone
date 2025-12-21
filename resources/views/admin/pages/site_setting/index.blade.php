@@ -68,6 +68,78 @@
                             <textarea name="legal_disclaimer" class="form-control summernote" rows="5">{{ $setting->legal_disclaimer }}</textarea>
                         </div>
 
+                        <hr class="my-4">
+                        <h5 class="mb-3">Email Settings</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email From Address <span class="text-danger">*</span></label>
+                                <input type="email" name="email_from_address" class="form-control" value="{{ $setting->email_from_address ?? 'noreply@quantumfundedcapital.com' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Emails From Name</label>
+                                <input type="text" name="email_from_name" class="form-control" value="{{ $setting->email_from_name ?? 'QuantumFunding' }}">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        <h5 class="mb-3">SMTP Email Settings</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SMTP Host</label>
+                                <input type="text" name="smtp_host" class="form-control" value="{{ $setting->smtp_host ?? 'smtp.mail.ovh.net' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SMTP User <span class="text-danger">*</span></label>
+                                <input type="text" name="smtp_user" class="form-control" value="{{ $setting->smtp_user ?? 'noreply@quantumfundedcapital.com' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SMTP Password</label>
+                                <div class="input-group">
+                                    <input type="password" name="smtp_password" id="smtp_password" class="form-control" value="" placeholder="Leave blank to keep current password">
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+                                <small class="text-muted">Leave blank if you don't want to change the password</small>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">SMTP Port</label>
+                                <input type="number" name="smtp_port" class="form-control" value="{{ $setting->smtp_port ?? '587' }}" min="1" max="65535">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">SMTP Security</label>
+                                <select name="smtp_security" class="form-control">
+                                    <option value="SSL" {{ ($setting->smtp_security ?? 'SSL') == 'SSL' ? 'selected' : '' }}>SSL</option>
+                                    <option value="TLS" {{ ($setting->smtp_security ?? 'SSL') == 'TLS' ? 'selected' : '' }}>TLS</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        <h5 class="mb-3">Remember Me Settings</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember_me_enabled" value="1" id="rememberMeEnabled" {{ ($setting->remember_me_enabled ?? true) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="rememberMeEnabled">
+                                        Enable Remember Me Feature
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Remember Me Text</label>
+                                <input type="text" name="remember_me_text" class="form-control" value="{{ $setting->remember_me_text ?? 'Remember me' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Remember Duration (Days)</label>
+                                <input type="number" name="remember_me_duration_days" class="form-control" value="{{ $setting->remember_me_duration_days ?? 30 }}" min="1" max="365">
+                                <small class="text-muted">How many days to keep user logged in (1-365 days)</small>
+                            </div>
+                        </div>
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
@@ -95,6 +167,20 @@
                 ['insert', ['link']],
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
+        });
+
+        // Toggle password visibility
+        $('#togglePassword').on('click', function() {
+            const passwordField = $('#smtp_password');
+            const toggleIcon = $('#toggleIcon');
+            
+            if (passwordField.attr('type') === 'password') {
+                passwordField.attr('type', 'text');
+                toggleIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                toggleIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
         });
     });
 </script>

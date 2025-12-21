@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Masterclass Trading Course - AlgoOne</title>
+    <title data-admin="pageTitle">{{ ($masterclass->course_title ?? 'Masterclass Trading Course') }} - {{ $setting->site_title ?? 'AlgoOne' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -88,9 +88,9 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
@@ -149,212 +149,99 @@
                     </div>
                     <div>
                         <h1 class="text-4xl md:text-5xl font-extrabold text-white" data-admin="courseTitle">
-                            Masterclass Trading Course
+                            {{ $masterclass->course_title ?? 'Masterclass Trading Course' }}
                         </h1>
+                        @if($masterclass->course_subtitle ?? null)
                         <p class="text-blue-200/80 text-lg mt-2" data-admin="courseSubtitle">
-                            People would pay thousands for this. At AlgoOne we are changing the game.
+                            {{ $masterclass->course_subtitle }}
                         </p>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Course Modules Grid, All Videos Use The Same YouTube URL and Only Logo Overlay -->
+            <!-- Course Modules Grid -->
+            @if(isset($masterclass) && $masterclass && !empty($masterclass->modules))
             <section class="mb-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Module 1-10 (All same video) -->
+                    @foreach($masterclass->modules as $index => $module)
                     <div class="module-card rounded-xl p-4">
                         <div class="video-iframe-wrapper">
                             <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
+                                <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" />
                             </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 1 Video" frameborder="0"
+                            <iframe src="{{ $module['video_url'] ?? 'https://www.youtube.com/embed/nR32hc8qcpA' }}"
+                                title="Module {{ $index + 1 }} Video" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 1</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
+                        <div class="text-white font-bold text-sm mb-2 {{ ($module['status'] ?? 'pending') == 'completed' ? 'bg-green-500 inline-block px-2 py-1 rounded' : '' }}">
+                            {{ $module['title'] ?? 'Module ' . ($index + 1) }}
+                            @if(($module['status'] ?? 'pending') == 'completed')
+                            <span class="ml-2">DONE</span>
+                            @endif
+                        </div>
+                        @php
+                            // Convert embed URL to watch URL for YouTube link
+                            $watchUrl = str_replace('/embed/', '/watch?v=', $module['video_url'] ?? 'https://www.youtube.com/embed/nR32hc8qcpA');
+                        @endphp
+                        <a href="{{ $watchUrl }}" target="_blank" rel="noopener"
                             class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module1Button">
+                            data-admin="module{{ $index + 1 }}Button">
                             <i class="fab fa-youtube"></i>
                             <span>Watch on YouTube</span>
                         </a>
                     </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 2 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 2</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module2Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 3 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2 bg-green-500 inline-block px-2 py-1 rounded">Module 3 DONE</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module3Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 4 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Step-2</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module4Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 5 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 5</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module5Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 6 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 6</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module6Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 7 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 7</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module7Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 8 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 8</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module8Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 9 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2">Module 9</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module9Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
-                    <div class="module-card rounded-xl p-4">
-                        <div class="video-iframe-wrapper">
-                            <div class="logo-overlay">
-                                <img src="{{ asset('assets/image/logo.png') }}" alt="AlgoOne Logo" />
-                            </div>
-                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
-                                title="Module 10 Video" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="text-white font-bold text-sm mb-2 uppercase">Module 10</div>
-                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
-                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-                            data-admin="module10Button">
-                            <i class="fab fa-youtube"></i>
-                            <span>Watch on YouTube</span>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </section>
+            @else
+            <!-- Fallback: Default modules if no data -->
+            <section class="mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @for($i = 1; $i <= 10; $i++)
+                    <div class="module-card rounded-xl p-4">
+                        <div class="video-iframe-wrapper">
+                            <div class="logo-overlay">
+                                <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" />
+                            </div>
+                            <iframe src="https://www.youtube.com/embed/nR32hc8qcpA"
+                                title="Module {{ $i }} Video" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="text-white font-bold text-sm mb-2">Module {{ $i }}</div>
+                        <a href="https://www.youtube.com/watch?v=nR32hc8qcpA" target="_blank" rel="noopener"
+                            class="w-full inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all">
+                            <i class="fab fa-youtube"></i>
+                            <span>Watch on YouTube</span>
+                        </a>
+                    </div>
+                    @endfor
+                </div>
+            </section>
+            @endif
 
             <!-- Call to Action -->
+            @if(isset($masterclass) && $masterclass && $masterclass->cta_button_text)
             <section class="mb-12">
                 <div class="text-center">
+                    @if($masterclass->cta_button_link)
+                    <a href="{{ $masterclass->cta_button_link }}"
+                        class="inline-block bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg"
+                        data-admin="ctaButton">
+                        {{ $masterclass->cta_button_text }}
+                    </a>
+                    @else
                     <button
                         class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg"
                         data-admin="ctaButton">
-                        Invest in More Funding to Manage
+                        {{ $masterclass->cta_button_text }}
                     </button>
+                    @endif
                 </div>
             </section>
+            @endif
         </div>
     </main>
 
@@ -362,7 +249,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -370,15 +257,14 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-red-500">LEGAL DISCLAIMER</strong> — All performance indicators, analyses, and
-                    data visualizations are <strong>NON-FACTUAL</strong> and constitute hypothetical simulations for
-                    demonstrative purposes, not actual transactions. No bona fide securities transactions occur through
-                    the platform. Prospective clients are invited for custom implementation services.
-                </p>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
             </div>
+            @endif
         </div>
     </footer>
 

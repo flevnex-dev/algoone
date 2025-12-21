@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Buy Funding - AlgoOne</title>
+    <title data-admin="pageTitle">Buy Funding - {{ $setting->site_title ?? 'AlgoOne' }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -73,9 +73,9 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
@@ -103,7 +103,7 @@
                     <i class="fas fa-users"></i>
                     <span>Referrals</span>
                 </a>
-                <a href="#"
+                <a href="{{ route('frontend.masterclass') }}"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2"
                     data-admin="navMasterclass">
                     <i class="fas fa-graduation-cap"></i>
@@ -128,11 +128,13 @@
             <!-- Title Section -->
             <div class="text-center mb-12">
                 <h1 class="text-5xl md:text-6xl font-extrabold text-blue-400 mb-4" data-admin="mainTitle">
-                    More Funding = More Profits
+                    {{ $buyFunding->main_title ?? 'More Funding = More Profits' }}
                 </h1>
+                @if($buyFunding->main_subtitle ?? null)
                 <p class="text-blue-200/80 text-xl max-w-3xl mx-auto" data-admin="mainSubtitle">
-                    Scale your trading and multiply your earnings with increased account sizes
+                    {{ $buyFunding->main_subtitle }}
                 </p>
+                @endif
             </div>
 
             <!-- Comparison Cards Section -->
@@ -142,14 +144,18 @@
                     <div class="comparison-card rounded-xl p-6">
                         <div class="account-section rounded-lg p-6 mb-4 relative">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-white" data-admin="smallAccountTitle">$5,000 Account
+                                <h3 class="text-2xl font-bold text-white" data-admin="smallAccountTitle">
+                                    {{ $buyFunding->comparison1_small_account_title ?? '$5,000 Account' }}
                                 </h3>
                                 <i class="fas fa-chart-line text-blue-400 text-xl"></i>
                             </div>
                             <div class="mt-4">
-                                <p class="text-blue-200/70 text-sm mb-1" data-admin="smallAccountLabel">Profit per 5%
-                                    gain</p>
-                                <p class="text-4xl font-bold text-blue-400" data-admin="smallAccountProfit">$250</p>
+                                <p class="text-blue-200/70 text-sm mb-1" data-admin="smallAccountLabel">
+                                    {{ $buyFunding->comparison1_small_account_label ?? 'Profit per 5% gain' }}
+                                </p>
+                                <p class="text-4xl font-bold text-blue-400" data-admin="smallAccountProfit">
+                                    {{ $buyFunding->comparison1_small_account_profit ?? '$250' }}
+                                </p>
                             </div>
                         </div>
 
@@ -159,36 +165,46 @@
 
                         <div class="account-section rounded-lg p-6 relative">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-white" data-admin="mediumAccountTitle">$100,000
-                                    Account</h3>
+                                <h3 class="text-2xl font-bold text-white" data-admin="mediumAccountTitle">
+                                    {{ $buyFunding->comparison1_medium_account_title ?? '$100,000 Account' }}
+                                </h3>
                                 <i class="fas fa-chart-line text-blue-400 text-xl"></i>
                             </div>
                             <div class="mt-4">
-                                <p class="text-blue-200/70 text-sm mb-1" data-admin="mediumAccountLabel">Profit per 5%
-                                    gain</p>
-                                <p class="text-4xl font-bold text-blue-400" data-admin="mediumAccountProfit">$5,000</p>
+                                <p class="text-blue-200/70 text-sm mb-1" data-admin="mediumAccountLabel">
+                                    {{ $buyFunding->comparison1_medium_account_label ?? 'Profit per 5% gain' }}
+                                </p>
+                                <p class="text-4xl font-bold text-blue-400" data-admin="mediumAccountProfit">
+                                    {{ $buyFunding->comparison1_medium_account_profit ?? '$5,000' }}
+                                </p>
                             </div>
                         </div>
 
+                        @if($buyFunding->comparison1_button_text ?? null)
                         <button
                             class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg"
                             data-admin="smallMediumButton">
-                            20x More Profit!
+                            {{ $buyFunding->comparison1_button_text }}
                         </button>
+                        @endif
                     </div>
 
                     <!-- Medium vs Large Account -->
                     <div class="comparison-card rounded-xl p-6">
                         <div class="account-section rounded-lg p-6 mb-4 relative">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-white" data-admin="mediumAccountTitle2">$100,000
-                                    Account</h3>
+                                <h3 class="text-2xl font-bold text-white" data-admin="mediumAccountTitle2">
+                                    {{ $buyFunding->comparison2_medium_account_title ?? '$100,000 Account' }}
+                                </h3>
                                 <i class="fas fa-chart-line text-blue-400 text-xl"></i>
                             </div>
                             <div class="mt-4">
-                                <p class="text-blue-200/70 text-sm mb-1" data-admin="mediumAccountLabel2">Profit per 5%
-                                    gain</p>
-                                <p class="text-4xl font-bold text-blue-400" data-admin="mediumAccountProfit2">$5,000</p>
+                                <p class="text-blue-200/70 text-sm mb-1" data-admin="mediumAccountLabel2">
+                                    {{ $buyFunding->comparison2_medium_account_label ?? 'Profit per 5% gain' }}
+                                </p>
+                                <p class="text-4xl font-bold text-blue-400" data-admin="mediumAccountProfit2">
+                                    {{ $buyFunding->comparison2_medium_account_profit ?? '$5,000' }}
+                                </p>
                             </div>
                         </div>
 
@@ -198,22 +214,28 @@
 
                         <div class="account-section rounded-lg p-6 relative">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-2xl font-bold text-white" data-admin="largeAccountTitle">$400,000
-                                    Account</h3>
+                                <h3 class="text-2xl font-bold text-white" data-admin="largeAccountTitle">
+                                    {{ $buyFunding->comparison2_large_account_title ?? '$400,000 Account' }}
+                                </h3>
                                 <i class="fas fa-chart-line text-blue-400 text-xl"></i>
                             </div>
                             <div class="mt-4">
-                                <p class="text-blue-200/70 text-sm mb-1" data-admin="largeAccountLabel">Profit per 5%
-                                    gain</p>
-                                <p class="text-4xl font-bold text-blue-400" data-admin="largeAccountProfit">$20,000</p>
+                                <p class="text-blue-200/70 text-sm mb-1" data-admin="largeAccountLabel">
+                                    {{ $buyFunding->comparison2_large_account_label ?? 'Profit per 5% gain' }}
+                                </p>
+                                <p class="text-4xl font-bold text-blue-400" data-admin="largeAccountProfit">
+                                    {{ $buyFunding->comparison2_large_account_profit ?? '$20,000' }}
+                                </p>
                             </div>
                         </div>
 
+                        @if($buyFunding->comparison2_button_text ?? null)
                         <button
                             class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg"
                             data-admin="mediumLargeButton">
-                            4x More Profit!
+                            {{ $buyFunding->comparison2_button_text }}
                         </button>
+                        @endif
                     </div>
                 </div>
             </section>
@@ -222,17 +244,21 @@
             <section class="mb-12">
                 <div class="card-blue rounded-xl p-8">
                     <h2 class="text-3xl font-bold text-white mb-2 text-center" data-admin="chartTitle">
-                        Account Size vs Profit Potential
+                        {{ $buyFunding->chart_title ?? 'Account Size vs Profit Potential' }}
                     </h2>
+                    @if($buyFunding->chart_subtitle ?? null)
                     <p class="text-blue-200/70 text-center mb-8" data-admin="chartSubtitle">
-                        5% monthly gain comparison across account sizes
+                        {{ $buyFunding->chart_subtitle }}
                     </p>
+                    @endif
                     <div class="h-96 mb-6">
                         <canvas id="profitChart"></canvas>
                     </div>
+                    @if($buyFunding->chart_conclusion ?? null)
                     <p class="text-blue-200/80 text-center text-lg" data-admin="chartConclusion">
-                        With just 5% monthly gains, larger accounts generate exponentially more profit
+                        {{ $buyFunding->chart_conclusion }}
                     </p>
+                    @endif
                 </div>
             </section>
 
@@ -240,24 +266,32 @@
             <section class="mb-12">
                 <div class="card-light-blue rounded-xl p-8 border-2 border-blue-500/40">
                     <div class="text-center">
+                        @if($buyFunding->cta_title ?? null)
                         <h2 class="text-3xl font-bold text-white mb-3" data-admin="ctaTitle">
-                            Ready to Scale Up?
+                            {{ $buyFunding->cta_title }}
                         </h2>
+                        @endif
+                        @if($buyFunding->cta_subtitle ?? null)
                         <p class="text-blue-200/80 text-xl mb-8" data-admin="ctaSubtitle">
-                            Increase your funding and multiply your profits
+                            {{ $buyFunding->cta_subtitle }}
                         </p>
+                        @endif
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            @if($buyFunding->cta_button1_text ?? null)
                             <button
                                 class="bg-transparent border-2 border-blue-500 text-blue-400 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-500/10 transition-all"
                                 data-admin="ctaButton1">
-                                Limited Spots Available
+                                {{ $buyFunding->cta_button1_text }}
                             </button>
-                            <button
+                            @endif
+                            @if($buyFunding->cta_button2_text ?? null)
+                            <a href="{{ $buyFunding->cta_button2_link ?? '#' }}"
                                 class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg flex items-center justify-center gap-2"
                                 data-admin="ctaButton2">
-                                <span>Message Us To Get More Funding</span>
+                                <span>{{ $buyFunding->cta_button2_text }}</span>
                                 <i class="fas fa-arrow-right"></i>
-                            </button>
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -269,7 +303,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -277,29 +311,37 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-red-500">LEGAL DISCLAIMER</strong> — All performance indicators, analyses, and
-                    data visualizations are <strong>NON-FACTUAL</strong> and constitute hypothetical simulations for
-                    demonstrative purposes, not actual transactions. No bona fide securities transactions occur through
-                    the platform. Prospective clients are invited for custom implementation services.
-                </p>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
             </div>
+            @endif
         </div>
     </footer>
 
     <script src="{{ asset('assets/js/admin-config.js') }}"></script>
     <script>
-        // Chart.js Configuration
+        // Chart.js Configuration - Dynamic Data
         const ctx = document.getElementById('profitChart');
+        @php
+            $chartLabels = $buyFunding->chart_data['labels'] ?? ['$5k', '$10k', '$25k', '$50k', '$100k', '$200k', '$300k', '$400k'];
+            $chartData = $buyFunding->chart_data['data'] ?? [250, 500, 1250, 2500, 5000, 10000, 15000, 20000];
+        @endphp
+        const chartLabels = @json($chartLabels);
+        const chartData = @json($chartData);
+        const maxValue = Math.max(...chartData);
+        const stepSize = Math.ceil(maxValue / 4);
+        
         const profitChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['$5k', '$10k', '$25k', '$50k', '$100k', '$200k', '$300k', '$400k'],
+                labels: chartLabels,
                 datasets: [{
                     label: 'Profit Potential',
-                    data: [250, 500, 1250, 2500, 5000, 10000, 15000, 20000],
+                    data: chartData,
                     backgroundColor: 'rgba(139, 92, 246, 0.8)',
                     borderColor: 'rgba(139, 92, 246, 1)',
                     borderWidth: 2,
@@ -330,9 +372,9 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 20000,
+                        max: maxValue,
                         ticks: {
-                            stepSize: 5000,
+                            stepSize: stepSize,
                             color: '#94a3b8',
                             font: {
                                 family: 'Montserrat',

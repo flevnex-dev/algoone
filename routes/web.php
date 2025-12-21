@@ -16,15 +16,15 @@ Route::get('/terms-conditions', [FrontendController::class, 'termsConditions'])-
 Route::get('/past-performance', [FrontendController::class, 'pastPerformance'])->name('frontend.past-performance');
 Route::get('/payout', [FrontendController::class, 'payout'])->name('frontend.payout');
 Route::get('/official-myfxbooks', [FrontendController::class, 'officialMyfxbooks'])->name('frontend.official-myfxbooks');
-Route::get('/referrals', [FrontendController::class, 'referrals'])->name('frontend.referrals');
+Route::get('/referrals', [FrontendController::class, 'referrals'])->middleware(['auth', 'trader'])->name('frontend.referrals');
 Route::get('/referrals-public', [FrontendController::class, 'referralsPublic'])->name('frontend.referrals-public');
 Route::get('/masterclass', [FrontendController::class, 'masterclass'])->name('frontend.masterclass');
-Route::get('/progress', [FrontendController::class, 'progress'])->name('frontend.progress');
+Route::get('/progress', [FrontendController::class, 'progress'])->middleware(['auth', 'trader'])->name('frontend.progress');
 
 Auth::routes();
 
 
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function() {
+Route::prefix('admin')->middleware(['auth', 'admin.role'])->name('admin.')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/topbars', [TopbarController::class, 'index'])->name('topbars.index');
     Route::post('/topbars', [TopbarController::class, 'update'])->name('topbars.update');
@@ -50,7 +50,33 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function() {
     Route::get('/cta', [\App\Http\Controllers\Admin\CtaSectionController::class, 'index'])->name('cta.index');
     Route::post('/cta', [\App\Http\Controllers\Admin\CtaSectionController::class, 'update'])->name('cta.update');
 
+    Route::get('/past-performance', [\App\Http\Controllers\Admin\PastPerformanceSectionController::class, 'index'])->name('past-performance.index');
+    Route::post('/past-performance', [\App\Http\Controllers\Admin\PastPerformanceSectionController::class, 'update'])->name('past-performance.update');
+
+    Route::get('/official-myfxbooks', [\App\Http\Controllers\Admin\OfficialMyfxbooksSectionController::class, 'index'])->name('official-myfxbooks.index');
+    Route::post('/official-myfxbooks', [\App\Http\Controllers\Admin\OfficialMyfxbooksSectionController::class, 'update'])->name('official-myfxbooks.update');
+
+    Route::get('/myfxbook-accounts', [\App\Http\Controllers\Admin\MyfxbookAccountController::class, 'index'])->name('myfxbook-accounts.index');
+    Route::post('/myfxbook-accounts/import', [\App\Http\Controllers\Admin\MyfxbookAccountController::class, 'import'])->name('myfxbook-accounts.import');
+    Route::put('/myfxbook-accounts/{id}', [\App\Http\Controllers\Admin\MyfxbookAccountController::class, 'update'])->name('myfxbook-accounts.update');
+    Route::delete('/myfxbook-accounts/{id}', [\App\Http\Controllers\Admin\MyfxbookAccountController::class, 'destroy'])->name('myfxbook-accounts.destroy');
+
     Route::get('/site-settings', [\App\Http\Controllers\Admin\SiteSettingController::class, 'index'])->name('site-settings.index');
     Route::post('/site-settings', [\App\Http\Controllers\Admin\SiteSettingController::class, 'update'])->name('site-settings.update');
+
+    Route::get('/progress-guidelines', [\App\Http\Controllers\Admin\ProgressGuidelineController::class, 'index'])->name('progress-guidelines.index');
+    Route::post('/progress-guidelines', [\App\Http\Controllers\Admin\ProgressGuidelineController::class, 'update'])->name('progress-guidelines.update');
+
+    Route::get('/masterclass', [\App\Http\Controllers\Admin\MasterclassSectionController::class, 'index'])->name('masterclass.index');
+    Route::post('/masterclass', [\App\Http\Controllers\Admin\MasterclassSectionController::class, 'update'])->name('masterclass.update');
+
+    Route::get('/buy-funding', [\App\Http\Controllers\Admin\BuyFundingSectionController::class, 'index'])->name('buy-funding.index');
+    Route::post('/buy-funding', [\App\Http\Controllers\Admin\BuyFundingSectionController::class, 'update'])->name('buy-funding.update');
+
+    Route::get('/privacy-policy', [\App\Http\Controllers\Admin\PrivacyPolicySectionController::class, 'index'])->name('privacy-policy.index');
+    Route::post('/privacy-policy', [\App\Http\Controllers\Admin\PrivacyPolicySectionController::class, 'update'])->name('privacy-policy.update');
+
+    Route::get('/terms-conditions', [\App\Http\Controllers\Admin\TermsConditionsSectionController::class, 'index'])->name('terms-conditions.index');
+    Route::post('/terms-conditions', [\App\Http\Controllers\Admin\TermsConditionsSectionController::class, 'update'])->name('terms-conditions.update');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
