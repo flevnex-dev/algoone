@@ -1,19 +1,20 @@
+@php
+    $setting = \App\Models\SiteSetting::first();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Optimum Meditred Ltd">
-    <meta name="keywords" content="Optimum Meditred Ltd">
-    <meta name="author" content="fkhrl">
+    <meta name="description" content="{{ $setting->site_title }}">
+    <meta name="keywords" content="{{ $setting->site_title }}">
+    <meta name="author" content="{{ $setting->site_title }}">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-@php
-    $setting = \App\Models\SiteSetting::first();
-@endphp
-    <title>@yield('title') | Optimum Meditred Ltd </title>
+
+    <title>@yield('title') | {{ $setting->site_title }} </title>
     <!-- Favicon icon-->
     @if($setting && $setting->favicon)
         <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
@@ -250,6 +251,7 @@
         
     </style>
     @yield('css')
+    @stack('head')
 </head>
 
 <body>

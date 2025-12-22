@@ -57,6 +57,12 @@
                 <li class="">
                     <a class="" href="{{ route('admin.past-performance.index') }}">Past Performance Sections</a>
                 </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.trading-weeks.index') }}">Trading Weeks</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.week-performance.index') }}">Week Performance Data</a>
+                </li>
               </ul>
             </li>
             <li class="sidebar-list"> <i class="fa-solid fa-thumbtack"></i><a class="sidebar-link" href="javascript:void(0)">
@@ -103,6 +109,20 @@
                     <h6 class="f-w-600">Terms & Conditions</h6>
                 </a>
             </li>
+            <li class="sidebar-list"> <i class="fa-solid fa-thumbtack"></i><a class="sidebar-link" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                  <use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Home"></use>
+                </svg>
+                <h6 class="f-w-600">Payouts</h6><i class="iconly-Arrow-Right-2 icli"></i></a>
+              <ul class="sidebar-submenu">
+                <li class="">
+                    <a class="" href="{{ route('admin.payouts.index') }}">Manage Payouts</a>
+                </li>
+                <li class="">
+                    <a class="" href="{{ route('admin.live-results.index') }}">Live Results</a>
+                </li>
+              </ul>
+            </li>
 
             <li class="sidebar-main-title">
                 <div>
@@ -114,6 +134,12 @@
                 <a class="sidebar-link" href="{{ route('admin.site-settings.index') }}">
                     <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
                     <h6 class="f-w-600">Site Settings</h6>
+                </a>
+            </li>
+            <li class="sidebar-list">
+                <a class="sidebar-link" href="{{ route('admin.email-configuration.index') }}">
+                    <svg class="stroke-icon"><use href="{{ url('/admin/assets') }}/svg/iconly-sprite.svg#Setting"></use></svg>
+                    <h6 class="f-w-600">Email Configuration</h6>
                 </a>
             </li>
 

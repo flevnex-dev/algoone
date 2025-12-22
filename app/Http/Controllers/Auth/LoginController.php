@@ -32,6 +32,11 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
+        // Check if there's an intended URL (e.g., from live-results page)
+        if (session()->has('intended_url')) {
+            return session('intended_url');
+        }
+        
         if (auth()->check()) {
             $user = auth()->user();
             if ($user->role === 'admin') {
@@ -115,6 +120,15 @@ class LoginController extends Controller
         $days = $setting->remember_me_duration_days ?? 30;
         $minutes = $days * 24 * 60; // Convert days to minutes
 
+        // Check for intended URL (from live-results or other pages)
+        $intendedUrl = $request->session()->get('intended_url');
+        $redirectTo = $intendedUrl ? $intendedUrl : $this->redirectPath();
+        
+        // Clear intended URL after use
+        if ($intendedUrl) {
+            $request->session()->forget('intended_url');
+        }
+
         // If remember me is checked, set custom cookie expiration
         if ($request->filled('remember')) {
             $rememberToken = $this->guard()->user()->getRememberToken();
@@ -124,12 +138,12 @@ class LoginController extends Controller
                     $this->guard()->user()->id . '|' . $rememberToken . '|' . $this->guard()->user()->password,
                     $minutes
                 );
-                return redirect()->intended($this->redirectPath())->withCookie($cookie);
+                return redirect($redirectTo)->withCookie($cookie);
             }
         }
 
         return $request->wantsJson()
                     ? new \Illuminate\Http\JsonResponse([], 204)
-                    : redirect()->intended($this->redirectPath());
+                    : redirect($redirectTo);
     }
 }

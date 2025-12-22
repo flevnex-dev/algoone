@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Live Results - AlgoOne</title>
+    <title data-admin="pageTitle">Live Results - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -51,9 +56,13 @@
             <div class="flex items-center space-x-3">
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-10 h-10 object-contain" />
+                        @if(isset($setting) && $setting->logo)
+                            <img src="{{ asset($setting->logo) }}" alt="Logo" class="w-10 h-10 object-contain" />
+                        @else
+                            <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-10 h-10 object-contain" />
+                        @endif
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="pageHeader">Live Results</span>
+                    <span class="text-2xl font-bold text-white" data-admin="pageHeader">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <a href="{{ route('frontend.index') }}" class="text-blue-300 hover:text-blue-100 text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-600/10 transition-all border border-blue-500/30 flex items-center gap-2">
@@ -77,117 +86,128 @@
 
         <!-- Messages Container - Timeline Style -->
         <div class="space-y-6 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar mb-8">
-            <!-- Message Card 1 -->
+            @forelse($liveResults as $result)
             <div class="message-card rounded-2xl p-6 shadow-xl relative">
                 <div class="flex gap-5">
                     <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 shadow-lg border-2 border-blue-400/30">
-                        Q
+                        {{ strtoupper(substr($result->user->name ?? 'U', 0, 1)) }}
                     </div>
                     <div class="flex-1">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <h3 class="font-bold text-white text-lg" data-admin="userName1">Quinn Palmer</h3>
-                            <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg" data-admin="amount1">
-                                <i class="fas fa-dollar-sign mr-1"></i>$13,344
+                            <h3 class="font-bold text-white text-lg">{{ $result->user->name ?? 'Anonymous' }}</h3>
+                            @if($result->amount)
+                            <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
+                                <i class="fas fa-dollar-sign mr-1"></i>{{ number_format($result->amount, 0) }}
                             </span>
-                            <span class="text-blue-300/70 text-sm" data-admin="time1">
-                                <i class="fas fa-clock mr-1"></i>13h ago
+                            @endif
+                            <span class="text-blue-300/70 text-sm">
+                                <i class="fas fa-clock mr-1"></i>{{ $result->created_at->diffForHumans() }}
                             </span>
                         </div>
-                        <p class="text-blue-200/90 text-base" data-admin="message1">Life changing! 🙌</p>
+                        <p class="text-blue-200/90 text-base">{{ $result->message }}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Message Card 2 -->
-            <div class="message-card rounded-2xl p-6 shadow-xl relative">
-                <div class="flex gap-5">
-                    <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 shadow-lg border-2 border-blue-400/30">
-                        B
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <h3 class="font-bold text-white text-lg" data-admin="userName2">Blake Rivers</h3>
-                            <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg" data-admin="amount2">
-                                <i class="fas fa-dollar-sign mr-1"></i>$15,371
-                            </span>
-                            <span class="text-blue-300/70 text-sm" data-admin="time2">
-                                <i class="fas fa-calendar mr-1"></i>11/29/2025
-                            </span>
-                        </div>
-                        <p class="text-blue-200/90 text-base" data-admin="message2">Weekly payout just hit my account. This is incredible! 🤑</p>
-                    </div>
-                </div>
+            @empty
+            <div class="text-center py-12">
+                <p class="text-blue-200/60 text-lg">No success stories yet. Be the first to share!</p>
             </div>
-
-            <!-- Message Card 3 -->
-            <div class="message-card rounded-2xl p-6 shadow-xl relative">
-                <div class="flex gap-5">
-                    <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 shadow-lg border-2 border-blue-400/30">
-                        R
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <h3 class="font-bold text-white text-lg" data-admin="userName3">Ryan Santos</h3>
-                            <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg" data-admin="amount3">
-                                <i class="fas fa-dollar-sign mr-1"></i>$24,661
-                            </span>
-                            <span class="text-blue-300/70 text-sm" data-admin="time3">
-                                <i class="fas fa-calendar mr-1"></i>11/28/2025
-                            </span>
-                        </div>
-                        <p class="text-blue-200/90 text-base" data-admin="message3">My account got funded faster than expected. Amazing work!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Message Card 4 -->
-            <div class="message-card rounded-2xl p-6 shadow-xl relative">
-                <div class="flex gap-5">
-                    <div class="h-16 w-16 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-blue-500/30 shadow-lg">
-                        <img src="https://i.pravatar.cc/80?img=5" class="h-full w-full object-cover" alt="User">
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <h3 class="font-bold text-white text-lg" data-admin="userName4">Blake Rivers</h3>
-                            <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg" data-admin="amount4">
-                                <i class="fas fa-dollar-sign mr-1"></i>$16,116
-                            </span>
-                            <span class="text-blue-300/70 text-sm" data-admin="time4">
-                                <i class="fas fa-calendar mr-1"></i>11/28/2025
-                            </span>
-                        </div>
-                        <p class="text-blue-200/90 text-base" data-admin="message4">Another successful withdrawal. The system really delivers!</p>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
+
+        <!-- Success Message -->
+        @if(session('success'))
+        <div class="mb-6 bg-green-500/20 border border-green-500/40 rounded-lg px-6 py-4 text-center">
+            <p class="text-green-400 text-sm font-medium">{{ session('success') }}</p>
+        </div>
+        @endif
 
         <!-- Input Box -->
         <div class="bg-gradient-to-r from-blue-600/20 to-blue-500/20 backdrop-blur-xl rounded-2xl p-6 shadow-2xl border-2 border-blue-500/30">
-            <div class="flex items-end gap-4">
-                <textarea rows="3" placeholder="Share your trading success..." 
-                    class="flex-1 resize-none outline-none text-white bg-black/30 border-2 border-blue-500/30 px-5 py-4 rounded-xl placeholder-blue-400/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                    data-admin="inputPlaceholder"></textarea>
-                <button class="bg-gradient-to-r from-blue-600 to-blue-500 h-14 w-14 flex items-center justify-center rounded-xl text-white hover:shadow-xl hover:shadow-blue-500/50 transition-all flex-shrink-0 border-2 border-blue-400/30">
-                    <i class="fas fa-paper-plane text-lg"></i>
-                </button>
-            </div>
+            @if(auth()->check())
+            <form id="liveResultForm" action="{{ route('frontend.live-results.store') }}" method="POST">
+                @csrf
+                <div class="flex items-end gap-4">
+                    <textarea name="message" id="messageInput" rows="3" placeholder="Share your trading success..." 
+                        class="flex-1 resize-none outline-none text-white bg-black/30 border-2 border-blue-500/30 px-5 py-4 rounded-xl placeholder-blue-400/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                        required minlength="5" maxlength="1000">{{ old('message', $pendingMessage ?? '') }}</textarea>
+                    <button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-500 h-14 w-14 flex items-center justify-center rounded-xl text-white hover:shadow-xl hover:shadow-blue-500/50 transition-all flex-shrink-0 border-2 border-blue-400/30">
+                        <i class="fas fa-paper-plane text-lg"></i>
+                    </button>
+                </div>
+                @error('message')
+                    <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </form>
+            @else
+            <form id="liveResultForm" action="{{ route('frontend.live-results.store') }}" method="POST">
+                @csrf
+                <div class="flex items-end gap-4">
+                    <textarea name="message" id="messageInput" rows="3" placeholder="Share your trading success... (Login required to submit)" 
+                        class="flex-1 resize-none outline-none text-white bg-black/30 border-2 border-blue-500/30 px-5 py-4 rounded-xl placeholder-blue-400/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                        required minlength="5" maxlength="1000">{{ old('message', $pendingMessage ?? '') }}</textarea>
+                    <button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-500 h-14 w-14 flex items-center justify-center rounded-xl text-white hover:shadow-xl hover:shadow-blue-500/50 transition-all flex-shrink-0 border-2 border-blue-400/30">
+                        <i class="fas fa-paper-plane text-lg"></i>
+                    </button>
+                </div>
+                <p class="text-blue-300/70 text-sm mt-2">
+                    <i class="fas fa-info-circle mr-1"></i>You need to login to submit your success story
+                </p>
+            </form>
+            @endif
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="mt-16 bg-black/80 backdrop-blur-xl border-t border-blue-500/20 py-8 relative z-10">
         <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <p class="text-blue-200/60 text-sm">
+                    @if(isset($setting) && $setting->copyright_text)
+                        {{ $setting->copyright_text }}
+                    @else
+                        © {{ date('Y') }} {{ $setting->site_title ?? 'AlgoOne' }}. All rights reserved.
+                    @endif
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-400 transition">Privacy Policy</a>
+                    <a href="{{ route('frontend.terms-conditions') }}" class="text-blue-200/60 text-sm hover:text-blue-400 transition">Terms & Conditions</a>
+                </div>
+            </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
+            <div class="max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/70 leading-relaxed">
+                <span class="text-yellow-400 text-lg mt-1">⚠</span>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
+            </div>
+            @else
             <div class="max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/70 leading-relaxed">
                 <span class="text-yellow-400 text-lg mt-1">⚠</span>
                 <p data-admin="disclaimer">
                     <strong class="text-blue-200/90">LEGAL DISCLAIMER</strong> — All quantitative performance indicators, statistical analyses, trading results, and any associated data visualizations or informational content displayed are presented for demonstration purposes only and are not indicative of future performance.
                 </p>
             </div>
+            @endif
         </div>
     </footer>
 
     <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('liveResultForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const messageInput = document.getElementById('messageInput');
+                    if (!messageInput || !messageInput.value.trim()) {
+                        e.preventDefault();
+                        alert('Please enter your success story');
+                        return false;
+                    }
+                });
+            }
+        });
+    </script>
     <style>
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;

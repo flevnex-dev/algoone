@@ -1,60 +1,381 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AlgoOne - Professional Prop Firm Trading Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive Laravel-based web application for managing prop firm trading operations, performance tracking, payouts, and client management.
 
-## About Laravel
+## 📋 Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [About](#about)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎯 About
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+AlgoOne is a professional prop firm trading management system built with Laravel 12. It provides comprehensive features for:
+- Trading week management and performance tracking
+- Payout management and tracking
+- Live results display
+- Myfxbook account integration
+- User authentication and authorization
+- Admin panel for content management
+- Email configuration and notifications
 
-## Learning Laravel
+## 📦 Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Server Requirements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **PHP**: >= 8.2
+- **Composer**: Latest version
+- **MySQL**: >= 5.7 or MariaDB >= 10.3
+- **Web Server**: Apache or Nginx
 
-## Laravel Sponsors
+### PHP Extensions
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+The following PHP extensions are required:
 
-### Premium Partners
+- `php-mbstring`
+- `php-xml`
+- `php-curl`
+- `php-zip`
+- `php-gd`
+- `php-mysql` or `php-mysqli`
+- `php-openssl`
+- `php-pdo`
+- `php-tokenizer`
+- `php-json`
+- `php-bcmath`
+- `php-fileinfo`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### PHP Information
 
-## Contributing
+- **PHP Version**: 8.2.28
+- **Laravel Framework**: 12.43.1
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Installation
 
-## Code of Conduct
+### Step 1: Clone the Repository
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone <https://github.com/flevnex-dev/algoone.git>
+cd algoone
+```
 
-## Security Vulnerabilities
+### Step 2: Install PHP Dependencies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer install
+```
 
-## License
+### Step 3: Environment Configuration
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# algoone
+Copy the `.env.example` file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+### Step 4: Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### Step 5: Configure Environment Variables
+
+Edit the `.env` file and update the following required variables:
+
+```env
+APP_NAME="AlgoOne"
+APP_ENV=local
+APP_KEY=base64:... (generated by key:generate)
+APP_DEBUG=true
+APP_TIMEZONE=UTC
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_algoone
+DB_USERNAME=root
+DB_PASSWORD=
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+
+MAIL_MAILER=log
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+**Important**: Update `APP_NAME` and `APP_URL` according to your project setup.
+
+### Step 6: Database Setup
+
+Create a MySQL database:
+
+```sql
+CREATE DATABASE laravel_algoone CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+(Optional) Seed the database:
+
+```bash
+php artisan db:seed
+```
+
+### Step 7: Create Storage Link
+
+```bash
+php artisan storage:link
+```
+
+### Step 8: Set Permissions (Linux/Mac)
+
+```bash
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+## ⚙️ Configuration
+
+### Database Configuration
+
+Update database credentials in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_algoone
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### Email Configuration
+
+Email settings can be configured through the admin panel at `/admin/email-configuration` or via `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mail.ovh.net
+MAIL_PORT=587
+MAIL_USERNAME=your_email@example.com
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@quantumfundedcapital.com
+MAIL_FROM_NAME="QuantumFunding"
+```
+
+### Session & Cache
+
+The application uses database-driven sessions and cache:
+
+```env
+SESSION_DRIVER=database
+CACHE_STORE=database
+```
+
+## 🗄️ Database Setup
+
+### Running Migrations
+
+```bash
+php artisan migrate
+```
+
+### Key Database Tables
+
+- `users` - User accounts
+- `site_settings` - Site configuration
+- `trading_weeks` - Trading week records
+- `week_performance_details` - Performance metrics
+- `payouts` - Payout records
+- `live_results` - Live trading results
+- `results_sections` - Results section accounts
+- `myfxbook_accounts` - Myfxbook account data
+
+See `DATABASE_STRUCTURE.md` for detailed database schema information.
+
+## 🏃 Running the Application
+
+### Development Server
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`
+
+**Admin Panel Access**: `http://127.0.0.1:8000/login`
+
+### With Queue Worker (Development)
+
+For full functionality including queue processing:
+
+```bash
+composer run dev
+```
+
+This command runs:
+- Laravel development server
+- Queue worker
+- Log viewer (Pail)
+
+### Production Deployment
+
+1. Set `APP_ENV=production` and `APP_DEBUG=false` in `.env`
+2. Optimize Laravel: `php artisan optimize`
+3. Clear cache: `php artisan config:clear && php artisan cache:clear`
+
+## 🛠️ Technologies Used
+
+### Backend
+
+- **Laravel Framework**: 12.43.1
+- **PHP**: 8.2.28
+- **Composer Packages**:
+  - `laravel/framework`: ^12.0
+  - `laravel/ui`: ^4.6 (Authentication scaffolding)
+  - `phpmailer/phpmailer`: ^7.0 (Email handling)
+  - `phpoffice/phpspreadsheet`: ^5.3 (Excel/CSV import/export)
+
+### Frontend
+
+- **Tailwind CSS**: ^4.0.0 (via CDN)
+- **JavaScript Libraries**:
+  - **Chart.js**: 4.4.0 (Data visualization)
+  - **Flatpickr**: Date picker
+  - **SweetAlert2**: Alert dialogs
+  - **jQuery**: DOM manipulation
+  - **DataTables**: Server-side data tables
+  - **Font Awesome**: 6.5.1 (Icons)
+  - **Bootstrap**: 5.2.3 (Admin panel)
+
+### Development Tools
+
+- **Laravel Pint**: Code formatting
+- **PHPUnit**: Testing framework
+- **Laravel Pail**: Log viewer
+- **Laravel Sail**: Docker development environment
+
+## 📁 Project Structure
+
+```
+algoone/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── Admin/          # Admin controllers
+│   │       └── FrontendController.php
+│   ├── Models/                 # Eloquent models
+│   ├── Services/               # Service classes (EmailService)
+│   └── ...
+├── database/
+│   ├── migrations/             # Database migrations
+│   └── seeders/               # Database seeders
+├── public/
+│   ├── assets/                 # Frontend assets
+│   └── admin/                  # Admin panel assets
+├── resources/
+│   ├── views/
+│   │   ├── admin/              # Admin panel views
+│   │   ├── frontend/           # Frontend views
+│   │   └── auth/               # Authentication views
+│   ├── js/                     # JavaScript source files
+│   └── css/                    # CSS source files
+├── routes/
+│   └── web.php                 # Web routes
+├── storage/                    # Storage directory
+├── .env                        # Environment configuration
+├── composer.json               # PHP dependencies
+├── package.json                # Node dependencies
+└── vite.config.js              # Vite configuration
+```
+
+## 🔐 Default Admin Access
+
+**Admin Panel Login URL**: `http://127.0.0.1:8000/login`
+
+After installation, create an admin user:
+
+```bash
+php artisan tinker
+```
+
+```php
+$user = new App\Models\User();
+$user->name = 'Admin';
+$user->email = 'admin@example.com';
+$user->password = Hash::make('password');
+$user->save();
+```
+
+Or use the registration page if available.
+
+## 📝 Additional Notes
+
+### File Uploads
+
+Uploaded files are stored in `public/uploads/`:
+- Settings: `public/uploads/settings/`
+- Referrals: `public/uploads/referral/`
+- How It Works: `public/uploads/how_it_works/`
+
+### Excel/CSV Import
+
+The application supports Excel/CSV import for:
+- Trading weeks
+- Week performance data
+- Myfxbook accounts
+- Results sections
+
+Template files are available in `public/` directory.
+
+### Cache & Optimization
+
+Clear cache when needed:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Permission Denied**: Ensure storage and cache directories are writable
+2. **Class Not Found**: Run `composer dump-autoload`
+3. **Migration Errors**: Check database connection and credentials
+4. **Asset Not Loading**: Clear browser cache and check asset paths
+
+## 📄 License
+
+This project is proprietary software. All rights reserved.
+
+## 👥 Support
+
+For support and questions, please contact the development team.
+
+---
+
+**Last Updated**: 2025-01-22
+**Laravel Version**: 12.43.1
+**PHP Version**: 8.2.28

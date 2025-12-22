@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Fallback chart configs for old static accounts
   const chartConfigs = {
     account1: {
       data: [0, 45, 85, 125, 154.63],
@@ -17,26 +18,55 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  const labels = ["Jul '23", "Sep '23", "Nov '23", "Jan '24", "Apr '24"];
+  const defaultLabels = ["Jul '23", "Sep '23", "Nov '23", "Jan '24", "Apr '24"];
 
   document.querySelectorAll(".account-chart").forEach((canvas) => {
     const chartId = canvas.dataset.chartId;
-    const config = chartConfigs[chartId];
-    if (!config || typeof Chart === "undefined") return;
+    if (!chartId || typeof Chart === "undefined") return;
 
     canvas.style.width = "100%";
     canvas.style.height = "100%";
 
     const ctx = canvas.getContext("2d");
+    
+    // Get chart labels and data from database (dynamic)
+    let chartLabels = [];
+    let chartData = [];
+    
+    try {
+      const labelsJson = canvas.dataset.chartLabels || null;
+      const dataJson = canvas.dataset.chartData || null;
+      
+      if (labelsJson && dataJson) {
+        chartLabels = JSON.parse(labelsJson);
+        chartData = JSON.parse(dataJson);
+      }
+    } catch (e) {
+      console.error('Error parsing chart data:', e);
+    }
+    
+    // If no chart data from database, use fallback config
+    if (!chartLabels || chartLabels.length === 0 || !chartData || chartData.length === 0) {
+      const config = chartConfigs[chartId];
+      if (config) {
+        chartLabels = defaultLabels;
+        chartData = config.data;
+      } else {
+        chartLabels = defaultLabels;
+        chartData = [0];
+      }
+    }
+    
+    const config = chartConfigs[chartId] || { color: "#0B64F4", label: chartId };
 
     new Chart(ctx, {
       type: "line",
       data: {
-        labels,
+        labels: chartLabels,
         datasets: [
           {
             label: config.label,
-            data: config.data,
+            data: chartData,
             borderColor: config.color,
             backgroundColor: (context) => {
               const { chart } = context;

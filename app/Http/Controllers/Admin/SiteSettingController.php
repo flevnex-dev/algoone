@@ -34,20 +34,6 @@ class SiteSettingController extends Controller
         $setting->copyright_text = $request->input('copyright_text');
         $setting->legal_disclaimer = $request->input('legal_disclaimer');
         
-        // Email Settings
-        $setting->email_from_address = $request->input('email_from_address');
-        $setting->email_from_name = $request->input('email_from_name');
-        $setting->smtp_host = $request->input('smtp_host');
-        $setting->smtp_user = $request->input('smtp_user');
-        
-        // Only update password if provided (to avoid overwriting with empty value)
-        if ($request->has('smtp_password') && !empty($request->input('smtp_password'))) {
-            $setting->smtp_password = $request->input('smtp_password');
-        }
-        
-        $setting->smtp_port = $request->input('smtp_port');
-        $setting->smtp_security = $request->input('smtp_security');
-        
         // Remember Me Settings
         $setting->remember_me_enabled = $request->has('remember_me_enabled');
         $setting->remember_me_text = $request->input('remember_me_text');

@@ -1,0 +1,4 @@
+Account Name,Subtext,Risk Label,Chart Labels,Chart Data,Daily %,Drawdown,Profit,Deposits,Platform
+Account #1,Verified,Low Risk,"Jul '23, Sep '23, Nov '23, Jan '24, Apr '24","0, 45, 85, 125, 154.63",0.71%,3.91%,$154639.72,$100000.00,ICMarkets MT4
+Account #2,Verified,Medium Risk,"Jul '23, Sep '23, Nov '23, Jan '24, Apr '24","0, 35, 95, 200, 325.97",0.08%,3.51%,$240980.38,$250000.00,Blueberry MT5
+Account #3,Verified,Low Risk,"Jul '23, Sep '23, Nov '23, Jan '24, Apr '24","0, 15, 30, 45, 56.26",0.21%,2.89%,$420115.63,$1139530.06,ICMarkets MT4

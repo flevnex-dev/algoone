@@ -54,9 +54,64 @@ class FrontendController extends Controller
         return view('frontend.buy-funding', compact('setting', 'buyFunding'));
     }
 
-    public function liveResults()
+    public function liveResults(Request $request)
     {
-        return view('frontend.live-results');
+        $setting = \App\Models\SiteSetting::first();
+        
+        // Get approved live results (oldest first, so latest appears at bottom)
+        $liveResults = \App\Models\LiveResult::where('status', 'approved')
+            ->with('user')
+            ->orderBy('created_at', 'asc')
+            ->take(20)
+            ->get();
+        
+        // Get pending message from session (if redirected from login)
+        $pendingMessage = $request->session()->get('pending_live_result_message');
+        
+        return view('frontend.live-results', compact('setting', 'liveResults', 'pendingMessage'));
+    }
+
+    public function storeLiveResult(Request $request)
+    {
+        // Check if user is authenticated
+        if (!auth()->check()) {
+            // Store message in session for after login
+            $request->session()->put('pending_live_result_message', $request->message);
+            $request->session()->put('intended_url', route('frontend.live-results'));
+            
+            return redirect()->route('frontend.sign-in')
+                ->with('info', 'Please login to submit your success story');
+        }
+
+        $validated = $request->validate([
+            'message' => 'required|string|min:5|max:1000',
+            'amount' => 'nullable|numeric|min:0',
+        ]);
+
+        // Get user's latest payout amount if amount not provided
+        if (empty($validated['amount'])) {
+            $latestPayout = \App\Models\Payout::where('user_id', auth()->id())
+                ->where('status', 'completed')
+                ->orderBy('payout_date', 'desc')
+                ->first();
+            
+            if ($latestPayout) {
+                $validated['amount'] = $latestPayout->amount;
+            }
+        }
+
+        \App\Models\LiveResult::create([
+            'user_id' => auth()->id(),
+            'message' => $validated['message'],
+            'amount' => $validated['amount'],
+            'status' => 'approved', // Auto-approve for now, can be changed to 'pending' for moderation
+        ]);
+
+        // Clear pending message from session
+        $request->session()->forget('pending_live_result_message');
+
+        return redirect()->route('frontend.live-results')
+            ->with('success', 'Your success story has been submitted!');
     }
 
     public function privacy()
@@ -77,12 +132,134 @@ class FrontendController extends Controller
     {
         $pastPerformanceSection = \App\Models\PastPerformanceSection::where('is_active', true)->first();
         $setting = \App\Models\SiteSetting::first();
-        return view('frontend.past-performance', compact('pastPerformanceSection', 'setting'));
+        
+        // Get all active weeks, ordered so that "current" and "last" appear at the end
+        $weeks = \App\Models\TradingWeek::where('is_active', true)
+            ->orderByRaw("CASE 
+                WHEN week_type = 'normal' THEN 1 
+                WHEN week_type = 'last' THEN 2 
+                WHEN week_type = 'current' THEN 3 
+                ELSE 4 
+            END")
+            ->orderBy('display_order')
+            ->orderBy('start_date', 'desc')
+            ->with('performanceDetail')
+            ->get();
+        
+        // Get current week (or latest if no current)
+        $currentWeek = \App\Models\TradingWeek::where('week_type', 'current')
+            ->where('is_active', true)
+            ->with('performanceDetail')
+            ->first();
+        
+        // If no current week, get the latest week
+        if (!$currentWeek && $weeks->count() > 0) {
+            $currentWeek = $weeks->first();
+        }
+        
+        return view('frontend.past-performance', compact(
+            'pastPerformanceSection', 
+            'setting', 
+            'weeks', 
+            'currentWeek'
+        ));
+    }
+
+    public function getWeekData($id)
+    {
+        $week = \App\Models\TradingWeek::with('performanceDetail')->findOrFail($id);
+        
+        return response()->json([
+            'success' => true,
+            'week' => [
+                'id' => $week->id,
+                'week_label' => $week->week_label,
+                'start_date' => $week->start_date->format('d/m/y'),
+                'end_date' => $week->end_date->format('d/m/y'),
+                'total_gain' => $week->total_gain,
+                'account_size' => $week->account_size,
+                'end_date_full' => $week->end_date->format('l, F d, Y'),
+            ],
+            'performance' => $week->performanceDetail ? [
+                'total_gain' => $week->performanceDetail->total_gain,
+                'trade_accuracy' => $week->performanceDetail->trade_accuracy,
+                'risk_reward_ratio' => $week->performanceDetail->risk_reward_ratio,
+                'largest_drawdown' => $week->performanceDetail->largest_drawdown,
+                'chart_labels' => $week->performanceDetail->chart_labels ?? [],
+                'chart_data' => $week->performanceDetail->chart_data ?? [],
+                'markets_traded' => $week->performanceDetail->markets_traded ?? [],
+                'daily_performance' => $week->performanceDetail->daily_performance ?? [],
+            ] : null,
+        ]);
     }
 
     public function payout()
     {
-        return view('frontend.payout');
+        $setting = \App\Models\SiteSetting::first();
+        
+        // Get all public payouts
+        $payouts = \App\Models\Payout::where('is_public', true)
+            ->where('status', 'completed')
+            ->orderBy('payout_date', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        // Calculate statistics
+        $totalPaid = $payouts->sum('amount');
+        $totalPayouts = $payouts->count();
+        $averagePayout = $totalPayouts > 0 ? $totalPaid / $totalPayouts : 0;
+        $highestPayout = $payouts->max('amount') ?? 0;
+        
+        // Get current month payouts
+        $currentMonth = now()->format('Y-m');
+        $currentMonthPayouts = $payouts->filter(function($payout) use ($currentMonth) {
+            return $payout->payout_date->format('Y-m') === $currentMonth;
+        });
+        $payoutsThisMonth = $currentMonthPayouts->count();
+        $currentMonthTotal = $currentMonthPayouts->sum('amount');
+        
+        // Calculate month-wise totals from payment dates (Jan to Dec of current year)
+        $currentYear = now()->format('Y');
+        $monthlyPayouts = $payouts->groupBy(function($payout) {
+            return $payout->payout_date->format('Y-m');
+        })->map(function($group) {
+            return $group->sum('amount');
+        });
+        
+        // Generate data for all 12 months (January to December) - Monthly amounts, not cumulative
+        $cumulativeData = [];
+        
+        for ($month = 1; $month <= 12; $month++) {
+            $monthKey = sprintf('%s-%02d', $currentYear, $month);
+            $monthAmount = $monthlyPayouts->get($monthKey, 0);
+            
+            $cumulativeData[] = [
+                'month' => $monthKey,
+                'amount' => round($monthAmount, 2) // Monthly amount, not cumulative
+            ];
+        }
+        
+        // Get latest month's payouts for detailed table
+        $latestMonth = $payouts->first() ? $payouts->first()->payout_date->format('F Y') : now()->format('F Y');
+        $latestMonthPayouts = $payouts->filter(function($payout) use ($payouts) {
+            if ($payouts->isEmpty()) return false;
+            $latestMonth = $payouts->first()->payout_date->format('Y-m');
+            return $payout->payout_date->format('Y-m') === $latestMonth;
+        });
+        
+        return view('frontend.payout', compact(
+            'setting',
+            'payouts',
+            'totalPaid',
+            'totalPayouts',
+            'averagePayout',
+            'highestPayout',
+            'payoutsThisMonth',
+            'currentMonthTotal',
+            'cumulativeData',
+            'latestMonth',
+            'latestMonthPayouts'
+        ));
     }
 
     public function officialMyfxbooks()

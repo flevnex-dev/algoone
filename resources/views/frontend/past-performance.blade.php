@@ -114,144 +114,69 @@
                 <h2 class="text-2xl md:text-3xl font-bold text-white mb-6" data-admin="weekSelectorTitle">Select Trading
                     Week</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    <!-- Week Cards -->
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="1">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week1Label">Week 1</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week1Date">09/09/24 - 13/09/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week1Gain">
-                            +2.45%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="2">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week2Label">Week 2</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week2Date">16/09/24 - 20/09/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week2Gain">
-                            +1.56%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="3">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week3Label">Week 3</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week3Date">23/09/24 - 27/09/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week3Gain">
-                            +2.78%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="4">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week4Label">Week 4</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week4Date">30/09/24 - 04/10/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week4Gain">
-                            +2.12%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="5">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week5Label">Week 5</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week5Date">07/10/24 - 11/10/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week5Gain">
-                            +1.93%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="6">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week6Label">Week 6</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week6Date">14/10/24 - 18/10/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week6Gain">
-                            +2.67%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="7">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week7Label">Week 7</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week7Date">21/10/24 - 25/10/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week7Gain">
-                            +1.45%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="8">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week8Label">Week 8</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week8Date">28/10/24 - 01/11/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week8Gain">
-                            +2.91%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="9">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week9Label">Week 9</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week9Date">28/10/24 - 01/11/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week9Gain">
-                            +1.87%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="10">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week10Label">Week 10</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week10Date">04/11/24 - 08/11/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week10Gain">
-                            +2.34%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="11">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week11Label">Week 11</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week11Date">11/11/24 - 15/11/24</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week11Gain">
-                            +2.23%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="12">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="week12Label">Week 12</div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="week12Date">10/11/25 - 14/11/25</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300" data-admin="week12Gain">
-                            +1.81%</div>
-                    </button>
-                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group"
-                        data-week="last">
-                        <div class="text-blue-200/70 text-xs font-medium mb-1" data-admin="lastWeekLabel">Last Week
+                    @forelse($weeks as $key => $week)
+                    <button class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group week-card {{ $currentWeek && $week->id == $currentWeek->id ? 'active bg-blue-600 border-2 border-blue-400' : '' }}"
+                        data-week-id="{{ $week->id }}">
+                        <div class="{{ $currentWeek && $week->id == $currentWeek->id ? 'text-white/90' : 'text-blue-200/70' }} text-xs font-medium mb-1">
+                            {{ $week->week_label }}
                         </div>
-                        <div class="text-blue-300/60 text-xs mb-2" data-admin="lastWeekDate">17/11/25 - 21/11/25</div>
-                        <div class="text-blue-400 font-bold text-lg group-hover:text-blue-300"
-                            data-admin="lastWeekGain">
-                            +2.01%</div>
-                    </button>
-                    <button
-                        class="card-blue rounded-xl p-4 text-left hover:bg-blue-600/20 transition-all group active bg-blue-600 border-2 border-blue-400"
-                        data-week="current">
-                        <div class="text-white/90 text-xs font-medium mb-1" data-admin="currentWeekLabel">This Week
+                        <div class="{{ $currentWeek && $week->id == $currentWeek->id ? 'text-white/80' : 'text-blue-300/60' }} text-xs mb-2">
+                            {{ $week->start_date->format('d/m/y') }} - {{ $week->end_date->format('d/m/y') }}
                         </div>
-                        <div class="text-white/80 text-xs mb-2" data-admin="currentWeekDate">24/11/25 - 28/11/25</div>
-                        <div class="text-white font-bold text-lg" data-admin="currentWeekGain">+2.98%</div>
+                        <div class="{{ $currentWeek && $week->id == $currentWeek->id ? 'text-white' : 'text-blue-400' }} font-bold text-lg group-hover:text-blue-300">
+                            {{ $week->total_gain >= 0 ? '+' : '' }}{{ number_format($week->total_gain, 2) }}%
+                        </div>
                     </button>
+                    @empty
+                    <div class="col-span-full text-center text-blue-300/60 py-8">
+                        <p>No trading weeks available yet.</p>
+                    </div>
+                    @endforelse
                 </div>
             </section>
 
+            @if($currentWeek)
             <!-- Current Week Summary -->
-            <section class="mb-12">
+            <section class="mb-12" id="weekSummarySection">
                 <div class="card-emerald rounded-2xl p-6 shadow-xl">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                         <div>
                             <h2 class="text-2xl md:text-3xl font-bold text-white mb-2" data-admin="weekSummaryTitle">
-                                Week 24/11/25 - 28/11/25</h2>
-                            <p class="text-blue-200/70 text-base" data-admin="accountSize">Account Size: $100,000
-                                (Example)</p>
+                                Week {{ $currentWeek->start_date->format('d/m/y') }} - {{ $currentWeek->end_date->format('d/m/y') }}</h2>
+                            <p class="text-blue-200/70 text-base" data-admin="accountSize">
+                                Account Size: ${{ number_format($currentWeek->account_size, 2) }}
+                            </p>
                         </div>
                         <div class="text-center min-w-[300px] shadow-lg bg-blue-600/30 rounded-xl p-4">
-                            <div class="text-white/90 text-sm font-medium mb-1" data-admin="netGainLabel">Net Weekly
-                                Gain +2.98%</div>
-                            <div class="text-emerald-200/70 text-xs" data-admin="endingDate">Ending: Friday, November
-                                28, 2025</div>
+                            <div class="text-white/90 text-sm font-medium mb-1" data-admin="netGainLabel">
+                                Net Weekly Gain {{ $currentWeek->total_gain >= 0 ? '+' : '' }}{{ number_format($currentWeek->total_gain, 2) }}%
+                            </div>
+                            <div class="text-emerald-200/70 text-xs" data-admin="endingDate">
+                                Ending: {{ $currentWeek->end_date->format('l, F d, Y') }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Equity Growth Chart -->
-            <section class="mb-12">
+            @if($currentWeek->performanceDetail)
+            <section class="mb-12" id="chartSection">
                 <div class="card-emerald rounded-2xl p-6 shadow-xl">
                     <h2 class="text-2xl md:text-3xl font-bold text-white mb-6" data-admin="chartTitle">This Week Equity
                         Growth</h2>
                     <div
                         class="h-80 bg-blue-900/30 rounded-lg border border-blue-500/20 flex items-center justify-center w-full">
-                        <!-- "w-full" on parent for full width, add style for canvas  -->
                         <canvas id="weekEquityGrowthChart"
-                            style="width:100% !important; height:100% !important; display:block"></canvas>
+                            data-chart-labels="{{ json_encode($currentWeek->performanceDetail->chart_labels ?? []) }}"
+                            data-chart-data="{{ json_encode($currentWeek->performanceDetail->chart_data ?? []) }}"
+                            style="width:100% !important; height:100% !important; display:block">
+                        </canvas>
                     </div>
                 </div>
             </section>
+            @endif
+            @endif
 
             <!-- Week Overview -->
             @if($pastPerformanceSection)
@@ -266,56 +191,59 @@
             </section>
             @endif
 
+            @if($currentWeek && $currentWeek->performanceDetail)
             <!-- Performance Breakdown -->
-            <section class="mb-12">
+            <section class="mb-12" id="performanceBreakdownSection">
                 <div class="card-blue rounded-2xl p-8 shadow-xl">
                     <h2 class="text-2xl md:text-3xl font-bold text-white mb-6" data-admin="breakdownTitle">Performance
                         Breakdown</h2>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
                         <div class="bg-blue-900/30 border border-blue-500/20 rounded-xl p-4">
                             <div class="text-blue-200/70 text-sm font-medium mb-2">Total Gain</div>
-                            <div class="text-blue-400 text-2xl font-bold" data-admin="totalGain">+2.98%</div>
+                            <div class="text-blue-400 text-2xl font-bold" data-admin="totalGain">
+                                {{ $currentWeek->performanceDetail->total_gain >= 0 ? '+' : '' }}{{ number_format($currentWeek->performanceDetail->total_gain, 2) }}%
+                            </div>
                         </div>
                         <div class="bg-blue-900/30 border border-blue-500/20 rounded-xl p-4">
                             <div class="text-blue-200/70 text-sm font-medium mb-2">Trade Accuracy</div>
-                            <div class="text-blue-400 text-2xl font-bold" data-admin="accuracy">83%</div>
+                            <div class="text-blue-400 text-2xl font-bold" data-admin="accuracy">
+                                {{ $currentWeek->performanceDetail->trade_accuracy ? number_format($currentWeek->performanceDetail->trade_accuracy, 0) . '%' : 'N/A' }}
+                            </div>
                         </div>
                         <div class="bg-blue-900/30 border border-blue-500/20 rounded-xl p-4">
                             <div class="text-blue-200/70 text-sm font-medium mb-2">Risk-Reward Ratio</div>
-                            <div class="text-blue-400 text-2xl font-bold" data-admin="riskReward">2.2</div>
+                            <div class="text-blue-400 text-2xl font-bold" data-admin="riskReward">
+                                {{ $currentWeek->performanceDetail->risk_reward_ratio ? number_format($currentWeek->performanceDetail->risk_reward_ratio, 1) : 'N/A' }}
+                            </div>
                         </div>
                         <div class="bg-emerald-900/30 border border-emerald-500/20 rounded-xl p-4">
                             <div class="text-emerald-200/70 text-sm font-medium mb-2">Largest Drawdown</div>
-                            <div class="text-red-400 text-2xl font-bold" data-admin="drawdown">-1.4%</div>
+                            <div class="text-red-400 text-2xl font-bold" data-admin="drawdown">
+                                {{ $currentWeek->performanceDetail->largest_drawdown ? number_format($currentWeek->performanceDetail->largest_drawdown, 2) . '%' : 'N/A' }}
+                            </div>
                         </div>
                     </div>
 
                     <div class="space-y-8">
+                        @if($currentWeek->performanceDetail->markets_traded && count($currentWeek->performanceDetail->markets_traded) > 0)
                         <div>
                             <h3 class="text-xl font-semibold text-white mb-4" data-admin="marketsTitle">Primary Markets
                                 Traded:</h3>
                             <div class="space-y-3">
+                                @foreach($currentWeek->performanceDetail->markets_traded as $market)
                                 <div
                                     class="bg-blue-900/20 border border-blue-500/10 rounded-lg px-4 py-3 flex items-center justify-between text-white/90">
-                                    <span data-admin="market1">XAUUSD</span>
-                                    <span class="text-blue-300 font-semibold" data-admin="market1Volume">55% of
-                                        volume</span>
+                                    <span data-admin="market{{ $loop->index + 1 }}">{{ $market['market'] ?? 'N/A' }}</span>
+                                    <span class="text-blue-300 font-semibold" data-admin="market{{ $loop->index + 1 }}Volume">
+                                        {{ $market['volume_percentage'] ?? 0 }}% of volume
+                                    </span>
                                 </div>
-                                <div
-                                    class="bg-blue-900/20 border border-blue-500/10 rounded-lg px-4 py-3 flex items-center justify-between text-white/90">
-                                    <span data-admin="market2">GBPUSD</span>
-                                    <span class="text-blue-300 font-semibold" data-admin="market2Volume">27% of
-                                        volume</span>
-                                </div>
-                                <div
-                                    class="bg-blue-900/20 border border-blue-500/10 rounded-lg px-4 py-3 flex items-center justify-between text-white/90">
-                                    <span data-admin="market3">EURUSD</span>
-                                    <span class="text-blue-300 font-semibold" data-admin="market3Volume">18% of
-                                        volume</span>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
+                        @endif
 
+                        @if($currentWeek->performanceDetail->daily_performance && count($currentWeek->performanceDetail->daily_performance) > 0)
                         <div>
                             <h3 class="text-xl font-semibold text-white mb-4" data-admin="dailySummaryTitle">Daily
                                 Performance Summary:</h3>
@@ -327,42 +255,26 @@
                                     <span class="text-right">Equity Balance</span>
                                 </div>
                                 <div class="divide-y divide-blue-500/10 text-white/90">
+                                    @foreach($currentWeek->performanceDetail->daily_performance as $day)
                                     <div class="grid grid-cols-3 px-4 py-3 items-center">
-                                        <span>Monday</span>
-                                        <span class="text-emerald-400 font-semibold text-center"
-                                            data-admin="mondayChange">+1.13%</span>
-                                        <span class="text-right" data-admin="mondayEquity">$101,130</span>
+                                        <span>{{ $day['day'] ?? 'N/A' }}</span>
+                                        <span class="font-semibold text-center {{ isset($day['change']) && strpos($day['change'], '-') !== false ? 'text-red-400' : 'text-emerald-400' }}"
+                                            data-admin="{{ strtolower($day['day'] ?? '') }}Change">
+                                            {{ $day['change'] ?? 'N/A' }}
+                                        </span>
+                                        <span class="text-right" data-admin="{{ strtolower($day['day'] ?? '') }}Equity">
+                                            {{ $day['equity'] ?? 'N/A' }}
+                                        </span>
                                     </div>
-                                    <div class="grid grid-cols-3 px-4 py-3 items-center">
-                                        <span>Tuesday</span>
-                                        <span class="text-emerald-400 font-semibold text-center"
-                                            data-admin="tuesdayChange">+1.04%</span>
-                                        <span class="text-right" data-admin="tuesdayEquity">$102,181.75</span>
-                                    </div>
-                                    <div class="grid grid-cols-3 px-4 py-3 items-center">
-                                        <span>Wednesday</span>
-                                        <span class="text-emerald-400 font-semibold text-center"
-                                            data-admin="wednesdayChange">+1.07%</span>
-                                        <span class="text-right" data-admin="wednesdayEquity">$103,275.10</span>
-                                    </div>
-                                    <div class="grid grid-cols-3 px-4 py-3 items-center">
-                                        <span>Thursday</span>
-                                        <span class="text-red-400 font-semibold text-center"
-                                            data-admin="thursdayChange">-0.30%</span>
-                                        <span class="text-right" data-admin="thursdayEquity">$102,965.27</span>
-                                    </div>
-                                    <div class="grid grid-cols-3 px-4 py-3 items-center">
-                                        <span>Friday</span>
-                                        <span class="text-emerald-400 font-semibold text-center"
-                                            data-admin="fridayChange">+0.04%</span>
-                                        <span class="text-right" data-admin="fridayEquity">$103,006.46</span>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </section>
+            @endif
 
             <!-- Outlook & Notices -->
             @if($pastPerformanceSection)

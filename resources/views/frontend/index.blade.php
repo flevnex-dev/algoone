@@ -436,9 +436,9 @@
     </section>
 
     <!-- How It Works Section - Circular Timeline -->
+    @if($howItWorks && $howItWorks->is_active)
     <section class="py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
-            @if($howItWorks && $howItWorks->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
@@ -507,14 +507,14 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
     </section>
+    @endif
 
+    @if($results && $results->is_active)
     <!-- Proven Track Record Section - Card Grid with    <!-- Results Section -->
     <section id="results" class="bg-gradient-to-br from-blue-900/40 via-black to-black py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
-            @if($results && $results->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <div
@@ -557,45 +557,48 @@
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" data-chart-id="account1"></canvas>
+                            <canvas class="account-chart" 
+                                    data-chart-id="account1"
+                                    data-chart-labels="{{ is_array($results->acc1_chart_labels ?? null) ? json_encode($results->acc1_chart_labels) : json_encode([]) }}"
+                                    data-chart-data="{{ is_array($results->acc1_chart_data ?? null) ? json_encode($results->acc1_chart_data) : json_encode([]) }}"></canvas>
                         </div>
                         <div class="space-y-6">
                             <div class="grid grid-cols-2 gap-6">
                                 <div>
                                     <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">+154.63%</div>
+                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc1_total_gain ?? '+0%' }}</div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">$252,124.82</div>
+                                    <div class="text-white text-2xl font-bold">{{ $results->acc1_balance ?? '$0.00' }}</div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">0.71%</div>
+                                    <div class="text-white font-bold">{{ $results->acc1_daily ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">14.86%</div>
+                                    <div class="text-white font-bold">{{ $results->acc1_monthly ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">3.91%</div>
+                                    <div class="text-white font-bold">{{ $results->acc1_drawdown ?? '0%' }}</div>
                                 </div>
                             </div>
                             <div class="pt-4 border-t border-white/20 space-y-3">
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">$154,639.72</span>
+                                    <span class="text-blue-400 font-bold">{{ $results->acc1_profit ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">$100,000.00</span>
+                                    <span class="text-white font-semibold">{{ $results->acc1_deposits ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">ICMarkets MT4</span>
+                                    <span class="text-white font-semibold">{{ $results->acc1_platform ?? 'N/A' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -624,45 +627,48 @@
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" data-chart-id="account2"></canvas>
+                            <canvas class="account-chart" 
+                                    data-chart-id="account2"
+                                    data-chart-labels="{{ is_array($results->acc2_chart_labels ?? null) ? json_encode($results->acc2_chart_labels) : json_encode([]) }}"
+                                    data-chart-data="{{ is_array($results->acc2_chart_data ?? null) ? json_encode($results->acc2_chart_data) : json_encode([]) }}"></canvas>
                         </div>
                         <div class="space-y-6">
                             <div class="grid grid-cols-2 gap-6">
                                 <div>
                                     <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">+325.97%</div>
+                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc2_total_gain ?? '+0%' }}</div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">$136,250.22</div>
+                                    <div class="text-white text-2xl font-bold">{{ $results->acc2_balance ?? '$0.00' }}</div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">0.08%</div>
+                                    <div class="text-white font-bold">{{ $results->acc2_daily ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">2.51%</div>
+                                    <div class="text-white font-bold">{{ $results->acc2_monthly ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">3.51%</div>
+                                    <div class="text-white font-bold">{{ $results->acc2_drawdown ?? '0%' }}</div>
                                 </div>
                             </div>
                             <div class="pt-4 border-t border-white/20 space-y-3">
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">$240,980.38</span>
+                                    <span class="text-blue-400 font-bold">{{ $results->acc2_profit ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">$250,000.00</span>
+                                    <span class="text-white font-semibold">{{ $results->acc2_deposits ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">Blueberry MT5</span>
+                                    <span class="text-white font-semibold">{{ $results->acc2_platform ?? 'N/A' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -691,45 +697,48 @@
                             </div>
                         </div>
                         <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" data-chart-id="account3"></canvas>
+                            <canvas class="account-chart" 
+                                    data-chart-id="account3"
+                                    data-chart-labels="{{ is_array($results->acc3_chart_labels ?? null) ? json_encode($results->acc3_chart_labels) : json_encode([]) }}"
+                                    data-chart-data="{{ is_array($results->acc3_chart_data ?? null) ? json_encode($results->acc3_chart_data) : json_encode([]) }}"></canvas>
                         </div>
                         <div class="space-y-6">
                             <div class="grid grid-cols-2 gap-6">
                                 <div>
                                     <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">+56.26%</div>
+                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc3_total_gain ?? '+0%' }}</div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">$110,904.26</div>
+                                    <div class="text-white text-2xl font-bold">{{ $results->acc3_balance ?? '$0.00' }}</div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">0.21%</div>
+                                    <div class="text-white font-bold">{{ $results->acc3_daily ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">4.03%</div>
+                                    <div class="text-white font-bold">{{ $results->acc3_monthly ?? '0%' }}</div>
                                 </div>
                                 <div>
                                     <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">2.89%</div>
+                                    <div class="text-white font-bold">{{ $results->acc3_drawdown ?? '0%' }}</div>
                                 </div>
                             </div>
                             <div class="pt-4 border-t border-white/20 space-y-3">
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">$420,115.63</span>
+                                    <span class="text-blue-400 font-bold">{{ $results->acc3_profit ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">$1,139,530.06</span>
+                                    <span class="text-white font-semibold">{{ $results->acc3_deposits ?? '$0.00' }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">ICMarkets MT4</span>
+                                    <span class="text-white font-semibold">{{ $results->acc3_platform ?? 'N/A' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -790,14 +799,14 @@
                     </a>
                 </div>
             </div>
-            @endif
         </div>
     </section>
+    @endif
 
+    @if($whyChoose && $whyChoose->is_active)
     <!-- Why Choose AlgoOne Section - Feature Grid -->
     <section class="py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
-            @if($whyChoose && $whyChoose->is_active)
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="why-choose-title">{{ $whyChoose->title }}</h2>
@@ -821,9 +830,9 @@
                     @endfor
                 </div>
             </div>
-            @endif
         </div>
     </section>
+    @endif
 
     @if($referral && $referral->is_active)
     <!-- Referral Program Section -->

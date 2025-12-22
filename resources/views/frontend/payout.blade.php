@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="pageTitle">Official Payouts - AlgoOne</title>
+    <title data-admin="pageTitle">Official Payouts - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -52,9 +57,13 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        @if(isset($setting) && $setting->logo)
+                            <img src="{{ asset($setting->logo) }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        @else
+                            <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        @endif
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
@@ -107,14 +116,13 @@
                             <div class="flex items-baseline gap-2">
                                 <span class="text-green-400 text-4xl md:text-5xl font-bold">$</span>
                                 <span class="text-green-400 text-4xl md:text-5xl font-bold"
-                                    data-admin="totalPaid">2,242,927</span>
+                                    data-admin="totalPaid">{{ number_format($totalPaid, 0) }}</span>
                             </div>
                         </div>
                         <div class="flex flex-col justify-center">
-                            <div class="text-blue-200/70 text-sm font-medium mb-3" data-admin="sinceLabel">Since January
-                                2024</div>
-                            <div class="text-white text-2xl md:text-3xl font-bold" data-admin="payoutsThisMonth">2
-                                Payouts This Month</div>
+                            <div class="text-blue-200/70 text-sm font-medium mb-3" data-admin="sinceLabel">Since January {{ now()->format('Y') }}</div>
+                            <div class="text-white text-2xl md:text-3xl font-bold" data-admin="payoutsThisMonth">{{ $payoutsThisMonth }}
+                                Payout{{ $payoutsThisMonth != 1 ? 's' : '' }} This Month</div>
                         </div>
                     </div>
                 </div>
@@ -124,30 +132,30 @@
                     <div class="card-blue rounded-2xl p-6 shadow-xl border-2 border-blue-500/40">
                         <div class="flex items-center gap-2 text-blue-200/70 text-sm font-medium mb-3">
                             <i class="fas fa-calendar text-blue-400"></i>
-                            <span data-admin="decemberLabel">December Total</span>
+                            <span data-admin="decemberLabel">{{ now()->format('F') }} Total</span>
                         </div>
-                        <div class="text-white text-3xl font-bold" data-admin="decemberTotal">$12,100</div>
+                        <div class="text-white text-3xl font-bold" data-admin="decemberTotal">${{ number_format($currentMonthTotal, 0) }}</div>
                     </div>
                     <div class="card-blue rounded-2xl p-6 shadow-xl border-2 border-green-500/40">
                         <div class="flex items-center gap-2 text-blue-200/70 text-sm font-medium mb-3">
                             <i class="fas fa-chart-line text-green-400"></i>
                             <span data-admin="averageLabel">Average Payout</span>
                         </div>
-                        <div class="text-white text-3xl font-bold" data-admin="averagePayout">$6,050</div>
+                        <div class="text-white text-3xl font-bold" data-admin="averagePayout">${{ number_format($averagePayout, 0) }}</div>
                     </div>
                     <div class="card-blue rounded-2xl p-6 shadow-xl border-2 border-yellow-500/40">
                         <div class="flex items-center gap-2 text-blue-200/70 text-sm font-medium mb-3">
                             <i class="fas fa-trophy text-yellow-400"></i>
                             <span data-admin="highestLabel">Highest Payout</span>
                         </div>
-                        <div class="text-white text-3xl font-bold" data-admin="highestPayout">$6,900</div>
+                        <div class="text-white text-3xl font-bold" data-admin="highestPayout">${{ number_format($highestPayout, 0) }}</div>
                     </div>
                     <div class="card-blue rounded-2xl p-6 shadow-xl border-2 border-blue-500/40">
                         <div class="flex items-center gap-2 text-blue-200/70 text-sm font-medium mb-3">
                             <i class="fas fa-users text-blue-400"></i>
                             <span data-admin="totalPayoutsLabel">Total Payouts</span>
                         </div>
-                        <div class="text-white text-3xl font-bold" data-admin="totalPayouts">2</div>
+                        <div class="text-white text-3xl font-bold" data-admin="totalPayouts">{{ $totalPayouts }}</div>
                     </div>
                 </div>
             </div>
@@ -157,11 +165,10 @@
                 <div class="card-blue rounded-2xl p-8 shadow-xl border border-blue-500/30">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
                         <div>
-                            <p class="text-blue-200/60 text-sm font-semibold uppercase tracking-wide">Cumulative Payout
+                            <p class="text-blue-200/60 text-sm font-semibold uppercase tracking-wide">Monthly Payout
                                 History</p>
-                            <h3 class="text-2xl md:text-3xl font-bold text-white mt-1">Growth Since January 2024</h3>
-                            <p class="text-blue-200/70 text-sm md:text-base mt-2">Live snapshot of total verified
-                                payouts over time.</p>
+                            <h3 class="text-2xl md:text-3xl font-bold text-white mt-1">Monthly Payouts - {{ now()->format('Y') }}</h3>
+                            <p class="text-blue-200/70 text-sm md:text-base mt-2">Month-wise payout amounts from January to December {{ now()->format('Y') }}.</p>
                         </div>
                         <div
                             class="flex items-center gap-3 bg-blue-600/15 border border-blue-500/30 rounded-full px-4 py-2">
@@ -178,10 +185,9 @@
 
             <!-- Detailed Payouts Table -->
             <div class="card-blue rounded-2xl p-8 shadow-xl mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2" data-admin="tableTitle">December 2025
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2" data-admin="tableTitle">{{ $latestMonth }}
                     Detailed Payouts</h2>
-                <p class="text-blue-300/60 text-sm mb-6" data-admin="tableNote">Note: 5k and 10k accounts not listed as
-                    both are under $500 in payouts</p>
+                <p class="text-blue-300/60 text-sm mb-6" data-admin="tableNote">Note: Only public payouts are displayed here</p>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
@@ -197,20 +203,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($latestMonthPayouts as $payout)
                             <tr class="border-b border-blue-500/10">
-                                <td class="text-white font-medium py-4 px-4" data-admin="payout1Name">Ronald B.</td>
-                                <td class="text-blue-200/80 py-4 px-4" data-admin="payout1Date">Dec 1, 2025</td>
-                                <td class="text-blue-200/80 py-4 px-4" data-admin="payout1Country">US</td>
-                                <td class="text-green-400 text-right font-bold py-4 px-4" data-admin="payout1Amount">
-                                    $5,200</td>
+                                <td class="text-white font-medium py-4 px-4" data-admin="payoutName">{{ $payout->name ?? 'N/A' }}</td>
+                                <td class="text-blue-200/80 py-4 px-4" data-admin="payoutDate">{{ $payout->payout_date->format('M d, Y') }}</td>
+                                <td class="text-blue-200/80 py-4 px-4" data-admin="payoutCountry">{{ $payout->country ?? 'N/A' }}</td>
+                                <td class="text-green-400 text-right font-bold py-4 px-4" data-admin="payoutAmount">
+                                    ${{ number_format($payout->amount, 2) }}</td>
                             </tr>
+                            @empty
                             <tr>
-                                <td class="text-white font-medium py-4 px-4" data-admin="payout2Name">Ronald C.</td>
-                                <td class="text-blue-200/80 py-4 px-4" data-admin="payout2Date">Dec 1, 2025</td>
-                                <td class="text-blue-200/80 py-4 px-4" data-admin="payout2Country">NZ</td>
-                                <td class="text-green-400 text-right font-bold py-4 px-4" data-admin="payout2Amount">
-                                    $6,900</td>
+                                <td colspan="4" class="text-center text-blue-200/60 py-8">No payouts available for this month</td>
                             </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -222,7 +227,13 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">© 2025 AlgoOne. All rights reserved.</p>
+                <p class="text-blue-200/60 text-sm" data-admin="copyright">
+                    @if(isset($setting) && $setting->copyright_text)
+                        {{ $setting->copyright_text }}
+                    @else
+                        © {{ date('Y') }} {{ $setting->site_title ?? 'AlgoOne' }}. All rights reserved.
+                    @endif
+                </p>
                 <div class="flex items-center gap-6">
                     <a href="{{ route('frontend.privacy') }}" class="text-blue-200/60 text-sm hover:text-blue-300 transition">Privacy
                         Policy</a>
@@ -230,6 +241,14 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
+            @if(isset($setting) && $setting->legal_disclaimer)
+            <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
+                <span class="text-red-400 text-base mt-1">⚠</span>
+                <div data-admin="disclaimer">
+                    {!! $setting->legal_disclaimer !!}
+                </div>
+            </div>
+            @else
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
                 <p data-admin="disclaimer">
@@ -240,11 +259,26 @@
                     not indicative of future results.
                 </p>
             </div>
+            @endif
         </div>
     </footer>
 
     <script src="{{ asset('assets/js/admin-config.js') }}"></script>
     <script src="{{ asset('assets/js/charts.js') }}"></script>
+    
+    <script>
+        // Pass chart data to JavaScript
+        window.payoutChartData = @json($cumulativeData);
+        window.payoutTotalPaid = {{ $totalPaid }};
+        window.payoutStats = {
+            totalPayouts: {{ $totalPayouts }},
+            averagePayout: {{ $averagePayout }},
+            highestPayout: {{ $highestPayout }},
+            currentMonthTotal: {{ $currentMonthTotal }},
+            payoutsThisMonth: {{ $payoutsThisMonth }}
+        };
+    </script>
+    
     <script src="{{ asset('assets/js/payout.js') }}"></script>
 </body>
 
