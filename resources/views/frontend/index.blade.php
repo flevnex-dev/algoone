@@ -160,7 +160,7 @@
                     <span
                         class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all"></span>
                 </a>
-                <a href="#signals"
+                <a href="{{ isset($signal) && $signal->join_button_link ? $signal->join_button_link : '#' }}" target="_blank"
                     class="text-white/90 hover:text-blue-400 text-sm font-semibold transition-all px-4 py-2 rounded-lg hover:bg-blue-600/20 relative group">
                     <span>Signals</span>
                     <span
@@ -177,10 +177,10 @@
                     Sign In
                 </a>
                 @endauth
-                <button
-                    class="accent-gradient text-white px-6 py-2 rounded-lg text-sm font-bold hover:shadow-2xl hover:shadow-blue-500/50 transition-all shadow-xl hover:scale-105 border border-blue-400/30">
+                <a href="{{ isset($hero) && $hero->primary_cta_link ? $hero->primary_cta_link : '#' }}" target="_blank"
+                    class="accent-gradient text-white px-6 py-2 rounded-lg text-sm font-bold hover:shadow-2xl hover:shadow-blue-500/50 transition-all shadow-xl hover:scale-105 border border-blue-400/30 inline-block">
                     <span data-admin="cta-button">Get Started</span>
-                </button>
+                </a>
             </div>
             <button
                 class="flex md:hidden text-white mobile-menu-toggle py-2 outline-none focus:outline-none active:outline-none rounded-lg transition-all items-center justify-center"
@@ -208,17 +208,17 @@
                     class="flex items-center gap-3 text-white/90 hover:text-blue-400 font-medium py-3 px-4 rounded-lg hover:bg-blue-600/20 transition-all">
                     <span>Live Results</span>
                 </a>
-                <a href="#signals"
+                <a href="{{ isset($signal) && $signal->join_button_link ? $signal->join_button_link : '#' }}" target="_blank"
                     class="flex items-center gap-3 text-white/90 hover:text-blue-400 font-medium py-3 px-4 rounded-lg hover:bg-blue-600/20 transition-all">
                     <span>Signals</span>
                 </a>
                 <a href="{{ route('frontend.sign-in') }}"
                     class="block text-white/90 hover:text-blue-400 font-medium py-3 px-4 rounded-lg hover:bg-blue-600/20 transition-all">Sign
                     In</a>
-                <button
-                    class="w-full accent-gradient text-white px-6 py-3 rounded-lg font-semibold hover:shadow-xl transition-all shadow-lg mt-4">
+                <a href="{{ isset($hero) && $hero->primary_cta_link ? $hero->primary_cta_link : '#' }}" target="_blank"
+                    class="w-full accent-gradient text-white px-6 py-3 rounded-lg font-semibold hover:shadow-xl transition-all shadow-lg mt-4 inline-block text-center">
                     <span data-admin="cta-button">Get Started</span>
-                </button>
+                </a>
             </div>
         </div>
     </header>
@@ -271,7 +271,7 @@
                 <!-- CTA Buttons -->
                 @if($hero)
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a href="{{ $hero->primary_cta_link ?? '#' }}">
+                    <a href="{{ $hero->primary_cta_link ?? '#' }}" target="_blank">
                         <button
                             class="accent-gradient text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/50 flex items-center justify-center gap-3 hover:scale-105 transition-all pulse-glow">
                             <span data-admin="primary-cta">{{ $hero->primary_cta_text }}</span>
@@ -315,23 +315,47 @@
                     <div class="space-y-6">
                         <div class="flex items-center justify-between">
                             <div class="text-blue-400 font-bold text-sm">Total Performance</div>
-                            <div class="text-white font-bold text-3xl">$815K+</div>
+                            <div class="text-white font-bold text-3xl">
+                                @if(isset($performanceStats) && $performanceStats['total_performance'] > 0)
+                                    ${{ number_format($performanceStats['total_performance'] / 1000, 0) }}K+
+                                @else
+                                    $815K+
+                                @endif
+                            </div>
                         </div>
                         <div class="h-3 bg-blue-600/20 rounded-full overflow-hidden">
                             <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
-                                style="width: 85%"></div>
+                                style="width: {{ isset($performanceStats) ? number_format($performanceStats['progress_percentage'], 0) : 85 }}%"></div>
                         </div>
                         <div class="grid grid-cols-3 gap-4">
                             <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">226%</div>
+                                <div class="text-blue-400 font-bold text-2xl">
+                                    @if(isset($performanceStats) && $performanceStats['avg_gain'] > 0)
+                                        {{ number_format($performanceStats['avg_gain'], 0) }}%
+                                    @else
+                                        226%
+                                    @endif
+                                </div>
                                 <div class="text-white/70 text-xs">Avg Gain</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">4.9%</div>
+                                <div class="text-blue-400 font-bold text-2xl">
+                                    @if(isset($performanceStats) && $performanceStats['avg_drawdown'] > 0)
+                                        {{ number_format($performanceStats['avg_drawdown'], 1) }}%
+                                    @else
+                                        4.9%
+                                    @endif
+                                </div>
                                 <div class="text-white/70 text-xs">Drawdown</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">500+</div>
+                                <div class="text-blue-400 font-bold text-2xl">
+                                    @if(isset($performanceStats) && $performanceStats['total_traders'] > 0)
+                                        {{ number_format($performanceStats['total_traders']) }}+
+                                    @else
+                                        500+
+                                    @endif
+                                </div>
                                 <div class="text-white/70 text-xs">Traders</div>
                             </div>
                         </div>
@@ -420,7 +444,7 @@
                 </div>
 
                 <div class="text-center">
-                    <a href="{{ $signal->join_button_link ?? '#' }}">
+                    <a href="{{ $signal->join_button_link ?? '#' }}" target="_blank">
                         <button
                             class="accent-gradient text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center gap-4 mx-auto hover:scale-105 pulse-glow">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
@@ -907,7 +931,7 @@
                 <p class="text-2xl md:text-3xl text-white/90 mb-12" data-admin="cta-section-description">
                     {{ $cta->description }}
                 </p>
-                <a href="{{ $cta->button_link }}"
+                <a href="{{ $cta->button_link }}" 
                     class="inline-flex items-center gap-3 bg-black text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all border-2 border-white/20 pulse-glow">
                     <span data-admin="create-account-button">{{ $cta->button_text }}</span>
                     <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-6 h-6">

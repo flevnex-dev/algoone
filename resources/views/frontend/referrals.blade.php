@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-admin="pageTitle">Referral Program - {{ $setting->site_title ?? 'AlgoOne' }}</title>
+    @if(isset($setting) && $setting->favicon)
+        <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
+    @else
+        <link rel="icon" href="{{ asset('assets/image/favicon.png') }}" type="image/x-icon">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
@@ -67,9 +72,9 @@
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">AlgoOne</span>
+                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
@@ -85,12 +90,7 @@
                     <i class="fas fa-arrow-left"></i>
                     <span>Back</span>
                 </a>
-                <button
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg flex items-center gap-2"
-                    data-admin="navJoinSignals">
-                    <i class="fas fa-bolt"></i>
-                    <span>Join Signals</span>
-                </button>
+                
                 <a href="{{ route('frontend.sign-in') }}"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all flex items-center gap-2"
                     data-admin="navSignOut">

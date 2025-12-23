@@ -22,7 +22,72 @@ class FrontendController extends Controller
         $referral = \App\Models\ReferralSection::where('is_active', true)->first();
         $cta = \App\Models\CtaSection::where('is_active', true)->first();
         $setting = \App\Models\SiteSetting::first();
-        return view('frontend.index', compact('topbar', 'hero', 'signal', 'howItWorks', 'results', 'whyChoose', 'referral', 'cta', 'setting'));
+        
+        // Calculate performance stats from past performance data
+        $performanceStats = $this->calculatePerformanceStats();
+        
+        return view('frontend.index', compact('topbar', 'hero', 'signal', 'howItWorks', 'results', 'whyChoose', 'referral', 'cta', 'setting', 'performanceStats'));
+    }
+    
+    /**
+     * Calculate performance statistics from trading weeks
+     */
+    private function calculatePerformanceStats()
+    {
+        // Get all active trading weeks with their performance details
+        $tradingWeeks = \App\Models\TradingWeek::where('is_active', true)
+            ->with('performanceDetail')
+            ->get();
+        
+        // Calculate total performance (sum of all account sizes)
+        $totalPerformance = $tradingWeeks->sum(function($week) {
+            return $week->account_size ?? 0;
+        });
+        
+        // Calculate average gain from all weeks
+        $avgGain = 0;
+        $weeksWithGain = $tradingWeeks->filter(function($week) {
+            return $week->total_gain !== null && $week->total_gain > 0;
+        });
+        if ($weeksWithGain->count() > 0) {
+            $avgGain = $weeksWithGain->avg('total_gain');
+        }
+        
+        // Calculate average drawdown from performance details
+        $avgDrawdown = 0;
+        $drawdowns = $tradingWeeks->filter(function($week) {
+            return $week->performanceDetail && 
+                   $week->performanceDetail->largest_drawdown !== null && 
+                   $week->performanceDetail->largest_drawdown != 0;
+        })->map(function($week) {
+            return abs($week->performanceDetail->largest_drawdown);
+        });
+        if ($drawdowns->count() > 0) {
+            $avgDrawdown = $drawdowns->avg();
+        }
+        
+        // Count total traders (users with role 'trader' or all users)
+        $totalTraders = \App\Models\User::where('role', 'trader')->count();
+        // If no traders with role, count all users
+        if ($totalTraders == 0) {
+            $totalTraders = \App\Models\User::count();
+        }
+        
+        // Calculate progress percentage (based on a target, e.g., 1000K = 100%)
+        // You can adjust the target as needed
+        $targetPerformance = 1000000; // $1M target
+        $progressPercentage = 85; // Default
+        if ($targetPerformance > 0 && $totalPerformance > 0) {
+            $progressPercentage = min(100, max(0, ($totalPerformance / $targetPerformance) * 100));
+        }
+        
+        return [
+            'total_performance' => $totalPerformance,
+            'avg_gain' => round($avgGain, 1),
+            'avg_drawdown' => round($avgDrawdown, 1),
+            'total_traders' => $totalTraders,
+            'progress_percentage' => round($progressPercentage, 0),
+        ];
     }
 
     public function signIn()
