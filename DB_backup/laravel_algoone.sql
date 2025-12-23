@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 22, 2025 at 11:37 AM
+-- Generation Time: Dec 23, 2025 at 09:01 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.28
 
@@ -83,8 +83,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('algoone-cache-fakhrul606399@gmail.com|127.0.0.1', 'i:1;', 1766317718),
-('algoone-cache-fakhrul606399@gmail.com|127.0.0.1:timer', 'i:1766317718;', 1766317718);
+('algoone-cache-fakhrul606399@gmail.com|127.0.0.1', 'i:1;', 1766480216),
+('algoone-cache-fakhrul606399@gmail.com|127.0.0.1:timer', 'i:1766480216;', 1766480216);
 
 -- --------------------------------------------------------
 
@@ -169,7 +169,7 @@ CREATE TABLE `hero_sections` (
 --
 
 INSERT INTO `hero_sections` (`id`, `badge_text`, `title`, `description`, `rating`, `traders_count`, `primary_cta_text`, `signin_cta_text`, `myfxbook_text`, `payout_text`, `is_active`, `created_at`, `updated_at`, `primary_cta_link`, `signin_cta_link`, `myfxbook_link`, `payout_link`) VALUES
-(1, 'WE ONLY MAKE MONEY WHEN YOU MAKE MONEY', '<span class=\"block mb-2\">Professional</span><span class=\"block bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent\">Prop Firm Trading</span>', 'We pass your prop firm challenges with precision and get you funded. Zero risk - if we fail, we refund you + $500.', '5.0 Rating', '500+ traders', 'Start Trading Now', 'Sign In', 'Check Myfxbook', 'Check Payouts', 1, '2025-12-18 01:12:35', '2025-12-18 01:18:40', '/', '/sign-in', '/official-myfxbooks', '/payout');
+(1, 'WE ONLY MAKE MONEY WHEN YOU MAKE MONEY', '<span class=\"block mb-2\">Professional</span><span class=\"block bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent\">Prop Firm Trading</span>', 'We pass your prop firm challenges with precision and get you funded. Zero risk - if we fail, we refund you + $500.', '5.0 Rating', '500+ traders', 'Start Trading Now', 'Sign In', 'Check Myfxbook', 'Check Payouts', 1, '2025-12-18 01:12:35', '2025-12-23 02:57:14', 'https://t.me/+FRMjk8mHMGMzN2U0', '/sign-in', '/official-myfxbooks', '/payout');
 
 -- --------------------------------------------------------
 
@@ -600,6 +600,13 @@ CREATE TABLE `referral_stats` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `referral_stats`
+--
+
+INSERT INTO `referral_stats` (`id`, `user_id`, `total_clicks`, `unique_visitors`, `conversions`, `conversion_rate`, `referral_count`, `created_at`, `updated_at`) VALUES
+(2, 5, 0, 0, 0, 0.00, 0, '2025-12-23 02:38:53', '2025-12-23 02:38:53');
+
 -- --------------------------------------------------------
 
 --
@@ -688,8 +695,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('uUfBWHuesFI2Md6vJP3adTYALmJjwJuWlj7eXSaZ', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiZm15TWVLMzBpVHBRWndGOVZtdXE2WHhZZkl6b1BrcEJ6dmxXajZ0diI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hcGkvd2Vlay84IjtzOjU6InJvdXRlIjtzOjEzOiJhcGkud2Vlay5kYXRhIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NjtzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NjYzODQzOTM7fX0=', 1766402739),
-('Yxi0KIHwiAgJUXEyGmmb0PTcq0UFMdgbWpKcLkqi', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSHo5bWVPRzVDbW1UU2t3YzloU09ESndvQ0ZjZFNYTnBsR1ZudkY4eCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9lbWFpbC1jb25maWd1cmF0aW9uIjtzOjU6InJvdXRlIjtzOjMxOiJhZG1pbi5lbWFpbC1jb25maWd1cmF0aW9uLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NjYzODAzOTg7fX0=', 1766403242);
+('20cfbIa3mzoX7UkeksqRPL12NXK8AweP9Oh1iEdG', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiR2o1VHRTZm9QQ24xR2JLNk0xSk9TVVl4THNFRDhpb0V5VEZ3WWtWWCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czoxNDoiZnJvbnRlbmQuaW5kZXgiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc2NjQ4MDE2MTt9fQ==', 1766480407);
 
 -- --------------------------------------------------------
 
@@ -719,7 +725,7 @@ CREATE TABLE `signal_sections` (
 --
 
 INSERT INTO `signal_sections` (`id`, `badge_text`, `title`, `description`, `win_rate`, `risk_reward`, `primary_market`, `why_different_title`, `why_different_text`, `join_button_text`, `join_button_link`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'FREE SIGNALS CHANNEL', '<p>Elite Trading Signals<br><span class=\"bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent\">Completely Free</span></p>', '<p><span style=\"font-size: 18px;\">Join our exclusive signals channel where we share professional </span></p><p><span style=\"font-size: 18px;\">GBPJPY trades with an exceptional track record.</span></p>', '80%', '1:3', 'GBPJPY', 'Why We\'re Different', '<p>While others charge hundreds or thousands for signal services, we believe everyone deserves a fair opportunity to start somewhere with trading. Our consistently profitable signals are shared completely free because we know that success in trading shouldn\'t be locked behind paywalls. Join thousands of traders who trust our analysis and execution on GBPJPY – one of the most reliable currency pairs with excellent volatility and liquidity.</p>', 'Join Free Signals Now', '/', 1, '2025-12-18 01:21:46', '2025-12-18 02:30:30');
+(1, 'FREE SIGNALS CHANNEL', '<p>Elite Trading Signals<br><span class=\"bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent\">Completely Free</span></p>', '<p><span style=\"font-size: 18px;\">Join our exclusive signals channel where we share professional </span></p><p><span style=\"font-size: 18px;\">GBPJPY trades with an exceptional track record.</span></p>', '80%', '1:3', 'GBPJPY', 'Why We\'re Different', '<p>While others charge hundreds or thousands for signal services, we believe everyone deserves a fair opportunity to start somewhere with trading. Our consistently profitable signals are shared completely free because we know that success in trading shouldn\'t be locked behind paywalls. Join thousands of traders who trust our analysis and execution on GBPJPY – one of the most reliable currency pairs with excellent volatility and liquidity.</p>', 'Join Free Signals Now', 'https://t.me/+FRMjk8mHMGMzN2U0', 1, '2025-12-18 01:21:46', '2025-12-23 02:57:20');
 
 -- --------------------------------------------------------
 
@@ -902,7 +908,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `status`, `referral_code`, `phone`, `address`, `city`, `state`, `zip`, `country`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Md. Fakhrul Islam Talukder', 'fakhrulislamtalukder@gmail.com', NULL, '$2y$12$T2c7jyNVe1XIjg7Rkt0Aoup2Z2RGqlNEbZi8OEtothsKrhhMgBE8S', 'admin', 'active', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-16 23:40:27', '2025-12-16 23:40:27'),
-(5, 'Fakhrul', 'fakhrul606399@gmail.com', NULL, '$2y$12$24oT44DJnllNsqv5b2QK4.5eK20PXN9Bkhyp/YOnPT0DOP8ot4hSm', 'trader', 'active', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'D6MZCSSolr5cMkoaVLjTxsnRYP0k0LsdskTKTViT1S6N7OtDNihpk8682euT', '2025-12-21 05:18:26', '2025-12-21 05:41:38'),
+(5, 'Fakhrul', 'fakhrul606399@gmail.com', NULL, '$2y$12$24oT44DJnllNsqv5b2QK4.5eK20PXN9Bkhyp/YOnPT0DOP8ot4hSm', 'trader', 'active', '1132D301', NULL, NULL, NULL, NULL, NULL, NULL, 'LACIRgoRP7SLOn2WpZ8yfgboZC3f366bSkIm6wQYqdS47NXq5UNZklu41ODg', '2025-12-21 05:18:26', '2025-12-23 02:38:53'),
 (6, 'Parash', 'dianahostparash@gmail.com', NULL, '$2y$12$FBqC3SHjqde00yMY/G91ReaFN.NYKv1AltODdjytwiYWXaE2rxe1q', 'trader', 'active', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-21 23:36:38', '2025-12-21 23:36:38');
 
 -- --------------------------------------------------------
@@ -1319,7 +1325,7 @@ ALTER TABLE `referral_sections`
 -- AUTO_INCREMENT for table `referral_stats`
 --
 ALTER TABLE `referral_stats`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `results_sections`

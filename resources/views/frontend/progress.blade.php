@@ -140,12 +140,7 @@
                 <a href="{{ route('frontend.buy-funding') }}"
                     class="text-blue-300 hover:text-blue-100 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-600/10 transition-all"
                     data-admin="navBuyFunding">Buy Funding</a>
-                <button
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-xl hover:shadow-blue-500/50 transition-all shadow-lg flex items-center gap-2"
-                    data-admin="navJoinSignals">
-                    <i class="fas fa-bolt"></i>
-                    <span>Join Signals</span>
-                </button>
+                
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
                     <button type="submit"
