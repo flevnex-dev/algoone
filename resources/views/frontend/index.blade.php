@@ -945,7 +945,7 @@
     <footer class="bg-black py-12 border-t-2 border-blue-500/20">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-white/60 text-sm" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
+                <p class="text-white/60 text-sm" >{{ $setting->copyright_text ?? '© 2025 All rights reserved.' }}</p>
                 <div class="flex items-center gap-8">
                     <a href="{{ route('frontend.privacy') }}"
                         class="text-white/60 text-sm hover:text-blue-400 transition-colors font-medium">Privacy
@@ -958,7 +958,7 @@
             <div class="bg-black/50 px-6 py-8 mt-10 rounded-2xl border border-blue-500/20">
                 <div class="max-w-5xl mx-auto flex items-start gap-4 text-xs text-white/60 leading-relaxed">
                     <span class="text-red-400 text-xl mt-1">⚠</span>
-                    <div data-admin="legal-disclaimer">
+                    <div >
                         {!! $setting->legal_disclaimer ?? '' !!}
                     </div>
                 </div>

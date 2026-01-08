@@ -139,7 +139,7 @@
     <footer class="bg-black/50 backdrop-blur-sm border-t border-blue-500/20 py-6 mt-12 relative z-10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs md:text-sm text-blue-300/60" data-admin="copyright">{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
+                <p class="text-xs md:text-sm text-blue-300/60" >{{ $setting->copyright_text ?? '© 2025 AlgoOne. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6 text-sm text-blue-300/60">
                     <a href="{{ route('frontend.privacy') }}" class="hover:text-blue-400 transition">Privacy Policy</a>
                     <a href="{{ route('frontend.terms-conditions') }}" class="hover:text-blue-400 transition">Terms & Conditions</a>

@@ -227,7 +227,7 @@
     <footer class="bg-slate-900/50 border-t border-blue-500/20 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-blue-200/60 text-sm" data-admin="copyright">
+                <p class="text-blue-200/60 text-sm" >
                     @if(isset($setting) && $setting->copyright_text)
                         {{ $setting->copyright_text }}
                     @else
