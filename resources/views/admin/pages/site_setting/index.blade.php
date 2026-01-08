@@ -30,17 +30,33 @@
                     <h5 class="mb-0">Manage Global Settings</h5>
                 </div>
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('admin.site-settings.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Site Title</label>
-                                <input type="text" name="site_title" class="form-control" value="{{ $setting->site_title }}">
+                                <input type="text" name="site_title" class="form-control @error('site_title') is-invalid @enderror" value="{{ old('site_title', $setting->site_title) }}">
+                                @error('site_title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Logo</label>
-                                <input type="file" name="logo" class="form-control">
+                                <input type="file" name="logo" class="form-control @error('logo') is-invalid @enderror">
+                                @error('logo')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                                 @if($setting->logo)
                                     <div class="mt-2">
                                         <img src="{{ asset($setting->logo) }}" alt="Logo" style="max-height: 50px;">
@@ -49,7 +65,10 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Favicon</label>
-                                <input type="file" name="favicon" class="form-control">
+                                <input type="file" name="favicon" class="form-control @error('favicon') is-invalid @enderror">
+                                @error('favicon')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                                 @if($setting->favicon)
                                     <div class="mt-2">
                                         <img src="{{ asset($setting->favicon) }}" alt="Favicon" style="max-height: 32px;">
@@ -60,12 +79,18 @@
 
                         <div class="mb-3">
                             <label class="form-label">Copyright Text</label>
-                            <input type="text" name="copyright_text" class="form-control" value="{{ $setting->copyright_text }}">
+                            <input type="text" name="copyright_text" class="form-control @error('copyright_text') is-invalid @enderror" value="{{ old('copyright_text', $setting->copyright_text) }}">
+                            @error('copyright_text')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Legal Disclaimer (HTML allowed)</label>
-                            <textarea name="legal_disclaimer" class="form-control summernote" rows="5">{{ $setting->legal_disclaimer }}</textarea>
+                            <label class="form-label">Legal Disclaimer</label>
+                            <textarea name="legal_disclaimer" class="form-control summernote @error('legal_disclaimer') is-invalid @enderror" rows="5">{{ old('legal_disclaimer', $setting->legal_disclaimer) }}</textarea>
+                            @error('legal_disclaimer')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <hr class="my-4">
@@ -74,19 +99,28 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember_me_enabled" value="1" id="rememberMeEnabled" {{ ($setting->remember_me_enabled ?? true) ? 'checked' : '' }}>
+                                    <input class="form-check-input @error('remember_me_enabled') is-invalid @enderror" type="checkbox" name="remember_me_enabled" value="1" id="rememberMeEnabled" {{ old('remember_me_enabled', $setting->remember_me_enabled ?? true) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="rememberMeEnabled">
                                         Enable Remember Me Feature
                                     </label>
+                                    @error('remember_me_enabled')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Remember Me Text</label>
-                                <input type="text" name="remember_me_text" class="form-control" value="{{ $setting->remember_me_text ?? 'Remember me' }}">
+                                <input type="text" name="remember_me_text" class="form-control @error('remember_me_text') is-invalid @enderror" value="{{ old('remember_me_text', $setting->remember_me_text ?? 'Remember me') }}">
+                                @error('remember_me_text')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Remember Duration (Days)</label>
-                                <input type="number" name="remember_me_duration_days" class="form-control" value="{{ $setting->remember_me_duration_days ?? 30 }}" min="1" max="365">
+                                <input type="number" name="remember_me_duration_days" class="form-control @error('remember_me_duration_days') is-invalid @enderror" value="{{ old('remember_me_duration_days', $setting->remember_me_duration_days ?? 30) }}" min="1" max="365">
+                                @error('remember_me_duration_days')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                                 <small class="text-muted">How many days to keep user logged in (1-365 days)</small>
                             </div>
                         </div>

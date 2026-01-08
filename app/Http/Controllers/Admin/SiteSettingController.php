@@ -23,6 +23,9 @@ class SiteSettingController extends Controller
             'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,ico|max:1024',
             'copyright_text' => 'nullable|string',
             'legal_disclaimer' => 'nullable|string',
+            'remember_me_enabled' => 'nullable|boolean',
+            'remember_me_text' => 'nullable|string|max:255',
+            'remember_me_duration_days' => 'nullable|numeric|min:1|max:365',
         ]);
 
         $setting = SiteSetting::first();

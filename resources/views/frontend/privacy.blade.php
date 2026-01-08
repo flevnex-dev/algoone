@@ -49,7 +49,7 @@
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg border border-blue-500/30">
                         <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" class="w-10 h-10 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <a href="{{ route('frontend.index') }}" class="text-blue-300 hover:text-blue-100 text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-600/10 transition-all border border-blue-500/30 flex items-center gap-2">

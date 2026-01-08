@@ -121,7 +121,7 @@
                         class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
                         <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">

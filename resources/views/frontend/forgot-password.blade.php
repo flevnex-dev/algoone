@@ -56,7 +56,7 @@
                         <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-14 h-14 object-contain" />
                     </div>
                 </div>
-                <h2 class="text-5xl font-extrabold text-white mb-2" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</h2>
+                <h2 class="text-5xl font-extrabold text-white mb-2" >{{ $setting->site_title ?? 'AlgoOne' }}</h2>
                 <p class="text-blue-400/80 font-medium">Reset your password</p>
             </div>
 

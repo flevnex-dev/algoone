@@ -239,13 +239,13 @@
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-8 leading-tight" data-admin="hero-title">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight" data-admin="hero-title">
                     {!! $hero->title !!}
                 </h1>
                 @endif
 
                 @if($hero && $hero->description)
-                <p class="text-2xl md:text-3xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto"
+                <p class="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto"
                     data-admin="hero-description">
                     {{ $hero->description }}
                 </p>

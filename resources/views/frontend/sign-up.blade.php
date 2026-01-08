@@ -55,7 +55,7 @@
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-12 h-12 object-contain" />
                 </div>
                 <div>
-                    <span class="text-4xl font-extrabold text-white block" data-admin="brandName">{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-4xl font-extrabold text-white block" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                     <span class="text-sm text-blue-400/80 font-medium">Professional Trading</span>
                 </div>
             </div>
