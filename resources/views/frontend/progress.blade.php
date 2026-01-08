@@ -43,55 +43,121 @@
         }
 
         .card-white {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-            border: 2px solid rgba(11, 100, 244, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         .header-blue {
-            background: linear-gradient(135deg, #000000 0%, #0f172a 100%);
-            border-bottom: 2px solid rgba(11, 100, 244, 0.4);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(11, 100, 244, 0.2);
         }
 
-        .accent-blue {
-            color: #0B64F4;
+        /* Vertical Timeline Styles */
+        .timeline-container {
+            position: relative;
+            padding-left: 3rem;
         }
 
-        .progress-slider {
-            -webkit-appearance: none;
-            appearance: none;
+        .timeline-line {
+            position: absolute;
+            left: 1.5rem;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: rgba(11, 100, 244, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .timeline-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: rgba(11, 100, 244, 0.2);
-            outline: none;
+            height: 0%;
+            background: linear-gradient(to bottom, #3577F5, #0B64F4);
+            box-shadow: 0 0 15px rgba(53, 119, 245, 0.5);
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .progress-slider::-webkit-slider-thumb {
+        .step-node {
+            position: relative;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-indicator {
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            border: 2px solid rgba(11, 100, 244, 0.2);
+            z-index: 10;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-0.25rem); /* Adjust for slightly larger size */
+        }
+
+        .step-node.completed .step-indicator {
+            background: #10b981;
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .step-node.in-progress .step-indicator {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            transform: scale(1.1);
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-node.active .step-card {
+            background: rgba(59, 130, 246, 0.05);
+            border-color: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-glow {
+            filter: drop-shadow(0 0 8px rgba(53, 119, 245, 0.4));
+        }
+
+        /* Slider Customization */
+        #progressSlider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
             width: 24px;
             height: 24px;
+            background: #fff;
+            border: 4px solid #3b82f6;
             border-radius: 50%;
-            background: #0B64F4;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(11, 100, 244, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            transition: all 0.2s ease;
         }
 
-        .progress-slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #0B64F4;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 10px rgba(11, 100, 244, 0.5);
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, #0B64F4 0%, #2563EB 100%);
-            height: 8px;
-            border-radius: 5px;
-            transition: width 0.3s ease;
+        #progressSlider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
         }
     </style>
 </head>
@@ -193,8 +259,8 @@
                     <!-- Warning Box -->
                     <div class="bg-blue-600/20 border border-blue-500/40 rounded-xl p-6 mb-8">
                         <div class="flex items-start gap-4">
-                            <i class="fas fa-exclamation-triangle text-yellow-400 text-2xl mt-1"></i>
-                            <p class="text-white font-bold text-lg" data-admin="warningText">
+                            <i class="fas fa-exclamation-triangle text-yellow-400 text-2xl"></i>
+                            <p class="text-white font-bold text-lg mt-1" data-admin="warningText">
                                 {!! $guideline->warning_text !!}
                             </p>
                         </div>
@@ -230,152 +296,129 @@
             </section>
             @endif
 
-            <!-- Your Progress Section -->
+            <!-- Redesigned Progress Section -->
             <section class="mb-12">
-                <div class="card-white rounded-2xl p-8 shadow-xl">
-                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-admin="progressTitle">
-                        Your Progress
-                    </h2>
-                    <p class="text-gray-600 text-sm mb-6" data-admin="progressSubtitle">
-                        Track your journey through the phases
-                    </p>
-
-                    <!-- Progress Bar -->
-                    <div class="mb-8">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-gray-700 font-semibold" data-admin="progressLabel">Progress</span>
-                            <span class="text-blue-600 font-bold text-lg" data-admin="progressPercentage">{{ $userProgress->progress_percentage ?? 33 }}%</span>
+                <div class="card-white rounded-3xl p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight" data-admin="progressTitle">
+                                Your Progress
+                            </h2>
+                            <p class="text-blue-200/50 text-base" data-admin="progressSubtitle">
+                                Track your journey through the phases
+                            </p>
                         </div>
-                        <div class="relative" style="height: 24px;">
-                            <!-- The blue progress bar, ending under the thumb (ball) -->
-                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-3 bg-gray-200 rounded-full overflow-hidden"></div>
-                            <div id="progressFillBar"
-                                class="absolute left-0 top-1/2 -translate-y-1/2 h-3 rounded-full"
-                                style="background: linear-gradient(90deg, #3577F5 0%, #0B64F4 100%);
-                                        width: {{ $userProgress->progress_percentage ?? 33 }}%; min-width: 0; max-width: 100%;">
-                            </div>
-                            <!-- Custom thumb (ball) -->
-                            <div id="progressThumb"
-                                class="absolute top-1/2 -translate-y-1/2"
-                                style="left: calc({{ $userProgress->progress_percentage ?? 33 }}% - 12px); z-index:20;">
-                                <div style="width: 24px; height: 24px; background: #fff; border: 3px solid #3577F5; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 2px 8px 0 rgba(53,119,245,0.13);"></div>
-                            </div>
-                            <!-- Actual range slider (for accessibility/interaction) -->
-                            <input type="range" min="0" max="100" value="{{ $userProgress->progress_percentage ?? 33 }}"
-                                class="absolute top-0 left-0 w-full h-6 opacity-0 cursor-pointer z-30"
-                                id="progressSlider"
-                                style="appearance:none; background: transparent;">
+                        <div class="bg-blue-600/10 border border-blue-500/20 px-6 py-3 rounded-2xl backdrop-blur-md">
+                            <span class="text-blue-400 font-medium mr-2" data-admin="progressLabel">Current Status:</span>
+                            <span class="text-white font-bold text-2xl" data-admin="progressPercentage">{{ $userProgress->progress_percentage ?? 33 }}%</span>
                         </div>
-                        <p class="text-gray-500 text-xs mt-2" data-admin="sliderInstruction">
-                            Drag the slider to explore different progress levels.
-                        </p>
                     </div>
 
-                    <!-- Phase Steps -->
-                    <div class="space-y-6">
+                    <!-- Enhanced Progress Interaction -->
+                    <div class="mb-16">
+                        <div class="relative pt-6">
+                            <!-- Background Track -->
+                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-4 bg-slate-800 rounded-full border border-white/5"></div>
+                            
+                            <!-- Animated Glow Track -->
+                            <div id="progressFillBar"
+                                class="absolute left-0 top-1/2 -translate-y-1/2 h-4 rounded-full transition-all duration-500 ease-out progress-glow"
+                                style="background: linear-gradient(90deg, #3577F5 0%, #0B64F4 100%);
+                                        width: {{ $userProgress->progress_percentage ?? 33 }}%;">
+                                <div class="absolute inset-0 bg-white/20 animate-pulse rounded-full"></div>
+                            </div>
+
+                            <!-- Interactive Slider -->
+                            <input type="range" min="0" max="100" value="{{ $userProgress->progress_percentage ?? 33 }}"
+                                class="absolute top-0 left-0 w-full h-12 opacity-0 cursor-pointer z-30"
+                                id="progressSlider"
+                                style="appearance:none; background: transparent;">
+                            
+                            <!-- Legend Marks -->
+                            <div class="flex justify-between mt-6 px-1">
+                                <span class="text-xs font-bold text-slate-500">0%</span>
+                                <span class="text-xs font-bold text-slate-500">25%</span>
+                                <span class="text-xs font-bold text-slate-500">50%</span>
+                                <span class="text-xs font-bold text-slate-500">75%</span>
+                                <span class="text-xs font-bold text-slate-500">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Premium Timeline -->
+                    <div class="timeline-container max-w-4xl mx-auto">
+                        <div class="timeline-line">
+                            <div id="timelineFill" class="timeline-line-fill"></div>
+                        </div>
+
                         @php
-                            // Ensure minimum 33% progress (Step 1 completed by default)
                             $progress = max($userProgress->progress_percentage ?? 33, 33);
-                            $step1Completed = $progress >= 33; // Step 1 completes at 33% (default completed)
-                            $step2Completed = $progress >= 66; // Step 2 completes at 66%
-                            $step3Completed = $progress >= 100; // Step 3 completes at 100%
-                            $step3InProgress = $progress >= 66 && $progress < 100; // Step 3 in progress between 66-100%
+                            $steps = [
+                                [
+                                    'title' => 'Step 1: Pass Phase 1',
+                                    'subtitle' => 'Achieve 10% profit target.',
+                                    'threshold' => 33,
+                                    'id' => 'step1'
+                                ],
+                                [
+                                    'title' => 'Step 2: Pass Phase 2',
+                                    'subtitle' => 'Achieve 5% profit target.',
+                                    'threshold' => 66,
+                                    'id' => 'step2'
+                                ],
+                                [
+                                    'title' => 'Step 3: Live Phase',
+                                    'subtitle' => 'First payout requires 35 trading days',
+                                    'requirement' => 'Complete 35 trading days before first payout eligibility.',
+                                    'threshold' => 100,
+                                    'id' => 'step3'
+                                ]
+                            ];
                         @endphp
-                        
-                        <!-- Step 1: Pass Phase 1 -->
-                        <div
-                            class="bg-white border-2 {{ $step1Completed ? 'border-green-300' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 {{ $step1Completed ? 'bg-green-500' : 'bg-gray-300 border-2 border-gray-400' }} rounded-full flex items-center justify-center">
-                                    @if($step1Completed)
-                                        <i class="fas fa-check text-white text-xl"></i>
-                                    @else
-                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
-                                    @endif
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <h3 class="text-xl font-bold text-gray-900" data-admin="step1Title">Step 1: Pass
-                                            Phase 1</h3>
-                                        @if($step1Completed)
-                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step1-completed"
-                                                data-admin="step1Completed">Completed</span>
-                                        @elseif($progress > 0 && $progress < 33)
-                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step1-in-progress"
-                                                data-admin="step1InProgress">In Progress</span>
-                                        @endif
-                                    </div>
-                                    <p class="text-gray-600 text-sm" data-admin="step1Subtitle">Achieve 10% profit
-                                        target.</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Step 2: Pass Phase 2 -->
-                        <div
-                            class="bg-white border-2 {{ $step2Completed ? 'border-green-300' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 {{ $step2Completed ? 'bg-green-500' : 'bg-gray-300 border-2 border-gray-400' }} rounded-full flex items-center justify-center">
-                                    @if($step2Completed)
-                                        <i class="fas fa-check text-white text-xl"></i>
+                        @foreach($steps as $index => $step)
+                            @php
+                                $isCompleted = $progress >= $step['threshold'];
+                                $isLastStep = $index === count($steps) - 1;
+                                $isInProgress = !$isCompleted && ($index === 0 || $progress >= $steps[$index-1]['threshold']);
+                            @endphp
+                            
+                            <div class="step-node {{ $isCompleted ? 'completed' : ($isInProgress ? 'in-progress' : '') }} {{ $isInProgress ? 'active' : '' }}" 
+                                 data-threshold="{{ $step['threshold'] }}" id="{{ $step['id'] }}_container">
+                                <div class="step-indicator">
+                                    @if($isCompleted)
+                                        <i class="fas fa-check text-white text-2xl"></i>
+                                    @elseif($isInProgress)
+                                        <i class="fas fa-spinner fa-spin text-white text-2xl"></i>
                                     @else
-                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
+                                        <i class="fas fa-lock text-slate-600 text-lg"></i>
                                     @endif
                                 </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <h3 class="text-xl font-bold text-gray-900" data-admin="step2Title">Step 2:
-                                            Pass Phase 2</h3>
-                                        @if($step2Completed)
-                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step2-completed"
-                                                data-admin="step2Completed">Completed</span>
-                                        @elseif($progress >= 33 && $progress < 66)
-                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step2-in-progress"
-                                                data-admin="step2InProgress">In Progress</span>
-                                        @endif
+                                
+                                <div class="step-card">
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-1">
+                                                <h3 class="text-xl font-bold text-white" data-admin="{{ $step['id'] }}Title">
+                                                    {{ $step['title'] }}
+                                                </h3>
+                                                @if($isCompleted)
+                                                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded-md border border-emerald-500/30" 
+                                                          data-admin="{{ $step['id'] }}Completed">Completed</span>
+                                                @elseif($isInProgress)
+                                                    <span class="bg-blue-500/20 text-blue-400 text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded-md border border-blue-500/30" 
+                                                          data-admin="{{ $step['id'] }}InProgress">In Progress</span>
+                                                @endif
+                                            </div>
+                                            <p class="text-slate-400 text-sm" data-admin="{{ $step['id'] }}Subtitle">{{ $step['subtitle'] }}</p>
+                                            @if(isset($step['requirement']))
+                                                <p class="text-slate-500 text-xs mt-2 italic" data-admin="{{ $step['id'] }}Requirement">{{ $step['requirement'] }}</p>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <p class="text-gray-600 text-sm" data-admin="step2Subtitle">Achieve 5% profit
-                                        target.</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Step 3: Live Phase -->
-                        <div
-                            class="bg-white border-2 {{ $step3Completed || $step3InProgress ? 'border-blue-400' : 'border-gray-200' }} rounded-xl p-6 hover:border-blue-400 transition-all">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex-shrink-0 w-12 h-12 {{ $step3Completed ? 'bg-green-500' : ($step3InProgress ? 'bg-blue-500' : 'bg-gray-300 border-2 border-gray-400') }} rounded-full flex items-center justify-center">
-                                    @if($step3Completed)
-                                        <i class="fas fa-check text-white text-xl"></i>
-                                    @elseif($step3InProgress)
-                                        <i class="fas fa-spinner fa-spin text-white text-xl"></i>
-                                    @else
-                                        <div class="w-6 h-6 bg-gray-400 rounded-full"></div>
-                                    @endif
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <h3 class="text-xl font-bold text-gray-900" data-admin="step3Title">Step 3:
-                                            Live Phase</h3>
-                                        @if($step3Completed)
-                                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full step3-completed"
-                                                data-admin="step3Completed">Completed</span>
-                                        @endif
-                                        @if($step3InProgress || $step3Completed)
-                                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full step3-in-progress"
-                                                data-admin="step3InProgress">In Progress</span>
-                                        @endif
-                                    </div>
-                                    <p class="text-gray-600 text-sm mb-2" data-admin="step3Subtitle">First payout
-                                        requires 35 trading days</p>
-                                    <p class="text-gray-500 text-xs" data-admin="step3Requirement">Complete 35 trading
-                                        days before first payout eligibility.</p>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </section>
@@ -407,150 +450,79 @@
 
     <script src="{{ asset('assets/js/admin-config.js') }}"></script>
     <script>
-        // Progress slider functionality with dynamic step updates
+        // Progress interaction functionality
         const progressSlider = document.getElementById('progressSlider');
         const progressFillBar = document.getElementById('progressFillBar');
-        const progressThumb = document.getElementById('progressThumb');
+        const timelineFill = document.getElementById('timelineFill');
         const progressPercentage = document.querySelector('[data-admin="progressPercentage"]');
 
-        function updateStepStatus(progress) {
-            const progressValue = parseInt(progress, 10);
+        function updateUI(progressValue) {
+            progressValue = parseInt(progressValue, 10);
             
-            // Step 1: Pass Phase 1 (completes at 33%)
-            const step1Icon = document.querySelector('.step1-icon') || document.querySelector('[data-admin="step1Title"]')?.closest('.rounded-xl')?.querySelector('.rounded-full');
-            const step1Card = document.querySelector('[data-admin="step1Title"]')?.closest('.rounded-xl');
-            const step1Completed = step1Card?.querySelector('.step1-completed');
-            const step1InProgress = step1Card?.querySelector('.step1-in-progress');
-            const step1IconDiv = step1Card?.querySelector('.rounded-full');
-            
-            // Step 1: Always completed by default (33%+)
-            if (progressValue >= 33) {
-                // Step 1 Completed
-                if (step1IconDiv) {
-                    step1IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
-                    step1IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
+            // Update Top Progress Bar
+            if (progressFillBar) progressFillBar.style.width = progressValue + '%';
+            if (progressPercentage) progressPercentage.textContent = progressValue + '%';
+
+            // Update Vertical Timeline Line
+            if (timelineFill) timelineFill.style.height = progressValue + '%';
+
+            // Update Steps
+            const steps = [
+                { id: 'step1', threshold: 33 },
+                { id: 'step2', threshold: 66 },
+                { id: 'step3', threshold: 100 }
+            ];
+
+            steps.forEach((step, index) => {
+                const container = document.getElementById(`${step.id}_container`);
+                if (!container) return;
+
+                const indicator = container.querySelector('.step-indicator');
+                const badgeContainer = container.querySelector('.flex.items-center.gap-3.mb-1');
+                
+                const isCompleted = progressValue >= step.threshold;
+                const isInProgress = !isCompleted && (index === 0 || progressValue >= steps[index-1].threshold);
+
+                // Reset
+                container.classList.remove('completed', 'in-progress', 'active');
+                if (indicator) indicator.innerHTML = '<i class="fas fa-lock text-slate-600 text-lg"></i>';
+                
+                // Clear existing badges
+                const existingBadges = container.querySelectorAll('span[data-admin$="Completed"], span[data-admin$="InProgress"]');
+                existingBadges.forEach(b => b.remove());
+
+                if (isCompleted) {
+                    container.classList.add('completed');
+                    if (indicator) indicator.innerHTML = '<i class="fas fa-check text-white text-2xl"></i>';
+                    
+                    if (badgeContainer) {
+                        const badge = document.createElement('span');
+                        badge.className = 'bg-emerald-500/20 text-emerald-400 text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded-md border border-emerald-500/30';
+                        badge.setAttribute('data-admin', `${step.id}Completed`);
+                        badge.textContent = 'Completed';
+                        badgeContainer.appendChild(badge);
+                    }
+                } else if (isInProgress) {
+                    container.classList.add('in-progress', 'active');
+                    if (indicator) indicator.innerHTML = '<i class="fas fa-spinner fa-spin text-white text-2xl"></i>';
+                    
+                    if (badgeContainer) {
+                        const badge = document.createElement('span');
+                        badge.className = 'bg-blue-500/20 text-blue-400 text-[10px] uppercase tracking-widest font-black px-2 py-1 rounded-md border border-blue-500/30';
+                        badge.setAttribute('data-admin', `${step.id}InProgress`);
+                        badge.textContent = 'In Progress';
+                        badgeContainer.appendChild(badge);
+                    }
                 }
-                if (step1Card) {
-                    step1Card.classList.remove('border-gray-200');
-                    step1Card.classList.add('border-green-300');
-                }
-                if (step1Completed) step1Completed.style.display = 'inline-block';
-                if (step1InProgress) step1InProgress.style.display = 'none';
-            } else {
-                // Step 1 should not be below 33% (default completed), but handle edge case
-                if (step1IconDiv) {
-                    step1IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
-                    step1IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
-                }
-                if (step1Card) {
-                    step1Card.classList.remove('border-gray-200');
-                    step1Card.classList.add('border-green-300');
-                }
-                if (step1Completed) step1Completed.style.display = 'inline-block';
-                if (step1InProgress) step1InProgress.style.display = 'none';
-            }
-            
-            // Step 2: Pass Phase 2 (completes at 66%)
-            const step2Card = document.querySelector('[data-admin="step2Title"]')?.closest('.rounded-xl');
-            const step2Completed = step2Card?.querySelector('.step2-completed');
-            const step2InProgress = step2Card?.querySelector('.step2-in-progress');
-            const step2IconDiv = step2Card?.querySelector('.rounded-full');
-            
-            if (progressValue >= 66) {
-                // Step 2 Completed
-                if (step2IconDiv) {
-                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
-                    step2IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
-                }
-                if (step2Card) {
-                    step2Card.classList.remove('border-gray-200');
-                    step2Card.classList.add('border-green-300');
-                }
-                if (step2Completed) step2Completed.style.display = 'inline-block';
-                if (step2InProgress) step2InProgress.style.display = 'none';
-            } else if (progressValue >= 33) {
-                // Step 2 In Progress
-                if (step2IconDiv) {
-                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
-                    step2IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
-                }
-                if (step2Card) {
-                    step2Card.classList.remove('border-green-300');
-                    step2Card.classList.add('border-gray-200');
-                }
-                if (step2Completed) step2Completed.style.display = 'none';
-                if (step2InProgress) step2InProgress.style.display = 'inline-block';
-            } else {
-                // Step 2 Not Started (shouldn't happen as Step 1 is default completed at 33%)
-                if (step2IconDiv) {
-                    step2IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
-                    step2IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
-                }
-                if (step2Card) {
-                    step2Card.classList.remove('border-green-300');
-                    step2Card.classList.add('border-gray-200');
-                }
-                if (step2Completed) step2Completed.style.display = 'none';
-                if (step2InProgress) step2InProgress.style.display = 'none';
-            }
-            
-            // Step 3: Live Phase (completes at 100%)
-            const step3Card = document.querySelector('[data-admin="step3Title"]')?.closest('.rounded-xl');
-            const step3Completed = step3Card?.querySelector('.step3-completed');
-            const step3InProgress = step3Card?.querySelector('.step3-in-progress');
-            const step3IconDiv = step3Card?.querySelector('.rounded-full');
-            
-            if (progressValue >= 100) {
-                // Step 3 Completed
-                if (step3IconDiv) {
-                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center';
-                    step3IconDiv.innerHTML = '<i class="fas fa-check text-white text-xl"></i>';
-                }
-                if (step3Card) {
-                    step3Card.classList.remove('border-gray-200', 'border-blue-400');
-                    step3Card.classList.add('border-blue-400');
-                }
-                if (step3Completed) step3Completed.style.display = 'inline-block';
-                if (step3InProgress) step3InProgress.style.display = 'inline-block';
-            } else if (progressValue >= 66) {
-                // Step 3 In Progress
-                if (step3IconDiv) {
-                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center';
-                    step3IconDiv.innerHTML = '<i class="fas fa-spinner fa-spin text-white text-xl"></i>';
-                }
-                if (step3Card) {
-                    step3Card.classList.remove('border-gray-200');
-                    step3Card.classList.add('border-blue-400');
-                }
-                if (step3Completed) step3Completed.style.display = 'none';
-                if (step3InProgress) step3InProgress.style.display = 'inline-block';
-            } else {
-                // Step 3 Not Started
-                if (step3IconDiv) {
-                    step3IconDiv.className = 'flex-shrink-0 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-2 border-gray-400';
-                    step3IconDiv.innerHTML = '<div class="w-6 h-6 bg-gray-400 rounded-full"></div>';
-                }
-                if (step3Card) {
-                    step3Card.classList.remove('border-blue-400');
-                    step3Card.classList.add('border-gray-200');
-                }
-                if (step3Completed) step3Completed.style.display = 'none';
-                if (step3InProgress) step3InProgress.style.display = 'none';
-            }
+            });
         }
 
-        if (progressSlider && progressFillBar && progressThumb && progressPercentage) {
-            // Initialize step status on page load
-            updateStepStatus(progressSlider.value);
+        if (progressSlider) {
+            // Initialize
+            updateUI(progressSlider.value);
             
             progressSlider.addEventListener('input', function () {
-                const value = parseInt(this.value, 10);
-                progressFillBar.style.width = value + '%';
-                progressThumb.style.left = `calc(${value}% - 12px)`;
-                progressPercentage.textContent = value + '%';
-                
-                // Update step statuses dynamically
-                updateStepStatus(value);
+                updateUI(this.value);
             });
         }
     </script>
