@@ -250,7 +250,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/admin-config.js') }}"></script>  --}}
     
     <script>
         document.addEventListener("DOMContentLoaded", () => {

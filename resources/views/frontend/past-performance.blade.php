@@ -328,7 +328,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/admin-config.js') }}"></script>  --}}
     <script src="{{ asset('assets/js/past-performance.js') }}"></script>
 </body>
 

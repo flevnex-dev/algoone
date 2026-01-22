@@ -322,7 +322,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/admin-config.js') }}"></script>  --}}
     <script>
         // Chart.js Configuration - Dynamic Data
         const ctx = document.getElementById('profitChart');

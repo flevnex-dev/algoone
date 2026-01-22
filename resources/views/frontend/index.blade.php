@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-admin="site-title">{{ $setting->site_title ?? 'AlgoOne - Professional Prop Firm Trading Management' }}</title>
+    <title >{{ $setting->site_title ?? 'AlgoOne - Professional Prop Firm Trading Management' }}</title>
     @if(isset($setting) && $setting->favicon)
         <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon">
     @else
@@ -125,9 +125,9 @@
                 <div class="flex items-center justify-center gap-3 text-sm font-medium">
                     <img src="{{ asset('assets/image/megaphone.png') }}" alt="megaphone" class="w-5 h-5 animate-bounce">
                     <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-6 h-6">
-                    <span data-admin="banner-text">{!! $topbar->content !!}</span>
+                    <span>{!! $topbar->content !!}</span>
                     @if($topbar->extra_content)
-                    <span class="hidden md:inline" data-admin="banner-text-extra">{!! $topbar->extra_content !!}</span>
+                    <span class="hidden md:inline" >{!! $topbar->extra_content !!}</span>
                     @endif
                 </div>
             </div>
@@ -145,7 +145,7 @@
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="AlgoOne Logo"
                         class="block max-w-full max-h-full object-contain p-2" decoding="async" loading="eager" />
                 </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight" data-admin="site-name">{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                <span class="text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
             </div>
             <div class="hidden md:flex items-center space-x-3">
                 <a href="{{ route('frontend.past-performance') }}"
@@ -179,7 +179,7 @@
                 @endauth
                 <a href="{{ isset($hero) && $hero->primary_cta_link ? $hero->primary_cta_link : '#' }}" target="_blank"
                     class="accent-gradient text-white px-6 py-2 rounded-lg text-sm font-bold hover:shadow-2xl hover:shadow-blue-500/50 transition-all shadow-xl hover:scale-105 border border-blue-400/30 inline-block">
-                    <span data-admin="cta-button">Get Started</span>
+                    <span >Get Started</span>
                 </a>
             </div>
             <button
@@ -217,7 +217,7 @@
                     In</a>
                 <a href="{{ isset($hero) && $hero->primary_cta_link ? $hero->primary_cta_link : '#' }}" target="_blank"
                     class="w-full accent-gradient text-white px-6 py-3 rounded-lg font-semibold hover:shadow-xl transition-all shadow-lg mt-4 inline-block text-center">
-                    <span data-admin="cta-button">Get Started</span>
+                    <span >Get Started</span>
                 </a>
             </div>
         </div>
@@ -233,20 +233,20 @@
                 <div
                     class="inline-flex bg-blue-600/30 border-2 border-blue-500/50 text-blue-400 px-8 py-4 rounded-full text-sm font-bold mb-8 items-center shadow-2xl gap-3 glass-effect float-animation">
                     <img src="{{ asset('assets/image/verified.png') }}" alt="check" class="w-6 h-6" style="object-fit: contain;">
-                    <span data-admin="hero-badge">{{ $hero->badge_text }}</span>
+                    <span >{{ $hero->badge_text }}</span>
                 </div>
                 @endif
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight" data-admin="hero-title">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight" >
                     {!! $hero->title !!}
                 </h1>
                 @endif
 
                 @if($hero && $hero->description)
                 <p class="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto"
-                    data-admin="hero-description">
+                    >
                     {{ $hero->description }}
                 </p>
                 @endif
@@ -967,7 +967,7 @@
     </footer>
 
     <script src="{{ asset('assets/js/charts.js') }}"></script>
-    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/admin-config.js') }}"></script>  --}}
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-toggle');

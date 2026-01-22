@@ -448,7 +448,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('assets/js/admin-config.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/admin-config.js') }}"></script>  --}}
     <script>
         // Progress interaction functionality
         const progressSlider = document.getElementById('progressSlider');
