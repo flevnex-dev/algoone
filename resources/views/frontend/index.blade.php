@@ -141,11 +141,11 @@
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div
-                    class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center shadow-xl border border-blue-400/30 transform hover:rotate-12 transition-transform pulse-glow">
-                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="AlgoOne Logo"
-                        class="block max-w-full max-h-full object-contain p-2" decoding="async" loading="eager" />
+                    class="w-12 h-12">
+                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
+                        class="block max-w-full max-h-full p-2" decoding="async" loading="eager" />
                 </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                <span class="text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
             </div>
             <div class="hidden md:flex items-center space-x-3">
                 <a href="{{ route('frontend.past-performance') }}"
@@ -231,7 +231,7 @@
                 <!-- Floating Badge -->
                 @if($hero && $hero->badge_text)
                 <div
-                    class="inline-flex bg-blue-600/30 border-2 border-blue-500/50 text-blue-400 px-8 py-4 rounded-full text-sm font-bold mb-8 items-center shadow-2xl gap-3 glass-effect float-animation">
+                    class="inline-flex bg-blue-600/30 border-2 border-blue-500/50 text-blue-400 px-8 py-3.5 rounded-full text-sm font-bold mb-8 items-center shadow-2xl gap-3 glass-effect float-animation">
                     <img src="{{ asset('assets/image/verified.png') }}" alt="check" class="w-6 h-6" style="object-fit: contain;">
                     <span >{{ $hero->badge_text }}</span>
                 </div>
@@ -239,7 +239,7 @@
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight" >
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight" >
                     {!! $hero->title !!}
                 </h1>
                 @endif
@@ -308,60 +308,6 @@
                 </div>
                 @endif
             </div>
-
-            <!-- Floating Performance Card -->
-            <div class="absolute top-1/2 right-10 transform -translate-y-1/2 hidden xl:block">
-                <div class="glass-effect border-2 border-blue-500/30 rounded-3xl p-8 shadow-2xl tilt-card w-80">
-                    <div class="space-y-6">
-                        <div class="flex items-center justify-between">
-                            <div class="text-blue-400 font-bold text-sm">Total Performance</div>
-                            <div class="text-white font-bold text-3xl">
-                                @if(isset($performanceStats) && $performanceStats['total_performance'] > 0)
-                                    ${{ number_format($performanceStats['total_performance'] / 1000, 0) }}K+
-                                @else
-                                    $815K+
-                                @endif
-                            </div>
-                        </div>
-                        <div class="h-3 bg-blue-600/20 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
-                                style="width: {{ isset($performanceStats) ? number_format($performanceStats['progress_percentage'], 0) : 85 }}%"></div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">
-                                    @if(isset($performanceStats) && $performanceStats['avg_gain'] > 0)
-                                        {{ number_format($performanceStats['avg_gain'], 0) }}%
-                                    @else
-                                        226%
-                                    @endif
-                                </div>
-                                <div class="text-white/70 text-xs">Avg Gain</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">
-                                    @if(isset($performanceStats) && $performanceStats['avg_drawdown'] > 0)
-                                        {{ number_format($performanceStats['avg_drawdown'], 1) }}%
-                                    @else
-                                        4.9%
-                                    @endif
-                                </div>
-                                <div class="text-white/70 text-xs">Drawdown</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-blue-400 font-bold text-2xl">
-                                    @if(isset($performanceStats) && $performanceStats['total_traders'] > 0)
-                                        {{ number_format($performanceStats['total_traders']) }}+
-                                    @else
-                                        500+
-                                    @endif
-                                </div>
-                                <div class="text-white/70 text-xs">Traders</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -389,7 +335,7 @@
                     @endif
 
                     @if($signal->description)
-                    <p class="text-xl md:text-2xl text-gray-700 mb-16 max-w-3xl mx-auto"
+                    <p class="text-base md:text-lg lg:text-lg text-gray-700 mb-16 max-w-3xl mx-auto"
                         data-admin="signals-description">
                         {!! $signal->description !!}
                     </p>
