@@ -420,12 +420,12 @@
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12 md:mb-20">
-                    <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-8 py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
+                    <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-4 md:px-8 py-2 md:py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
                         <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-5 md:w-7 h-5 md:h-7">
                         <span data-admin="how-it-works-badge">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
-                    <p class="text-xl md:text-3xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-2 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
+                    <p class="text-base md:text-3xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
                 </div>
 
                 <!-- Circular Timeline Layout -->
@@ -504,15 +504,15 @@
     <section id="results" class="bg-gradient-to-br from-blue-900/40 via-black to-black py-32 md:py-40 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-24">
+                <div class="text-center mb-8 md:mb-24">
                     <div
                         class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-6 py-2.5 md:py-3.5 rounded-full text-sm font-bold mb-8 shadow-xl glass-effect">
-                        <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-5 md:w-7 h-7 md:h-7">
+                        <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-4 md:w-7 h-4 md:h-7">
                         <span data-admin="performance-badge">{{ $results->badge_text }}</span>
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8" data-admin="track-record-title">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 md:mb-8" data-admin="track-record-title">
                         {{ $results->title }}</h2>
-                    <p class="text-lg md:text-2xl text-white/70 mb-6" data-admin="track-record-subtitle">
+                    <p class="text-base md:text-2xl text-white/70 mb-4 md:mb-6" data-admin="track-record-subtitle">
                         {{ $results->subtitle }}
                     </p>
                     <p class="text-sm text-white/60 italic" data-admin="track-record-disclaimer">
@@ -768,7 +768,7 @@
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
                     <a href="{{ $results->myfxbook_link }}"
-                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
+                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-2.5 md:py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round"></path>
@@ -780,7 +780,7 @@
                         <span data-admin="myfxbook-link-bottom">{{ $results->myfxbook_text }}</span>
                     </a>
                     <a href="{{ $results->payout_link }}"
-                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
+                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-2.5 md:py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <i class="fas fa-dollar-sign text-blue-400 text-xl"></i>
                         <span data-admin="payout-link-bottom">{{ $results->payout_text }}</span>
                     </a>
@@ -795,11 +795,11 @@
     <section class="py-28 md:py-32 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16 md:mb-20">
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 md:mb-8 leading-tight" data-admin="why-choose-title">
+                <div class="text-center mb-8 md:mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-5 md:mb-7 leading-tight" data-admin="why-choose-title">
                         {{ $whyChoose->title }}
                     </h2>
-                    <p class="text-lg md:text-2xl lg:text-3xl text-white/70 mb-2 md:mb-0 leading-relaxed" data-admin="why-choose-subtitle">
+                    <p class="text-base md:text-2xl lg:text-3xl text-white/70 leading-relaxed" data-admin="why-choose-subtitle">
                         {{ $whyChoose->subtitle }}
                     </p>
                 </div>
