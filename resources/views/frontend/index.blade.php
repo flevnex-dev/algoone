@@ -239,7 +239,7 @@
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight" >
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight" style="line-height: 1.15;">
                     {!! $hero->title !!}
                 </h1>
                 @endif
@@ -792,12 +792,16 @@
 
     @if($whyChoose && $whyChoose->is_active)
     <!-- Why Choose AlgoOne Section - Feature Grid -->
-    <section class="py-32 md:py-40 relative">
+    <section class="py-28 md:py-32 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-24">
-                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="why-choose-title">{{ $whyChoose->title }}</h2>
-                    <p class="text-3xl md:text-4xl text-white/70" data-admin="why-choose-subtitle">{{ $whyChoose->subtitle }}</p>
+                <div class="text-center mb-16 md:mb-20">
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 md:mb-8 leading-tight" data-admin="why-choose-title">
+                        {{ $whyChoose->title }}
+                    </h2>
+                    <p class="text-lg md:text-2xl lg:text-3xl text-white/70 mb-2 md:mb-0 leading-relaxed" data-admin="why-choose-subtitle">
+                        {{ $whyChoose->subtitle }}
+                    </p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @for($i = 1; $i <= 6; $i++)
@@ -805,8 +809,8 @@
                         <div
                             class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
                             <div
-                                class="w-20 h-20 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                                <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-12 h-12">
+                                class="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
+                                <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-9 h-9">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature{{ $i }}-title">{{ $whyChoose->{"card{$i}_title"} }}
                             </h3>
