@@ -141,9 +141,9 @@
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div
-                    class="w-12 h-12">
+                    class="w-9 h-9">
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
-                        class="block max-w-full max-h-full p-2" decoding="async" loading="eager" />
+                        class="" decoding="async" loading="eager" />
                 </div>
                 <span class="text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
             </div>
@@ -231,8 +231,8 @@
                 <!-- Floating Badge -->
                 @if($hero && $hero->badge_text)
                 <div
-                    class="inline-flex bg-blue-600/30 border-2 border-blue-500/50 text-blue-400 px-8 py-3.5 rounded-full text-sm font-bold mb-8 items-center shadow-2xl gap-3 glass-effect float-animation">
-                    <img src="{{ asset('assets/image/verified.png') }}" alt="check" class="w-6 h-6" style="object-fit: contain;">
+                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-3 md:px-8 py-3.5 rounded-full text-xs md:text-sm md:font-semibold mb-8 items-center shadow-2xl gap-3 glass-effect">
+                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-5 md:w-6 h-5 md:h-6">
                     <span >{{ $hero->badge_text }}</span>
                 </div>
                 @endif
@@ -245,14 +245,14 @@
                 @endif
 
                 @if($hero && $hero->description)
-                <p class="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed max-w-3xl mx-auto"
+                <p class="text-base md:text-lg lg:text-xl text-white/80 mb-6 leading-relaxed max-w-3xl mx-auto"
                     >
                     {{ $hero->description }}
                 </p>
                 @endif
 
                 <!-- Rating Stars -->
-                <div class="flex items-center justify-center gap-8 mb-12">
+                <div class="flex items-center justify-center gap-8 mb-8">
                     <div class="flex items-center space-x-1">
                         <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
                         <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
@@ -271,16 +271,25 @@
                 <!-- CTA Buttons -->
                 @if($hero)
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <a href="{{ $hero->primary_cta_link ?? '#' }}" target="_blank">
+                    <a 
+                        href="{{ $hero->primary_cta_link ?? '#' }}" 
+                        target="_blank"
+                        class="w-full sm:w-auto"
+                    >
                         <button
-                            class="accent-gradient text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/50 flex items-center justify-center gap-3 hover:scale-105 transition-all pulse-glow">
+                            class="w-full sm:w-auto accent-gradient text-white px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3"
+                        >
                             <span data-admin="primary-cta">{{ $hero->primary_cta_text }}</span>
-                            <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-5 h-5 animate-bounce">
+                            <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-5 h-4 md:h-5 ">
                         </button>
                     </a>
-                    <a href="{{ $hero->signin_cta_link ?? route('frontend.sign-in') }}">
+                    <a 
+                        href="{{ $hero->signin_cta_link ?? route('frontend.sign-in') }}"
+                        class="w-full sm:w-auto"
+                    >
                         <button
-                            class="glass-effect text-white border-2 border-blue-500/50 px-12 py-5 rounded-2xl font-bold text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl">
+                            class="w-full sm:w-auto glass-effect text-white border-2 border-blue-500/50 px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl"
+                        >
                             <span data-admin="signin-button">{{ $hero->signin_cta_text }}</span>
                         </button>
                     </a>
