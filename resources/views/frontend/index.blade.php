@@ -401,7 +401,7 @@
                 <div class="text-center">
                     <a href="{{ $signal->join_button_link ?? '#' }}" target="_blank">
                         <button
-                            class="accent-gradient text-white px-6 py-3 md:py-3.5 rounded-2xl font-bold text-base md:text-lg shadow-2xl flex items-center gap-3 md:gap-4 mx-auto">
+                            class="accent-gradient text-white px-6 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center gap-3 md:gap-4 mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
                                 <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                             </svg>
@@ -416,30 +416,32 @@
 
     <!-- How It Works Section - Circular Timeline -->
     @if($howItWorks && $howItWorks->is_active)
-    <section class="py-32 md:py-40 relative">
+    <section class="py-24 md:py-32 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-24">
-                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
-                    <p class="text-3xl md:text-4xl text-white/70" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
+                <div class="text-center mb-12 md:mb-20">
+                    <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-8 py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
+                        <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-5 md:w-7 h-5 md:h-7">
+                        <span data-admin="how-it-works-badge">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
+                    <p class="text-xl md:text-3xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
                 </div>
 
                 <!-- Circular Timeline Layout -->
                 <div class="relative">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                         <!-- Step 1 -->
-                        <div class="relative">
-                            <div
-                                class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-10 hover:border-blue-500 hover:scale-105 transition-all h-full">
-                                <div class="flex flex-col items-center text-center mb-6">
-                                    <div
-                                        class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset($howItWorks->step1_image ?? 'assets/image/check-mark.png') }}" alt="Step 1 Icon" class="w-14 h-14">
+                        <div class="relative h-full flex flex-col">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                                <div class="flex flex-col items-center text-center mb-4 md:mb-6">
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
+                                        <img src="{{ asset($howItWorks->step1_image ?? 'assets/image/check-mark.png') }}" alt="Step 1 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
-                                    <div class="text-8xl font-black text-blue-600/20 mb-4">01</div>
+                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">01</div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step1-title">{{ $howItWorks->step1_title }}</h3>
-                                <div class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-4 text-center" data-admin="step1-title">{{ $howItWorks->step1_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-base md:text-lg text-center flex-1 mb-4 md:mb-8"
                                     data-admin="step1-description">
                                     {!! $howItWorks->step1_description !!}
                                 </div>
@@ -447,18 +449,16 @@
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="relative">
-                            <div
-                                class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-10 hover:border-blue-500 hover:scale-105 transition-all h-full">
-                                <div class="flex flex-col items-center text-center mb-6">
-                                    <div class="text-8xl font-black text-blue-600/20 mb-4">02</div>
-                                    <div
-                                        class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset($howItWorks->step2_image ?? 'assets/image/trend.png') }}" alt="Step 2 Icon" class="w-14 h-14">
+                        <div class="relative h-full flex flex-col">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                                <div class="flex flex-col items-center text-center mb-4 md:mb-6">
+                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">02</div>
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
+                                        <img src="{{ asset($howItWorks->step2_image ?? 'assets/image/trend.png') }}" alt="Step 2 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step2-title">{{ $howItWorks->step2_title }}</h3>
-                                <div class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-4 text-center" data-admin="step2-title">{{ $howItWorks->step2_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-base md:text-lg text-center flex-1 mb-4 md:mb-8"
                                     data-admin="step2-description">
                                     {!! $howItWorks->step2_description !!}
                                 </div>
@@ -466,23 +466,32 @@
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="relative">
-                            <div
-                                class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-10 hover:border-blue-500 hover:scale-105 transition-all h-full">
-                                <div class="flex flex-col items-center text-center mb-6">
-                                    <div
-                                        class="w-24 h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-6 pulse-glow">
-                                        <img src="{{ asset($howItWorks->step3_image ?? 'assets/image/security.png') }}" alt="Step 3 Icon" class="w-14 h-14">
+                        <div class="relative h-full flex flex-col">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                                <div class="flex flex-col items-center text-center mb-4 md:mb-6">
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
+                                        <img src="{{ asset($howItWorks->step3_image ?? 'assets/image/security.png') }}" alt="Step 3 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
-                                    <div class="text-8xl font-black text-blue-600/20 mb-4">03</div>
+                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">03</div>
                                 </div>
-                                <h3 class="text-3xl font-bold text-white mb-6 text-center" data-admin="step3-title">{{ $howItWorks->step3_title }}</h3>
-                                <div class="text-white/80 leading-relaxed text-lg text-center"
+                                <h3 class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-4 text-center" data-admin="step3-title">{{ $howItWorks->step3_title }}</h3>
+                                <div class="text-white/80 leading-relaxed text-base md:text-lg text-center flex-1 mb-4 md:mb-8"
                                     data-admin="step3-description">
                                     {!! $howItWorks->step3_description !!}
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="flex justify-center mt-8 md:mt-12">
+                        <a href="{{ $howItWorks->cta_link ?? '#' }}" target="_blank">
+                            <button
+                                class="accent-gradient text-white px-4 md:px-7 py-3 md:py-4 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-xl flex items-center gap-3 md:gap-4 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
+                                    <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
+                                </svg>
+                                <span data-admin="how-it-works-button">{{ $howItWorks->cta_text ?? 'Get Started Now' }}</span>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
