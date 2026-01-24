@@ -325,11 +325,11 @@
         <div class="container mx-auto px-4">
             @if($signal && $signal->is_active)
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-20">
+                <div class="text-center mb-8 md:mb-12">
                     @if($signal->badge_text)
                     <div
-                        class="inline-flex items-center justify-center px-10 py-5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-sm mb-10 shadow-2xl gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                        class="inline-flex items-center justify-center px-6 md:px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold md:font-bold text-sm md:text-base mb-4 md:mb-6 shadow-2xl gap-2 md:gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
                             <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                         </svg>
                         <span data-admin="signals-badge">{{ $signal->badge_text }}</span>
@@ -337,14 +337,14 @@
                     @endif
 
                     @if($signal->title)
-                    <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight"
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-5 md:mb-7"
                         data-admin="signals-title">
                         {!! $signal->title !!}
                     </h2>
                     @endif
 
                     @if($signal->description)
-                    <p class="text-base md:text-lg lg:text-lg text-gray-700 mb-16 max-w-3xl mx-auto"
+                    <p class="text-sm md:text-base lg:text-lg text-gray-700 mb-7 md:mb-10 md:max-w-3xl mx-auto"
                         data-admin="signals-description">
                         {!! $signal->description !!}
                     </p>
@@ -352,46 +352,46 @@
                 </div>
 
                 <!-- Stats Cards - Hexagon Style -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-16">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-7 md:mb-10">
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4" data-admin="win-rate">
+                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="win-rate">
                                 {{ $signal->win_rate }}</div>
-                            <div class="text-xl font-bold text-gray-800">Win Rate</div>
+                            <div class="text-lg md:text-xl font-bold text-gray-800">Win Rate</div>
                         </div>
                     </div>
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4"
+                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3"
                                 data-admin="risk-reward">{{ $signal->risk_reward }}</div>
-                            <div class="text-xl font-bold text-gray-800">Risk-Reward Ratio</div>
+                            <div class="text-lg md:text-xl font-bold text-gray-800">Risk-Reward Ratio</div>
                         </div>
                     </div>
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-6xl md:text-7xl font-extrabold text-blue-600 mb-4" data-admin="market">
+                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="market">
                                 {{ $signal->primary_market }}</div>
-                            <div class="text-xl font-bold text-gray-800">Primary Market</div>
+                            <div class="text-lg md:text-xl font-bold text-gray-800">Primary Market</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Why Different Card - Glass Effect -->
-                <div class="relative mb-12">
+                <div class="relative mb-7 md:mb-10">
                     <div
                         class="absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-blue-500/20 rounded-3xl blur-2xl">
                     </div>
                     <div
-                        class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-12 rounded-3xl shadow-2xl">
-                        <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-center"
+                        class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-6 md:p-8 rounded-3xl shadow-2xl">
+                        <h3 class="text-2xl md:text-5xl font-bold text-gray-900 mb-5 md:mb-7 text-center"
                             data-admin="why-different-title">{{ $signal->why_different_title }}</h3>
-                        <p class="leading-relaxed text-xl md:text-2xl text-center text-gray-700"
+                        <p class="leading-relaxed text-sm md:text-base lg:text-lg text-justify text-gray-700"
                             data-admin="why-different-text">
                             {!! $signal->why_different_text !!}
                         </p>
@@ -401,8 +401,8 @@
                 <div class="text-center">
                     <a href="{{ $signal->join_button_link ?? '#' }}" target="_blank">
                         <button
-                            class="accent-gradient text-white px-14 py-6 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center gap-4 mx-auto hover:scale-105 pulse-glow">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                            class="accent-gradient text-white px-6 py-3 md:py-3.5 rounded-2xl font-bold text-base md:text-lg shadow-2xl flex items-center gap-3 md:gap-4 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
                                 <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                             </svg>
                             <span data-admin="join-signals-button">{{ $signal->join_button_text }}</span>
