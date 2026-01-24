@@ -506,13 +506,13 @@
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-24">
                     <div
-                        class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-8 py-4 rounded-full text-sm font-bold mb-10 shadow-xl glass-effect">
-                        <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-7 h-7">
+                        class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-6 py-2.5 md:py-3.5 rounded-full text-sm font-bold mb-8 shadow-xl glass-effect">
+                        <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-5 md:w-7 h-7 md:h-7">
                         <span data-admin="performance-badge">{{ $results->badge_text }}</span>
                     </div>
-                    <h2 class="text-6xl md:text-8xl font-extrabold text-white mb-8" data-admin="track-record-title">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-8" data-admin="track-record-title">
                         {{ $results->title }}</h2>
-                    <p class="text-2xl md:text-3xl text-white/70 mb-6" data-admin="track-record-subtitle">
+                    <p class="text-lg md:text-2xl text-white/70 mb-6" data-admin="track-record-subtitle">
                         {{ $results->subtitle }}
                     </p>
                     <p class="text-sm text-white/60 italic" data-admin="track-record-disclaimer">
