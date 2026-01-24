@@ -55,9 +55,9 @@
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg border border-blue-500/30">
+                    <div class="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg ">
                         @if(isset($setting) && $setting->logo)
-                            <img src="{{ asset($setting->logo) }}" alt="Logo" class="w-10 h-10 object-contain" />
+                            <img src="{{ asset($setting->logo) }}" alt="Logo" />
                         @else
                             <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-10 h-10 object-contain" />
                         @endif

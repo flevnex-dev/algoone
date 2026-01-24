@@ -51,8 +51,8 @@
         <div class="w-full max-w-lg">
             <!-- Logo and Company Name - Side by Side Layout -->
             <div class="flex items-center justify-center gap-4 mb-12">
-                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl border-2 border-blue-500/30">
-                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-12 h-12 object-contain" />
+                <div class="w-8 h-8 rounded-2xl flex items-center justify-center shadow-xl">
+                    <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" />
                 </div>
                 <div>
                     <span class="text-4xl font-extrabold text-white block" >{{ $setting->site_title ?? 'AlgoOne' }}</span>

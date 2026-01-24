@@ -87,8 +87,8 @@
             <div class="flex items-center space-x-3">
                 <a href="{{ route('frontend.index') }}" class="flex items-center space-x-3">
                     <div
-                        class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500/30">
-                        <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" class="w-8 h-8 object-contain" />
+                        class="w-8 h-8  rounded-lg flex items-center justify-center">
+                        <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo"/>
                     </div>
                     <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>

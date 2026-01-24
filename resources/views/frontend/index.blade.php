@@ -141,7 +141,7 @@
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div
-                    class="w-9 h-9">
+                    class="w-8 h-8">
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
                         class="" decoding="async" loading="eager" />
                 </div>

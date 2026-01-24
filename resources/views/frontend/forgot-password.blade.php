@@ -52,8 +52,10 @@
             <!-- Logo and Company Name - Vertical Layout -->
             <div class="text-center mb-12">
                 <div class="inline-flex items-center justify-center gap-4 mb-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-500 rounded-3xl flex items-center justify-center shadow-2xl border-2 border-blue-500/30">
-                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt="Logo" class="w-14 h-14 object-contain" />
+                    <div
+                        class="w-8 h-8">
+                        <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
+                            class="" decoding="async" loading="eager" />
                     </div>
                 </div>
                 <h2 class="text-5xl font-extrabold text-white mb-2" >{{ $setting->site_title ?? 'AlgoOne' }}</h2>
