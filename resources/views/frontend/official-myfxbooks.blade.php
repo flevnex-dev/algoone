@@ -209,16 +209,16 @@
 
             <!-- Call to Action -->
             @if($officialMyfxbooksSection)
-            <div class="card-modern rounded-3xl p-12 text-center mb-12 max-w-4xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4" data-admin="ctaTitle">{{ $officialMyfxbooksSection->cta_title ?? 'Want Results Like These?' }}</h2>
-                <p class="text-blue-200 text-lg md:text-xl mb-8 max-w-2xl mx-auto" data-admin="ctaText">
+            <div class="card-modern rounded-3xl p-5 md:p-12 text-center mb-12 max-w-7xl mx-auto">
+                <h2 class="text-2xl md:text-5xl font-bold text-white mb-4" data-admin="ctaTitle">{{ $officialMyfxbooksSection->cta_title ?? 'Want Results Like These?' }}</h2>
+                <p class="text-blue-200 text-sm md:text-xl mb-8 max-w-2xl mx-auto" data-admin="ctaText">
                     {{ $officialMyfxbooksSection->cta_text ?? 'Join hundreds of traders who trust AlgoOne with their prop firm challenges. We only profit when you profit.' }}
                 </p>
                 <a href="{{ $officialMyfxbooksSection->cta_button_link ?? '#' }}"
                     @if($officialMyfxbooksSection->cta_button_link && $officialMyfxbooksSection->cta_button_link !== '#')
                         target="_blank" rel="noopener noreferrer"
                     @endif
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 inline-flex items-center gap-3">
+                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 md:px-6 py-2.5 md:py-3.5 rounded-xl  font-semibold md:font-bold text-sm md:text-lg hover:shadow-2xl transition-all duration-300 inline-flex items-center gap-3">
                     <span data-admin="ctaButton">{{ $officialMyfxbooksSection->cta_button_text ?? 'Get Started Today' }}</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
