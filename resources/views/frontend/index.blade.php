@@ -231,34 +231,34 @@
                 <!-- Floating Badge -->
                 @if($hero && $hero->badge_text)
                 <div
-                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-3 md:px-8 py-3.5 rounded-full text-xs md:text-sm md:font-semibold mb-8 items-center shadow-2xl gap-3 glass-effect">
-                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-5 md:w-6 h-5 md:h-6">
-                    <span >{{ $hero->badge_text }}</span>
+                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-3 md:px-8 py-2.5 md:py-3.5 rounded-full md:font-semibold mb-2 md:mb-6 items-center shadow-2xl gap-1 md:gap-3 glass-effect">
+                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-4 md:w-6 h-4 md:h-6">
+                    <span class="text-xs md:text-base">{{ $hero->badge_text }}</span>
                 </div>
                 @endif
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight" style="line-height: 1.15;">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2 md:mb-6 leading-tight" style="line-height: 1.15;">
                     {!! $hero->title !!}
                 </h1>
                 @endif
 
                 @if($hero && $hero->description)
-                <p class="text-base md:text-lg lg:text-xl text-white/80 mb-6 leading-relaxed max-w-3xl mx-auto"
+                <p class="text-base md:text-lg lg:text-xl text-white/80 mb-2 md:mb-4 leading-relaxed max-w-3xl mx-auto"
                     >
                     {{ $hero->description }}
                 </p>
                 @endif
 
                 <!-- Rating Stars -->
-                <div class="flex items-center justify-center gap-8 mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-8">
                     <div class="flex items-center space-x-1">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-8 h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
                     </div>
                     @if($hero)
                     <div class="text-left">
