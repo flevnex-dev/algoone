@@ -331,11 +331,13 @@
                 <div class="text-center mb-6 md:mb-8">
                     @if($signal->badge_text)
                     <div
-                        class="inline-flex items-center justify-center px-4 md:px-6 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold md:font-bold text-sm md:text-base mb-4 md:mb-6 shadow-2xl gap-2 md:gap-3">
+                        class="inline-flex items-center justify-center px-4 md:px-6 py-3.5 rounded-full 
+                        bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold md:font-bold text-sm md:text-base mb-4 
+                        md:mb-6 shadow-2xl gap-2 md:gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-5 h-4 md:h-5">
                             <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                         </svg>
-                        <span data-admin="signals-badge">{{ $signal->badge_text }}</span>
+                        <span data-admin="signals-badge" class="text-white">{{ $signal->badge_text }}</span>
                     </div>
                     @endif
 
