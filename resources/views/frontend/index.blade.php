@@ -428,7 +428,7 @@
                 <div class="text-center mb-8 md:mb-12">
                     <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-4 md:px-6 py-2 md:py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
                         <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-5 md:w-7 h-5 md:h-7">
-                        <span data-admin="how-it-works-badge">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
+                        <span data-admin="how-it-works-badge" class="text-white">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
                     </div>
                     <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
                     <p class="text-base md:text-2xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
@@ -531,7 +531,7 @@
                     @if(!empty($results->accounts) && is_array($results->accounts))
                         @foreach($results->accounts as $index => $acc)
                         <div
-                            class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
+                            class="glass-effect border-2 border-blue-500/20 p-4 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
                             <div class="flex justify-between items-center mb-6">
                                 <div class="flex items-center gap-3">
                                     <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
