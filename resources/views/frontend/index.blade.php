@@ -231,53 +231,55 @@
                 <!-- Floating Badge -->
                 @if($hero && $hero->badge_text)
                 <div
-                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-3 md:px-8 py-2.5 md:py-3.5 rounded-full md:font-semibold mb-2 md:mb-6 items-center shadow-2xl gap-1 md:gap-3 glass-effect">
-                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-4 md:w-6 h-4 md:h-6">
-                    <span class="text-xs md:text-base">{{ $hero->badge_text }}</span>
+                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-2 md:px-6 py-2 md:py-3
+                    rounded-full md:font-semibold mb-2 md:mb-6 items-center shadow-2xl gap-1 md:gap-3 glass-effect">
+                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-3 md:w-4 h-3 md:h-4">
+                    <span class="text-xs md:text-sm">{{ $hero->badge_text }}</span>
                 </div>
                 @endif
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2 md:mb-6 leading-tight" style="line-height: 1.15;">
+                <h1 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-6 leading-tight" style="line-height: 1.15;">
                     {!! $hero->title !!}
                 </h1>
                 @endif
 
                 @if($hero && $hero->description)
-                <p class="text-base md:text-lg lg:text-xl text-white/80 mb-2 md:mb-4 leading-relaxed max-w-3xl mx-auto"
+                <p class="text-base md:text-lg text-white/80 mb-2 md:mb-4 leading-relaxed max-w-3xl mx-auto"
                     >
                     {{ $hero->description }}
                 </p>
                 @endif
 
                 <!-- Rating Stars -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-8">
+                <div class="flex items-center justify-center gap-2 md:gap-6 mb-4 md:mb-6">
                     <div class="flex items-center space-x-1">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
                     </div>
                     @if($hero)
                     <div class="text-left">
-                        <div class="text-white font-bold text-2xl" data-admin="rating">{{ $hero->rating }}</div>
-                        <div class="text-white/70 text-base" data-admin="traders-count">{{ $hero->traders_count }}</div>
+                        <div class="text-white font-bold text-lg md:text-xl" data-admin="rating">{{ $hero->rating }}</div>
+                        <div class="text-white/70 text-sm md:text-base" data-admin="traders-count">{{ $hero->traders_count }}</div>
                     </div>
                     @endif
                 </div>
 
                 <!-- CTA Buttons -->
                 @if($hero)
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
                     <a 
                         href="{{ $hero->primary_cta_link ?? '#' }}" 
                         target="_blank"
                         class="w-full sm:w-auto"
                     >
                         <button
-                            class="w-full sm:w-auto accent-gradient text-white px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3"
+                            class="w-full sm:w-auto accent-gradient text-white px-6 py-3 rounded-2xl
+                            font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3"
                         >
                             <span data-admin="primary-cta">{{ $hero->primary_cta_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-5 h-4 md:h-5 ">
@@ -288,7 +290,8 @@
                         class="w-full sm:w-auto"
                     >
                         <button
-                            class="w-full sm:w-auto glass-effect text-white border-2 border-blue-500/50 px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl"
+                            class="w-full sm:w-auto glass-effect text-white border-2 border-blue-500/50 px-6 py-3 rounded-2xl
+                            font-semibold text-base md:text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl"
                         >
                             <span data-admin="signin-button">{{ $hero->signin_cta_text }}</span>
                         </button>
@@ -298,7 +301,7 @@
                 <!-- Quick Links -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="{{ $hero->myfxbook_link ?? route('frontend.official-myfxbooks') }}"
-                        class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
+                        class="glass-effect border border-blue-500/50 text-white px-6 py-3.5 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round"></path>
@@ -310,7 +313,7 @@
                         <span data-admin="myfxbook-link">{{ $hero->myfxbook_text }}</span>
                     </a>
                     <a href="{{ $hero->payout_link ?? route('frontend.payout') }}"
-                        class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
+                        class="glass-effect border border-blue-500/50 text-white px-6 py-3.5 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <i class="fas fa-dollar-sign text-blue-400"></i>
                         <span data-admin="payout-link">{{ $hero->payout_text }}</span>
                     </a>
