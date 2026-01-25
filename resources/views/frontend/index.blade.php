@@ -231,53 +231,55 @@
                 <!-- Floating Badge -->
                 @if($hero && $hero->badge_text)
                 <div
-                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-3 md:px-8 py-2.5 md:py-3.5 rounded-full md:font-semibold mb-2 md:mb-6 items-center shadow-2xl gap-1 md:gap-3 glass-effect">
-                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-4 md:w-6 h-4 md:h-6">
-                    <span class="text-xs md:text-base">{{ $hero->badge_text }}</span>
+                    class="inline-flex bg-blue-600/30 border-1.5 border-blue-500/50 text-white px-2 md:px-6 py-2 md:py-3
+                    rounded-full md:font-semibold mb-2 md:mb-6 items-center shadow-2xl gap-1 md:gap-3 glass-effect">
+                    <img src="{{ asset('assets/image/verified.png') }}" alt="" class="w-3 md:w-4 h-3 md:h-4">
+                    <span class="text-xs md:text-sm">{{ $hero->badge_text }}</span>
                 </div>
                 @endif
 
                 <!-- Main Heading -->
                 @if($hero && $hero->title)
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2 md:mb-6 leading-tight" style="line-height: 1.15;">
+                <h1 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-6 leading-tight" style="line-height: 1.15;">
                     {!! $hero->title !!}
                 </h1>
                 @endif
 
                 @if($hero && $hero->description)
-                <p class="text-base md:text-lg lg:text-xl text-white/80 mb-2 md:mb-4 leading-relaxed max-w-3xl mx-auto"
+                <p class="text-base md:text-lg text-white/80 mb-2 md:mb-4 leading-relaxed max-w-3xl mx-auto"
                     >
                     {{ $hero->description }}
                 </p>
                 @endif
 
                 <!-- Rating Stars -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-8">
+                <div class="flex items-center justify-center gap-2 md:gap-6 mb-4 md:mb-6">
                     <div class="flex items-center space-x-1">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
-                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-5 md:w-8 h-5 md:h-8">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
+                        <img src="{{ asset('assets/image/star.png') }}" alt="star" class="w-4 md:w-5 h-4 md:h-5">
                     </div>
                     @if($hero)
                     <div class="text-left">
-                        <div class="text-white font-bold text-2xl" data-admin="rating">{{ $hero->rating }}</div>
-                        <div class="text-white/70 text-base" data-admin="traders-count">{{ $hero->traders_count }}</div>
+                        <div class="text-white font-bold text-lg md:text-xl" data-admin="rating">{{ $hero->rating }}</div>
+                        <div class="text-white/70 text-sm md:text-base" data-admin="traders-count">{{ $hero->traders_count }}</div>
                     </div>
                     @endif
                 </div>
 
                 <!-- CTA Buttons -->
                 @if($hero)
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
                     <a 
                         href="{{ $hero->primary_cta_link ?? '#' }}" 
                         target="_blank"
                         class="w-full sm:w-auto"
                     >
                         <button
-                            class="w-full sm:w-auto accent-gradient text-white px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3"
+                            class="w-full sm:w-auto accent-gradient text-white px-6 py-3 rounded-2xl
+                            font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3"
                         >
                             <span data-admin="primary-cta">{{ $hero->primary_cta_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-5 h-4 md:h-5 ">
@@ -288,7 +290,8 @@
                         class="w-full sm:w-auto"
                     >
                         <button
-                            class="w-full sm:w-auto glass-effect text-white border-2 border-blue-500/50 px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl"
+                            class="w-full sm:w-auto glass-effect text-white border-2 border-blue-500/50 px-6 py-3 rounded-2xl
+                            font-semibold text-base md:text-lg hover:bg-blue-600/20 hover:border-blue-500 transition-all shadow-xl"
                         >
                             <span data-admin="signin-button">{{ $hero->signin_cta_text }}</span>
                         </button>
@@ -298,7 +301,7 @@
                 <!-- Quick Links -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="{{ $hero->myfxbook_link ?? route('frontend.official-myfxbooks') }}"
-                        class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
+                        class="glass-effect border border-blue-500/50 text-white px-6 py-3.5 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round"></path>
@@ -310,7 +313,7 @@
                         <span data-admin="myfxbook-link">{{ $hero->myfxbook_text }}</span>
                     </a>
                     <a href="{{ $hero->payout_link ?? route('frontend.payout') }}"
-                        class="glass-effect border border-blue-500/50 text-white px-8 py-3 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
+                        class="glass-effect border border-blue-500/50 text-white px-6 py-3.5 rounded-xl text-base hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-lg justify-center">
                         <i class="fas fa-dollar-sign text-blue-400"></i>
                         <span data-admin="payout-link">{{ $hero->payout_text }}</span>
                     </a>
@@ -321,30 +324,32 @@
     </section>
 
     <!-- Elite Trading Signals Section - Hexagon Cards -->
-    <section id="signals" class="bg-gradient-to-b from-white via-blue-50/50 to-white py-32 md:py-40 relative">
+    <section id="signals" class="bg-gradient-to-b from-white via-blue-50/50 to-white py-16 md:py-24 relative">
         <div class="container mx-auto px-4">
             @if($signal && $signal->is_active)
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-12">
+                <div class="text-center mb-6 md:mb-8">
                     @if($signal->badge_text)
                     <div
-                        class="inline-flex items-center justify-center px-6 md:px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold md:font-bold text-sm md:text-base mb-4 md:mb-6 shadow-2xl gap-2 md:gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
+                        class="inline-flex items-center justify-center px-4 md:px-6 py-3.5 rounded-full 
+                        bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold md:font-bold text-sm md:text-base mb-4 
+                        md:mb-6 shadow-2xl gap-2 md:gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 md:w-5 h-4 md:h-5">
                             <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                         </svg>
-                        <span data-admin="signals-badge">{{ $signal->badge_text }}</span>
+                        <span data-admin="signals-badge" class="text-white">{{ $signal->badge_text }}</span>
                     </div>
                     @endif
 
                     @if($signal->title)
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-5 md:mb-7"
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-gray-900 mb-2 md:mb-3"
                         data-admin="signals-title">
                         {!! $signal->title !!}
                     </h2>
                     @endif
 
                     @if($signal->description)
-                    <p class="text-sm md:text-base lg:text-lg text-gray-700 mb-7 md:mb-10 md:max-w-3xl mx-auto"
+                    <p class="text-sm md:text-base text-gray-700 mb-2 md:mb-3 md:max-w-3xl mx-auto"
                         data-admin="signals-description">
                         {!! $signal->description !!}
                     </p>
@@ -352,30 +357,30 @@
                 </div>
 
                 <!-- Stats Cards - Hexagon Style -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-7 md:mb-10">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-4 md:mb-6">
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-6 md:p-10 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="win-rate">
+                            <div class="text-3xl md:text-4xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="win-rate">
                                 {{ $signal->win_rate }}</div>
                             <div class="text-lg md:text-xl font-bold text-gray-800">Win Rate</div>
                         </div>
                     </div>
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-6 md:p-10 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3"
+                            <div class="text-3xl md:text-4xl font-extrabold text-blue-600 mb-2 md:mb-3"
                                 data-admin="risk-reward">{{ $signal->risk_reward }}</div>
                             <div class="text-lg md:text-xl font-bold text-gray-800">Risk-Reward Ratio</div>
                         </div>
                     </div>
                     <div
-                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-8 md:p-12 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
+                        class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 p-6 md:p-10 rounded-3xl shadow-2xl text-center transform hover:scale-105 transition-all relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                         <div class="relative">
-                            <div class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="market">
+                            <div class="text-3xl md:text-4xl font-extrabold text-blue-600 mb-2 md:mb-3" data-admin="market">
                                 {{ $signal->primary_market }}</div>
                             <div class="text-lg md:text-xl font-bold text-gray-800">Primary Market</div>
                         </div>
@@ -383,13 +388,13 @@
                 </div>
 
                 <!-- Why Different Card - Glass Effect -->
-                <div class="relative mb-7 md:mb-10">
+                <div class="relative mb-6 md:mb-8">
                     <div
                         class="absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-blue-500/20 rounded-3xl blur-2xl">
                     </div>
                     <div
-                        class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-6 md:p-8 rounded-3xl shadow-2xl">
-                        <h3 class="text-2xl md:text-5xl font-bold text-gray-900 mb-5 md:mb-7 text-center"
+                        class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-6 md:p-10 rounded-3xl shadow-2xl">
+                        <h3 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3 text-center"
                             data-admin="why-different-title">{{ $signal->why_different_title }}</h3>
                         <p class="leading-relaxed text-sm md:text-base lg:text-lg text-justify text-gray-700"
                             data-admin="why-different-text">
@@ -401,8 +406,9 @@
                 <div class="text-center">
                     <a href="{{ $signal->join_button_link ?? '#' }}" target="_blank">
                         <button
-                            class="accent-gradient text-white px-6 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center gap-3 md:gap-4 mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
+                            class="accent-gradient text-white px-4 py-2 md:py-3 rounded-2xl font-semibold text-base md:text-lg 
+                            shadow-2xl flex items-center gap-2.5 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-6 h-5 md:h-6">
                                 <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                             </svg>
                             <span data-admin="join-signals-button">{{ $signal->join_button_text }}</span>
@@ -416,29 +422,29 @@
 
     <!-- How It Works Section - Circular Timeline -->
     @if($howItWorks && $howItWorks->is_active)
-    <section class="py-24 md:py-32 relative">
+    <section class="py-16 md:py-24 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12 md:mb-20">
-                    <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-4 md:px-8 py-2 md:py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
+                <div class="text-center mb-8 md:mb-12">
+                    <div class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-4 md:px-6 py-2 md:py-3 rounded-full text-sm font-semibold md:font-bold mb-6 shadow-xl glass-effect">
                         <img src="{{ asset('assets/image/firework2.png') }}" alt="" class="w-5 md:w-7 h-5 md:h-7">
-                        <span data-admin="how-it-works-badge">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
+                        <span data-admin="how-it-works-badge" class="text-white">{{ $howItWorks->badge_text ?? 'How It Works' }}</span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-2 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
-                    <p class="text-base md:text-3xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-8" data-admin="how-it-works-title">{{ $howItWorks->title }}</h2>
+                    <p class="text-base md:text-2xl text-white/70 mb-3 md:mb-4" data-admin="how-it-works-subtitle">{{ $howItWorks->subtitle }}</p>
                 </div>
 
                 <!-- Circular Timeline Layout -->
                 <div class="relative">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
                         <!-- Step 1 -->
                         <div class="relative h-full flex flex-col">
-                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-5 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
                                 <div class="flex flex-col items-center text-center mb-4 md:mb-6">
                                     <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
                                         <img src="{{ asset($howItWorks->step1_image ?? 'assets/image/check-mark.png') }}" alt="Step 1 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
-                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">01</div>
+                                    <div class="text-2xl md:text-3xl font-black text-blue-600/20 mb-2 md:mb-4">01</div>
                                 </div>
                                 <h3 class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-4 text-center" data-admin="step1-title">{{ $howItWorks->step1_title }}</h3>
                                 <div class="text-white/80 leading-relaxed text-base md:text-lg text-center flex-1 mb-4 md:mb-8"
@@ -450,9 +456,9 @@
 
                         <!-- Step 2 -->
                         <div class="relative h-full flex flex-col">
-                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-5 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
                                 <div class="flex flex-col items-center text-center mb-4 md:mb-6">
-                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">02</div>
+                                    <div class="text-2xl md:text-3xl font-black text-blue-600/20 mb-2 md:mb-4">02</div>
                                     <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
                                         <img src="{{ asset($howItWorks->step2_image ?? 'assets/image/trend.png') }}" alt="Step 2 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
@@ -467,12 +473,12 @@
 
                         <!-- Step 3 -->
                         <div class="relative h-full flex flex-col">
-                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-7 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
+                            <div class="glass-effect border-2 border-blue-500/30 rounded-3xl shadow-2xl p-5 md:p-8 hover:border-blue-500 hover:scale-105 transition-all flex flex-col h-full">
                                 <div class="flex flex-col items-center text-center mb-4 md:mb-6">
                                     <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-blue-600/20 flex items-center justify-center border-4 border-blue-500/30 mb-3 md:mb-5 pulse-glow">
                                         <img src="{{ asset($howItWorks->step3_image ?? 'assets/image/security.png') }}" alt="Step 3 Icon" class="w-11 h-11 md:w-14 md:h-14">
                                     </div>
-                                    <div class="text-6xl md:text-8xl font-black text-blue-600/20 mb-2 md:mb-4">03</div>
+                                    <div class="text-2xl md:text-3xl font-black text-blue-600/20 mb-2 md:mb-4">03</div>
                                 </div>
                                 <h3 class="text-xl md:text-3xl font-bold text-white mb-2 md:mb-4 text-center" data-admin="step3-title">{{ $howItWorks->step3_title }}</h3>
                                 <div class="text-white/80 leading-relaxed text-base md:text-lg text-center flex-1 mb-4 md:mb-8"
@@ -482,10 +488,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-center mt-8 md:mt-12">
+                    <div class="flex justify-center mt-6 md:mt-10">
                         <a href="{{ $howItWorks->cta_link ?? '#' }}" target="_blank">
                             <button
-                                class="accent-gradient text-white px-4 md:px-7 py-3 md:py-4 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-xl flex items-center gap-3 md:gap-4 mx-auto">
+                                class="accent-gradient text-white px-4 md:px-7 py-3 md:py-4 rounded-2xl font-semibold text-base md:text-lg shadow-xl flex items-center gap-3 md:gap-4 mx-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
                                     <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                                 </svg>
@@ -500,19 +506,19 @@
     @endif
 
     @if($results && $results->is_active)
-    <!-- Proven Track Record Section - Card Grid with    <!-- Results Section -->
-    <section id="results" class="bg-gradient-to-br from-blue-900/40 via-black to-black py-32 md:py-40 relative">
+    <!-- Proven Track Record Section - Card Grid with  Results Section -->
+    <section id="results" class="bg-gradient-to-br from-blue-900/40 via-black to-black py-16 md:py-24 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-24">
+                <div class="text-center mb-8 md:mb-12">
                     <div
                         class="inline-flex items-center gap-3 bg-blue-600/20 border-2 border-blue-500 text-blue-400 px-6 py-2.5 md:py-3.5 rounded-full text-sm font-bold mb-8 shadow-xl glass-effect">
                         <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-4 md:w-7 h-4 md:h-7">
                         <span data-admin="performance-badge">{{ $results->badge_text }}</span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 md:mb-8" data-admin="track-record-title">
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-3" data-admin="track-record-title">
                         {{ $results->title }}</h2>
-                    <p class="text-base md:text-2xl text-white/70 mb-4 md:mb-6" data-admin="track-record-subtitle">
+                    <p class="text-base md:text-xl text-white/70 mb-2 md:mb-3" data-admin="track-record-subtitle">
                         {{ $results->subtitle }}
                     </p>
                     <p class="text-sm text-white/60 italic" data-admin="track-record-disclaimer">
@@ -521,11 +527,11 @@
                 </div>
 
                 <!-- Accounts Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @if(!empty($results->accounts) && is_array($results->accounts))
                         @foreach($results->accounts as $index => $acc)
                         <div
-                            class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
+                            class="glass-effect border-2 border-blue-500/20 p-4 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
                             <div class="flex justify-between items-center mb-6">
                                 <div class="flex items-center gap-3">
                                     <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
@@ -534,7 +540,7 @@
                                                 d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
                                         </svg>
                                     </div>
-                                    <span class="text-white font-bold text-lg">{{ $acc['name'] ?? '' }}</span>
+                                    <span class="text-white font-bold text-base md:text-lg">{{ $acc['name'] ?? '' }}</span>
                                 </div>
                                 <div
                                     class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
@@ -597,9 +603,9 @@
                 </div>
 
                 <!-- Performance Summary -->
-                <div class="glass-effect border-2 border-blue-500/40 rounded-3xl p-7 md:p-12 shadow-2xl overflow-hidden relative mb-10 mt-14 md:mt-16">
+                <div class="glass-effect border-2 border-blue-500/40 rounded-3xl p-6 md:p-10  shadow-2xl overflow-hidden relative mb-8 mt-12 md:mt-14">
                     <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
-                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-12">
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10">
                         <div class="flex-1">
                             <div
                                 class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-blue-600/20 border-2 border-blue-500/50 mb-4">
@@ -610,17 +616,17 @@
                                 <span class="text-xs md:text-sm font-bold text-blue-400 uppercase tracking-wider">Performance
                                     Summary</span>
                             </div>
-                            <h3 class="text-3xl md:text-5xl font-extrabold text-white mb-4 md:mb-6"
+                            <h3 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-3"
                                 data-admin="performance-summary-title">
                                 {!! $results->summary_title !!}
                             </h3>
-                            <div class="text-base md:text-xl text-white/80 leading-relaxed max-w-2xl"
+                            <div class="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl"
                                 data-admin="performance-summary-description">
                                 {!! $results->summary_description !!}
                             </div>
                         </div>
                         <a href="{{ $results->view_results_link }}"
-                            class="accent-gradient text-white px-4 md:px-6 py-2 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2.5 md:gap-4 group hover:scale-105">
+                            class="accent-gradient text-white px-4 md:px-6 py-2 md:py-3.5 rounded-2xl font-semibold text-base md:text-lg shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2.5 md:gap-4 group hover:scale-105">
                             <span data-admin="view-results-button">{{ $results->view_results_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow"
                                 class="w-3 md:w-5 h-3 md:h-5">
@@ -631,7 +637,7 @@
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
                     <a href="{{ $results->myfxbook_link }}"
-                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-2.5 md:py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
+                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-8 py-2.5 md:py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
                             <path d="M8.38 12L10.79 14.42L15.62 9.57996" stroke="#0B64F4" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round"></path>
@@ -643,7 +649,8 @@
                         <span data-admin="myfxbook-link-bottom">{{ $results->myfxbook_text }}</span>
                     </a>
                     <a href="{{ $results->payout_link }}"
-                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-10 py-2.5 md:py-4 rounded-xl text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
+                        class="w-full sm:w-auto glass-effect border-2 border-blue-500/50 text-white px-8 py-2.5 md:py-4 rounded-xl 
+                        text-lg hover:bg-blue-600/20 flex items-center gap-3 transition-all shadow-xl justify-center hover:scale-105">
                         <i class="fas fa-dollar-sign text-blue-400 text-xl"></i>
                         <span data-admin="payout-link-bottom">{{ $results->payout_text }}</span>
                     </a>
@@ -655,14 +662,14 @@
 
     @if($whyChoose && $whyChoose->is_active)
     <!-- Why Choose AlgoOne Section - Feature Grid -->
-    <section class="py-28 md:py-32 relative">
+    <section class="py-16 md:py-24 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-16">
-                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-5 md:mb-7 leading-tight" data-admin="why-choose-title">
+                <div class="text-center mb-6 md:mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-3 leading-tight" data-admin="why-choose-title">
                         {{ $whyChoose->title }}
                     </h2>
-                    <p class="text-base md:text-2xl lg:text-3xl text-white/70 leading-relaxed" data-admin="why-choose-subtitle">
+                    <p class="text-base md:text-xl text-white/70 leading-relaxed" data-admin="why-choose-subtitle">
                         {{ $whyChoose->subtitle }}
                     </p>
                 </div>
@@ -670,7 +677,7 @@
                     @for($i = 1; $i <= 6; $i++)
                         <!-- Card {{ $i }} -->
                         <div
-                            class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-10 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
+                            class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-8 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
                             <div
                                 class="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
                                 <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-9 h-9">
@@ -690,12 +697,12 @@
 
     @if($referral && $referral->is_active)
     <!-- Referral Program Section -->
-    <section class="relative py-28 md:py-32 bg-gradient-to-br from-white via-blue-50/50 to-white overflow-hidden">
+    <section class="relative py-16 md:py-24 bg-gradient-to-br from-white via-blue-50/50 to-white overflow-hidden">
         <div class="absolute right-0 top-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-16">
-                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-5 md:mb-7 leading-tight" data-admin="referral-title">
+                <div class="text-center mb-6 md:mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight" data-admin="referral-title">
                         {{ $referral->title }}</h2>
                     <p class="text-base md:text-lg text-gray-700 leading-relaxed" data-admin="referral-subtitle">{{ $referral->subtitle }}</p>
                 </div>
@@ -744,7 +751,9 @@
                             class="w-full sm:w-auto"
                         >
                             <button
-                                class="sm:w-auto bg-black text-white border-2 border-gray-700 px-6 md:px-8 py-3 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
+                                class="sm:w-auto bg-black text-white border-2 border-gray-700 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl 
+                                font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl
+                                 hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
                             >
                                 <span data-admin="learn-referrals-button">{{ $referral->button_text }}</span>
                                 <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-6 h-4  md:h-6">
@@ -759,20 +768,22 @@
 
     <!-- Ready to Start Trading Section - Full Width Banner -->
     @if($cta && $cta->is_active)
-    <section class="py-16 md:py-24 relative overflow-hidden">
+    <section class="py-12 md:py-20 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600"></div>
         <div class="absolute inset-0 bg-black/20"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-5xl mx-auto text-center">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 md:mb-6" data-admin="cta-section-title">{{ $cta->title }}</h2>
-                <p class="text-base md:text-2xl text-white/90 mb-6 md:mb-8" data-admin="cta-section-description">
+                <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-4" data-admin="cta-section-title">{{ $cta->title }}</h2>
+                <p class="text-base md:text-xl text-white/90 mb-4 md:mb-6" data-admin="cta-section-description">
                     {{ $cta->description }}
                 </p>
                 <a href="{{ $cta->button_link ?? '#' }}" target="_blank" class="w-full sm:w-auto inline-block">
                     <button
-                        class=" sm:w-auto accent-gradient text-white px-6 py-2.5 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl hover:scale-105 transition-all border-2 border-white/20 pulse-glow mx-auto"
+                        class=" sm:w-auto accent-gradient text-white px-4 py-2.5 md:py-3 rounded-2xl font-semibold
+                         text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-xl border-2 
+                         border-white/20 mx-auto"
                     >
-                        <span data-admin="create-account-button">{{ $cta->button_text }}</span>
+                        <span data-admin="create-account-button text-sm md:text-base">{{ $cta->button_text }}</span>
                         <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-5 h-4 md:h-5">
                     </button>
                 </a>
