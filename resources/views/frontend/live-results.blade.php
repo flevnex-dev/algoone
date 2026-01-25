@@ -174,7 +174,7 @@
                     <a href="{{ route('frontend.terms-conditions') }}" class="text-blue-200/60 text-sm hover:text-blue-400 transition">Terms & Conditions</a>
                 </div>
             </div>
-            @if(isset($setting) && $setting->legal_disclaimer)
+            @if(isset($setting) && $setting->show_legal_disclaimer && $setting->legal_disclaimer)
             <div class="max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/70 leading-relaxed">
                 <span class="text-yellow-400 text-lg mt-1">⚠</span>
                 <div data-admin="disclaimer">

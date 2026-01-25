@@ -269,28 +269,26 @@
 
                     <!-- Guidelines List -->
                     <ol class="space-y-4 text-white/90">
-                        @for($i = 1; $i <= 7; $i++)
-                            @php
-                                $title = $guideline->{"guideline{$i}_title"};
-                                $text = $guideline->{"guideline{$i}_text"};
-                            @endphp
-                            @if($title || $text)
-                            <li class="flex items-start gap-4">
-                                <span
-                                    class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
-                                    {{ $i }}
-                                </span>
-                                <div>
-                                    @if($title)
-                                    <p class="font-semibold mb-1" data-admin="guideline{{ $i }}Title">{!! $title !!}</p>
-                                    @endif
-                                    @if($text)
-                                    <p class="text-blue-200/80" data-admin="guideline{{ $i }}Text">{!! $text !!}</p>
-                                    @endif
-                                </div>
-                            </li>
-                            @endif
-                        @endfor
+                        @if(is_array($guideline->guidelines))
+                            @foreach($guideline->guidelines as $index => $item)
+                                @if(!empty($item['title']) || !empty($item['text']))
+                                <li class="flex items-start gap-4">
+                                    <span
+                                        class="flex-shrink-0 w-8 h-8 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 font-bold text-blue-400">
+                                        {{ $index + 1 }}
+                                    </span>
+                                    <div>
+                                        @if(!empty($item['title']))
+                                        <p class="font-semibold mb-1">{!! $item['title'] !!}</p>
+                                        @endif
+                                        @if(!empty($item['text']))
+                                        <p class="text-blue-200/80">{!! $item['text'] !!}</p>
+                                        @endif
+                                    </div>
+                                </li>
+                                @endif
+                            @endforeach
+                        @endif
                     </ol>
                 </div>
             </section>
@@ -437,7 +435,7 @@
                         class="text-blue-200/60 text-sm hover:text-blue-300 transition">Terms & Conditions</a>
                 </div>
             </div>
-            @if(isset($setting) && $setting->legal_disclaimer)
+            @if(isset($setting) && $setting->show_legal_disclaimer && $setting->legal_disclaimer)
             <div class="mt-6 max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/60 leading-relaxed">
                 <span class="text-red-400 text-base mt-1">⚠</span>
                 <div data-admin="disclaimer">

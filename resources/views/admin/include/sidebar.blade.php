@@ -43,8 +43,11 @@
                 <li class="">
                     <a class="" href="{{ route('admin.why-choose.index') }}">Why Choose Us</a>
                 </li>
-                 <li class="">
+                <li class="">
                     <a class="" href="{{ route('admin.cta.index') }}">CTA Section</a>
+                </li>
+                 <li class="">
+                    <a class="" href="{{ route('admin.referral.index') }}">Referral Section</a>
                 </li>
               </ul>
             </li>

@@ -36,6 +36,7 @@ class SiteSettingController extends Controller
         $setting->site_title = $request->input('site_title');
         $setting->copyright_text = $request->input('copyright_text');
         $setting->legal_disclaimer = $request->input('legal_disclaimer');
+        $setting->show_legal_disclaimer = $request->has('show_legal_disclaimer');
         
         // Remember Me Settings
         $setting->remember_me_enabled = $request->has('remember_me_enabled');

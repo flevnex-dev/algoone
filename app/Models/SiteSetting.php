@@ -22,10 +22,12 @@ class SiteSetting extends Model
         'remember_me_enabled',
         'remember_me_text',
         'remember_me_duration_days',
+        'show_legal_disclaimer',
     ];
 
     protected $casts = [
         'remember_me_enabled' => 'boolean',
         'remember_me_duration_days' => 'integer',
+        'show_legal_disclaimer' => 'boolean',
     ];
 }

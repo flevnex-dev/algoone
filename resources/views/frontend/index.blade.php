@@ -522,215 +522,78 @@
 
                 <!-- Accounts Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Account 1 -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
+                    @if(!empty($results->accounts) && is_array($results->accounts))
+                        @foreach($results->accounts as $index => $acc)
+                        <div
+                            class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-white font-bold text-lg">{{ $acc['name'] ?? '' }}</span>
+                                </div>
+                                <div
+                                    class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
+                                    <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
                                     </svg>
-                                </div>
-                                <span class="text-white font-bold text-lg">{{ $results->acc1_name }}</span>
-                            </div>
-                            <div
-                                class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
-                                <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                </svg>
-                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc1_subtext }}</span>
-                            </div>
-                        </div>
-                        <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" 
-                                    data-chart-id="account1"
-                                    data-chart-labels="{{ is_array($results->acc1_chart_labels ?? null) ? json_encode($results->acc1_chart_labels) : json_encode([]) }}"
-                                    data-chart-data="{{ is_array($results->acc1_chart_data ?? null) ? json_encode($results->acc1_chart_data) : json_encode([]) }}"></canvas>
-                        </div>
-                        <div class="space-y-6">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc1_total_gain ?? '+0%' }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">{{ $results->acc1_balance ?? '$0.00' }}</div>
+                                    <span class="text-blue-400 text-xs font-bold">{{ $acc['subtext'] ?? '' }}</span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">{{ $results->acc1_daily ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">{{ $results->acc1_monthly ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">{{ $results->acc1_drawdown ?? '0%' }}</div>
-                                </div>
+                            <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
+                                <canvas class="account-chart" 
+                                        data-chart-id="account{{ $index }}"
+                                        data-chart-labels="{{ is_array($acc['chart_labels'] ?? null) ? json_encode($acc['chart_labels']) : json_encode([]) }}"
+                                        data-chart-data="{{ is_array($acc['chart_data'] ?? null) ? json_encode($acc['chart_data']) : json_encode([]) }}"></canvas>
                             </div>
-                            <div class="pt-4 border-t border-white/20 space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">{{ $results->acc1_profit ?? '$0.00' }}</span>
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="text-white/60 text-sm mb-2">Total Gain</div>
+                                        <div class="text-blue-400 text-3xl font-bold">{{ $acc['total_gain'] ?? '+0%' }}</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-white/60 text-sm mb-2">Balance</div>
+                                        <div class="text-white text-2xl font-bold">{{ $acc['balance'] ?? '$0.00' }}</div>
+                                    </div>
                                 </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">{{ $results->acc1_deposits ?? '$0.00' }}</span>
+                                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
+                                    <div>
+                                        <div class="text-white/60 text-xs mb-1">Daily</div>
+                                        <div class="text-white font-bold">{{ $acc['daily'] ?? '0%' }}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-white/60 text-xs mb-1">Monthly</div>
+                                        <div class="text-white font-bold">{{ $acc['monthly'] ?? '0%' }}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-white/60 text-xs mb-1">Drawdown</div>
+                                        <div class="text-white font-bold">{{ $acc['drawdown'] ?? '0%' }}</div>
+                                    </div>
                                 </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">{{ $results->acc1_platform ?? 'N/A' }}</span>
+                                <div class="pt-4 border-t border-white/20 space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-white/60 text-sm">Profit</span>
+                                        <span class="text-blue-400 font-bold">{{ $acc['profit'] ?? '$0.00' }}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-white/60 text-sm">Deposits</span>
+                                        <span class="text-white font-semibold">{{ $acc['deposits'] ?? '$0.00' }}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-white/60 text-sm">Platform</span>
+                                        <span class="text-white font-semibold">{{ $acc['platform'] ?? 'N/A' }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Account 2 -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
-                                    </svg>
-                                </div>
-                                <span class="text-white font-bold text-lg">{{ $results->acc2_name }}</span>
-                            </div>
-                            <div
-                                class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
-                                <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                </svg>
-                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc2_subtext }}</span>
-                            </div>
-                        </div>
-                        <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" 
-                                    data-chart-id="account2"
-                                    data-chart-labels="{{ is_array($results->acc2_chart_labels ?? null) ? json_encode($results->acc2_chart_labels) : json_encode([]) }}"
-                                    data-chart-data="{{ is_array($results->acc2_chart_data ?? null) ? json_encode($results->acc2_chart_data) : json_encode([]) }}"></canvas>
-                        </div>
-                        <div class="space-y-6">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc2_total_gain ?? '+0%' }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">{{ $results->acc2_balance ?? '$0.00' }}</div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">{{ $results->acc2_daily ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">{{ $results->acc2_monthly ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">{{ $results->acc2_drawdown ?? '0%' }}</div>
-                                </div>
-                            </div>
-                            <div class="pt-4 border-t border-white/20 space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">{{ $results->acc2_profit ?? '$0.00' }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">{{ $results->acc2_deposits ?? '$0.00' }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">{{ $results->acc2_platform ?? 'N/A' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Account 3 -->
-                    <div
-                        class="glass-effect border-2 border-blue-500/20 p-8 rounded-3xl shadow-2xl card-hover transform hover:scale-105 transition-all">
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
-                                    </svg>
-                                </div>
-                                <span class="text-white font-bold text-lg">{{ $results->acc3_name }}</span>
-                            </div>
-                            <div
-                                class="flex items-center gap-2 px-4 bg-blue-600/20 border border-blue-500 py-2 rounded-full">
-                                <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                </svg>
-                                <span class="text-blue-400 text-xs font-bold">{{ $results->acc3_subtext }}</span>
-                            </div>
-                        </div>
-                        <div class="h-52 rounded-xl mb-6 relative p-3 bg-black/50 border border-blue-500/20">
-                            <canvas class="account-chart" 
-                                    data-chart-id="account3"
-                                    data-chart-labels="{{ is_array($results->acc3_chart_labels ?? null) ? json_encode($results->acc3_chart_labels) : json_encode([]) }}"
-                                    data-chart-data="{{ is_array($results->acc3_chart_data ?? null) ? json_encode($results->acc3_chart_data) : json_encode([]) }}"></canvas>
-                        </div>
-                        <div class="space-y-6">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <div class="text-white/60 text-sm mb-2">Total Gain</div>
-                                    <div class="text-blue-400 text-3xl font-bold">{{ $results->acc3_total_gain ?? '+0%' }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-white/60 text-sm mb-2">Balance</div>
-                                    <div class="text-white text-2xl font-bold">{{ $results->acc3_balance ?? '$0.00' }}</div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Daily</div>
-                                    <div class="text-white font-bold">{{ $results->acc3_daily ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Monthly</div>
-                                    <div class="text-white font-bold">{{ $results->acc3_monthly ?? '0%' }}</div>
-                                </div>
-                                <div>
-                                    <div class="text-white/60 text-xs mb-1">Drawdown</div>
-                                    <div class="text-white font-bold">{{ $results->acc3_drawdown ?? '0%' }}</div>
-                                </div>
-                            </div>
-                            <div class="pt-4 border-t border-white/20 space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Profit</span>
-                                    <span class="text-blue-400 font-bold">{{ $results->acc3_profit ?? '$0.00' }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Deposits</span>
-                                    <span class="text-white font-semibold">{{ $results->acc3_deposits ?? '$0.00' }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/60 text-sm">Platform</span>
-                                    <span class="text-white font-semibold">{{ $results->acc3_platform ?? 'N/A' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
 
                 <!-- Performance Summary -->
@@ -932,6 +795,7 @@
                         Conditions</a>
                 </div>
             </div>
+            @if($setting->show_legal_disclaimer)
             <div class="bg-black/50 px-6 py-8 mt-10 rounded-2xl border border-blue-500/20">
                 <div class="max-w-5xl mx-auto flex items-start gap-4 text-xs text-white/60 leading-relaxed">
                     <span class="text-red-400 text-xl mt-1">⚠</span>
@@ -940,6 +804,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </footer>
 

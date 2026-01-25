@@ -42,7 +42,12 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Trader User <span class="text-danger">*</span></label>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label mb-0">Trader User <span class="text-danger">*</span></label>
+                            <button type="button" id="addUserBtn" class="btn btn-sm btn-outline-primary">
+                                <i class="fa-solid fa-plus"></i> Add New User
+                            </button>
+                        </div>
                         <select name="user_id" id="traderSelect" class="form-select" required>
                             <option value="">Select Trader</option>
                             @foreach($traders as $trader)
@@ -219,6 +224,43 @@
             </form>
         </div>
     </div>
+    </div>
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Trader User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="addUserForm" action="{{ route('admin.payouts.store-user') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="text" name="password" class="form-control" value="123456" required> <!-- Default password -->
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Country</label>
+                            <input type="text" name="country" class="form-control" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 @endsection
@@ -238,6 +280,11 @@
     });
     
     document.addEventListener('DOMContentLoaded', function() {
+        // Handle Add User Button Click (Manual Trigger)
+        $(document).on('click', '#addUserBtn', function() {
+            $('#addUserModal').modal('show');
+        });
+
         // Initialize date picker for main form
         if (document.getElementById('payoutDate')) {
             flatpickr("#payoutDate", {
@@ -335,53 +382,53 @@
         
         // Function to handle trader selection
         function handleTraderSelect(selectElement, nameInput, countryInput) {
-            selectElement.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
+            $(selectElement).on('change', function() {
+                const selectedOption = $(this).find(':selected');
                 
-                if (selectedOption.value) {
-                    const userName = selectedOption.getAttribute('data-name');
-                    const userCountry = selectedOption.getAttribute('data-country');
+                if (selectedOption.val()) {
+                    const userName = selectedOption.data('name');
+                    const userCountry = selectedOption.data('country');
                     
-                    // Auto-generate display name from user name (only if field is empty)
-                    if (userName && !nameInput.value.trim()) {
-                        nameInput.value = generateDisplayName(userName);
+                    // Auto-generate display name from user name
+                    if (userName) {
+                        $(nameInput).val(generateDisplayName(userName));
                     }
                     
-                    // Auto-fill country if available and empty
-                    if (userCountry && !countryInput.value.trim()) {
-                        countryInput.value = userCountry;
+                    // Auto-fill country if available
+                    if (userCountry) {
+                        $(countryInput).val(userCountry);
                     }
                 }
             });
         }
         
         // Handle main form
-        const traderSelect = document.getElementById('traderSelect');
-        const displayNameInput = document.getElementById('displayName');
-        const countryInput = document.getElementById('countryInput');
+        const traderSelect = $('#traderSelect');
+        const displayNameInput = $('#displayName');
+        const countryInput = $('#countryInput');
         
-        if (traderSelect && displayNameInput && countryInput) {
+        if (traderSelect.length && displayNameInput.length && countryInput.length) {
             handleTraderSelect(traderSelect, displayNameInput, countryInput);
         }
         
         // Handle edit modal trader select
         $(document).on('change', '.edit-trader-select', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const nameInput = document.getElementById('editName');
-            const countryInput = document.getElementById('editCountry');
+            const selectedOption = $(this).find(':selected');
+            const nameInput = $('#editName');
+            const countryInput = $('#editCountry');
             
-            if (selectedOption.value && nameInput && countryInput) {
-                const userName = selectedOption.getAttribute('data-name');
-                const userCountry = selectedOption.getAttribute('data-country');
+            if (selectedOption.val() && nameInput.length && countryInput.length) {
+                const userName = selectedOption.data('name');
+                const userCountry = selectedOption.data('country');
                 
-                // Auto-generate display name (only if field is empty)
-                if (userName && !nameInput.value.trim()) {
-                    nameInput.value = generateDisplayName(userName);
+                // Auto-generate display name
+                if (userName) {
+                    nameInput.val(generateDisplayName(userName));
                 }
                 
-                // Auto-fill country if available and empty
-                if (userCountry && !countryInput.value.trim()) {
-                    countryInput.value = userCountry;
+                // Auto-fill country if available
+                if (userCountry) {
+                    countryInput.val(userCountry);
                 }
             }
         });
@@ -592,6 +639,11 @@
                 success: function(response) {
                     if (response.success) {
                         $('#addPayoutForm')[0].reset();
+                        // Reset date picker default date
+                        if (document.getElementById('payoutDate')) {
+                            document.getElementById('payoutDate')._flatpickr.setDate("{{ date('Y-m-d') }}");
+                        }
+                        
                         payoutTable.ajax.reload();
                         Swal.fire({
                             icon: 'success',
@@ -629,6 +681,74 @@
                         title: 'Error!',
                         html: errorMsg
                     });
+                }
+            });
+        });
+
+        // Handle Add User Form Submission
+        $('#addUserForm').on('submit', function(e) {
+            e.preventDefault();
+            const form = $(this);
+            const submitBtn = form.find('button[type="submit"]');
+            
+            submitBtn.prop('disabled', true).text('Creating...');
+            
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        // Close modal
+                        $('#addUserModal').modal('hide');
+                        form[0].reset();
+                        
+                        // Add new option to trader select
+                        const user = response.user;
+                        const optionText = user.name + ' (' + user.email + ')';
+                        const newOption = new Option(optionText, user.id, true, true); // Create and select
+                        
+                        // Add attributes
+                        $(newOption).attr('data-name', user.name);
+                        $(newOption).attr('data-country', user.country || '');
+                        
+                        $('#traderSelect').append(newOption).trigger('change');
+                        
+                        // Also add to edit modal select just in case
+                        const editOption = new Option(optionText, user.id);
+                        $(editOption).attr('data-name', user.name);
+                        $(editOption).attr('data-country', user.country || '');
+                        $('#editUserId').append(editOption);
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Trader created successfully and selected!',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    let errorMsg = 'Error creating user';
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        let errors = '';
+                        $.each(xhr.responseJSON.errors, function(key, value) {
+                            errors += value[0] + '<br>';
+                        });
+                        errorMsg = errors;
+                    } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        html: errorMsg
+                    });
+                },
+                complete: function() {
+                    submitBtn.prop('disabled', false).text('Create User');
                 }
             });
         });

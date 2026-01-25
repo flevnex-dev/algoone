@@ -30,32 +30,32 @@
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Employees</h6>
-                    <h3 class="fw-bold text-primary">{{ $data['totalEmployees'] }}</h3>
+                    <h6 class="text-muted">Total Traders</h6>
+                    <h3 class="fw-bold text-primary">{{ $data['totalTraders'] }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Clients</h6>
-                    <h3 class="fw-bold text-success">{{ $data['totalClients'] }}</h3>
+                    <h6 class="text-muted">Total Payouts</h6>
+                    <h3 class="fw-bold text-success">৳{{ number_format($data['totalPayouts'], 2) }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Products</h6>
-                    <h3 class="fw-bold text-warning">{{ $data['totalProducts'] }}</h3>
+                    <h6 class="text-muted">Active Trading Weeks</h6>
+                    <h3 class="fw-bold text-warning">{{ $data['activeTradingWeeks'] }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Sales</h6>
-                    <h3 class="fw-bold text-info">{{ $data['totalSales'] }}</h3>
+                    <h6 class="text-muted">Approved Live Results</h6>
+                    <h3 class="fw-bold text-info">{{ $data['approvedLiveResults'] }}</h3>
                 </div>
             </div>
         </div>
@@ -66,32 +66,32 @@
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Revenue</h6>
-                    <h3 class="fw-bold text-success">৳{{ number_format($data['totalRevenue'], 2) }}</h3>
+                    <h6 class="text-muted">Active Myfxbook Accounts</h6>
+                    <h3 class="fw-bold text-success">{{ $data['activeMyfxbookAccounts'] }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Pending Deliveries</h6>
-                    <h3 class="fw-bold text-warning">{{ $data['pendingDeliveries'] }}</h3>
+                    <h6 class="text-muted">Referral Conversions</h6>
+                    <h3 class="fw-bold text-warning">{{ $data['totalReferralConversions'] }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Low Stock Products</h6>
-                    <h3 class="fw-bold text-danger">{{ $data['lowStockProducts'] }}</h3>
+                    <h6 class="text-muted">Pending Payouts</h6>
+                    <h3 class="fw-bold text-danger">{{ $data['pendingPayouts'] }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h6 class="text-muted">Overdue Payments</h6>
-                    <h3 class="fw-bold text-danger">৳{{ number_format($data['overduePayments'], 2) }}</h3>
+                    <h6 class="text-muted">Total Users</h6>
+                    <h3 class="fw-bold text-info">{{ $data['totalUsers'] }}</h3>
                 </div>
             </div>
         </div>

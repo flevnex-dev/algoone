@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ResultsSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ResultsSectionController extends Controller
 {
@@ -24,44 +23,19 @@ class ResultsSectionController extends Controller
             'subtitle' => 'nullable|string',
             'disclaimer' => 'nullable|string',
             
-            'acc1_name' => 'nullable|string',
-            'acc1_subtext' => 'nullable|string',
-            'acc1_chart_labels' => 'nullable|string',
-            'acc1_chart_data' => 'nullable|string',
-            'acc1_total_gain' => 'nullable|string',
-            'acc1_balance' => 'nullable|string',
-            'acc1_daily' => 'nullable|string',
-            'acc1_monthly' => 'nullable|string',
-            'acc1_drawdown' => 'nullable|string',
-            'acc1_profit' => 'nullable|string',
-            'acc1_deposits' => 'nullable|string',
-            'acc1_platform' => 'nullable|string',
-
-            'acc2_name' => 'nullable|string',
-            'acc2_subtext' => 'nullable|string',
-            'acc2_chart_labels' => 'nullable|string',
-            'acc2_chart_data' => 'nullable|string',
-            'acc2_total_gain' => 'nullable|string',
-            'acc2_balance' => 'nullable|string',
-            'acc2_daily' => 'nullable|string',
-            'acc2_monthly' => 'nullable|string',
-            'acc2_drawdown' => 'nullable|string',
-            'acc2_profit' => 'nullable|string',
-            'acc2_deposits' => 'nullable|string',
-            'acc2_platform' => 'nullable|string',
-
-            'acc3_name' => 'nullable|string',
-            'acc3_subtext' => 'nullable|string',
-            'acc3_chart_labels' => 'nullable|string',
-            'acc3_chart_data' => 'nullable|string',
-            'acc3_total_gain' => 'nullable|string',
-            'acc3_balance' => 'nullable|string',
-            'acc3_daily' => 'nullable|string',
-            'acc3_monthly' => 'nullable|string',
-            'acc3_drawdown' => 'nullable|string',
-            'acc3_profit' => 'nullable|string',
-            'acc3_deposits' => 'nullable|string',
-            'acc3_platform' => 'nullable|string',
+            'accounts' => 'nullable|array',
+            'accounts.*.name' => 'nullable|string',
+            'accounts.*.subtext' => 'nullable|string',
+            'accounts.*.chart_labels' => 'nullable', // string or array
+            'accounts.*.chart_data' => 'nullable', // string or array
+            'accounts.*.total_gain' => 'nullable|string',
+            'accounts.*.balance' => 'nullable|string',
+            'accounts.*.daily' => 'nullable|string',
+            'accounts.*.monthly' => 'nullable|string',
+            'accounts.*.drawdown' => 'nullable|string',
+            'accounts.*.profit' => 'nullable|string',
+            'accounts.*.deposits' => 'nullable|string',
+            'accounts.*.platform' => 'nullable|string',
 
             'summary_title' => 'nullable|string',
             'summary_description' => 'nullable|string',
@@ -77,39 +51,60 @@ class ResultsSectionController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active');
-
-        // Parse chart labels and data from comma-separated strings to arrays
-        for ($i = 1; $i <= 3; $i++) {
-            // Parse chart labels
-            if (!empty($validated["acc{$i}_chart_labels"])) {
-                $labels = array_map('trim', explode(',', $validated["acc{$i}_chart_labels"]));
-                $validated["acc{$i}_chart_labels"] = array_filter($labels); // Remove empty values
-            } else {
-                $validated["acc{$i}_chart_labels"] = null;
-            }
-            
-            // Parse chart data
-            if (!empty($validated["acc{$i}_chart_data"])) {
-                $data = array_map(function($val) {
-                    return floatval(trim($val));
-                }, explode(',', $validated["acc{$i}_chart_data"]));
-                $validated["acc{$i}_chart_data"] = array_filter($data, function($val) {
-                    return $val !== null && $val !== false;
-                }); // Remove empty/invalid values
-                
-                // Recalculate auto-calculated fields if chart data exists
-                if (!empty($validated["acc{$i}_chart_data"])) {
-                    $chartData = array_values($validated["acc{$i}_chart_data"]);
-                    $chartLabels = $validated["acc{$i}_chart_labels"] ?? [];
-                    
-                    $validated["acc{$i}_total_gain"] = $this->calculateTotalGain($chartData);
-                    $validated["acc{$i}_monthly"] = $this->calculateMonthly($chartData, $chartLabels);
-                    $validated["acc{$i}_drawdown"] = $this->calculateDrawdown($chartData);
-                    $validated["acc{$i}_balance"] = $this->calculateBalance($chartData);
+        
+        // Process accounts data
+        if (isset($validated['accounts']) && is_array($validated['accounts'])) {
+            $processedAccounts = [];
+            foreach ($validated['accounts'] as $acc) {
+                // Parse chart labels
+                $chartLabels = null;
+                if (!empty($acc['chart_labels'])) {
+                    if (is_array($acc['chart_labels'])) {
+                        $labels = $acc['chart_labels'];
+                    } else {
+                        $labels = array_map('trim', explode(',', $acc['chart_labels']));
+                    }
+                    $chartLabels = array_values(array_filter($labels)); // Remove empty values
                 }
-            } else {
-                $validated["acc{$i}_chart_data"] = null;
+                
+                // Parse chart data
+                $chartData = null;
+                if (!empty($acc['chart_data'])) {
+                    if (is_array($acc['chart_data'])) {
+                        $data = $acc['chart_data'];
+                    } else {
+                         $data = array_map(function($val) {
+                            return floatval(trim($val));
+                        }, explode(',', $acc['chart_data']));
+                    }
+                    $chartData = array_values(array_filter($data, function($val) {
+                        return $val !== null && $val !== false;
+                    }));
+                }
+
+                // Recalculate auto-calculated fields if chart data exists AND manual input is empty
+                if ($chartData) {
+                    if (!isset($acc['total_gain']) || $acc['total_gain'] === '') {
+                        $acc['total_gain'] = $this->calculateTotalGain($chartData);
+                    }
+                    if (!isset($acc['monthly']) || $acc['monthly'] === '') {
+                        $acc['monthly'] = $this->calculateMonthly($chartData, $chartLabels);
+                    }
+                    if (!isset($acc['drawdown']) || $acc['drawdown'] === '') {
+                        $acc['drawdown'] = $this->calculateDrawdown($chartData);
+                    }
+                    if (!isset($acc['balance']) || $acc['balance'] === '') {
+                        $acc['balance'] = $this->calculateBalance($chartData);
+                    }
+                }
+
+                $acc['chart_labels'] = $chartLabels;
+                $acc['chart_data'] = $chartData;
+                $processedAccounts[] = $acc;
             }
+            $validated['accounts'] = $processedAccounts; // Save as sequential array
+        } else {
+            $validated['accounts'] = [];
         }
 
         $results = ResultsSection::first();
@@ -129,7 +124,7 @@ class ResultsSectionController extends Controller
         ]);
 
         $file = $request->file('excel_file');
-        $extension = $file->getClientOriginalExtension();
+        $extension = strtolower($file->getClientOriginalExtension());
 
         try {
             if ($extension === 'csv') {
@@ -141,9 +136,71 @@ class ResultsSectionController extends Controller
             return redirect()->route('admin.results.index')
                 ->with('success', 'Accounts imported successfully!');
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Import Error: ' . $e->getMessage());
             return redirect()->route('admin.results.index')
                 ->with('error', 'Error importing file: ' . $e->getMessage());
         }
+    }
+
+    public function deleteAccount($index)
+    {
+        try {
+            $results = ResultsSection::first();
+            if (!$results || empty($results->accounts)) {
+                return response()->json(['message' => 'No accounts found'], 404);
+            }
+
+            $accounts = $results->accounts;
+            
+            // Validate index
+            if (!isset($accounts[$index])) {
+                return response()->json(['message' => 'Account not found'], 404);
+            }
+
+            // Remove account and re-index
+            unset($accounts[$index]);
+            $results->accounts = array_values($accounts);
+            $results->save();
+
+            return response()->json(['message' => 'Account deleted successfully']);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Delete Account Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Error deleting account: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function downloadTemplate()
+    {
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="results_accounts_template.csv"',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $columns = [
+            'Account Name', 'Subtext', 'Risk Label', 'Chart Labels (comma-separated)', 
+            'Chart Data (comma-separated)', 'Daily %', 'Drawdown %', 'Profit', 'Deposits', 'Platform'
+        ];
+
+        $callback = function() use ($columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            
+            // Example row
+            fputcsv($file, [
+                'Account #1', 'Verified', 'Low Risk', 
+                "Jul '23, Sep '23, Nov '23, Jan '24, Apr '24", 
+                "0, 45, 85, 125, 154.63",
+                '0.45', '5.2', '12450', '50000', 'MT4'
+            ]);
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     private function importCsv($file)
@@ -160,71 +217,15 @@ class ResultsSectionController extends Controller
             $results = ResultsSection::first() ?? new ResultsSection();
             $accounts = [];
             
-            $rowCount = 0;
-            while (($row = fgetcsv($handle)) !== false && $rowCount < 3) {
+            while (($row = fgetcsv($handle)) !== false) {
                 if (count($row) >= 5 && !empty(trim($row[0] ?? ''))) {
-                    $accounts[] = $row;
-                    $rowCount++;
+                    $accounts[] = $this->processRow($row);
                 }
             }
             fclose($handle);
             
-            // Process accounts (max 3)
-            for ($i = 0; $i < min(3, count($accounts)); $i++) {
-                $row = $accounts[$i];
-                $accNum = $i + 1;
-                
-                // Parse chart labels and data
-                $chartLabels = !empty(trim($row[3] ?? '')) 
-                    ? array_map('trim', explode(',', trim($row[3]))) 
-                    : null;
-                
-                $chartData = !empty(trim($row[4] ?? '')) 
-                    ? array_map(function($val) {
-                        return floatval(trim($val));
-                    }, explode(',', trim($row[4]))) 
-                    : null;
-                
-                // Calculate values from chart data
-                $totalGain = $this->calculateTotalGain($chartData);
-                $monthly = $this->calculateMonthly($chartData, $chartLabels);
-                $balance = $this->calculateBalance($chartData);
-                
-                // Drawdown: Use from Excel if provided (column 6), otherwise calculate
-                $drawdown = null;
-                if (isset($row[6]) && !empty(trim($row[6]))) {
-                    $drawdown = trim($row[6]);
-                } else {
-                    $drawdown = $this->calculateDrawdown($chartData);
-                }
-                
-                // Update account data
-                // Column order: Account Name, Subtext, Risk Label, Chart Labels, Chart Data, Daily %, Drawdown, Profit, Deposits, Platform
-                $results->{"acc{$accNum}_name"} = trim($row[0] ?? '');
-                $results->{"acc{$accNum}_subtext"} = trim($row[1] ?? 'Verified');
-                // Risk Label is column 2 but we don't store it separately, it's just for reference
-                $results->{"acc{$accNum}_total_gain"} = $totalGain;
-                $results->{"acc{$accNum}_balance"} = $balance;
-                $results->{"acc{$accNum}_monthly"} = $monthly;
-                $results->{"acc{$accNum}_drawdown"} = $drawdown;
-                $results->{"acc{$accNum}_chart_labels"} = $chartLabels;
-                $results->{"acc{$accNum}_chart_data"} = $chartData;
-                
-                // Optional fields (columns 5, 7-9)
-                if (isset($row[5]) && !empty(trim($row[5]))) {
-                    $results->{"acc{$accNum}_daily"} = trim($row[5]);
-                }
-                if (isset($row[7]) && !empty(trim($row[7]))) {
-                    $results->{"acc{$accNum}_profit"} = trim($row[7]);
-                }
-                if (isset($row[8]) && !empty(trim($row[8]))) {
-                    $results->{"acc{$accNum}_deposits"} = trim($row[8]);
-                }
-                if (isset($row[9]) && !empty(trim($row[9]))) {
-                    $results->{"acc{$accNum}_platform"} = trim($row[9]);
-                }
-            }
-            
+            // Save accounts array to JSON column
+            $results->accounts = $accounts;
             $results->save();
             DB::commit();
         } catch (\Exception $e) {
@@ -240,86 +241,35 @@ class ResultsSectionController extends Controller
 
     private function importExcel($file)
     {
+        if (!class_exists(\PhpOffice\PhpSpreadsheet\IOFactory::class)) {
+            throw new \Exception('PhpSpreadsheet library is not installed. Please use CSV format or install the library.');
+        }
+
         try {
-            $spreadsheet = IOFactory::load($file->getPathname());
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getPathname());
             $worksheet = $spreadsheet->getActiveSheet();
             $rows = $worksheet->toArray();
             
             DB::beginTransaction();
             try {
                 $results = ResultsSection::first() ?? new ResultsSection();
-                
+                $accounts = [];
+
                 // Skip header row
                 array_shift($rows);
                 
-                // Process accounts (max 3)
-                $rowCount = 0;
                 foreach ($rows as $row) {
-                    if ($rowCount >= 3) {
-                        break; // Stop after 3 accounts
-                    }
-                    
+                    // Normalize row data
                     $row = array_map(function($cell) {
-                        return is_null($cell) ? '' : trim((string)$cell);
+                         return is_null($cell) ? '' : trim((string)$cell);
                     }, $row);
-                    
+
                     if (count($row) >= 5 && !empty($row[0])) {
-                        $accNum = $rowCount + 1;
-                        
-                        // Parse chart labels and data
-                        $chartLabels = !empty($row[3] ?? '') 
-                            ? array_map('trim', explode(',', $row[3])) 
-                            : null;
-                        
-                        $chartData = !empty($row[4] ?? '') 
-                            ? array_map(function($val) {
-                                return floatval(trim($val));
-                            }, explode(',', $row[4])) 
-                            : null;
-                        
-                        // Calculate values
-                        $totalGain = $this->calculateTotalGain($chartData);
-                        $monthly = $this->calculateMonthly($chartData, $chartLabels);
-                        $balance = $this->calculateBalance($chartData);
-                        
-                        // Drawdown: Use from Excel if provided (column 6), otherwise calculate
-                        $drawdown = null;
-                        if (isset($row[6]) && !empty($row[6])) {
-                            $drawdown = trim($row[6]);
-                        } else {
-                            $drawdown = $this->calculateDrawdown($chartData);
-                        }
-                        
-                        // Update account data
-                        // Column order: Account Name, Subtext, Risk Label, Chart Labels, Chart Data, Daily %, Drawdown, Profit, Deposits, Platform
-                        $results->{"acc{$accNum}_name"} = $row[0] ?? '';
-                        $results->{"acc{$accNum}_subtext"} = $row[1] ?? 'Verified';
-                        // Risk Label is column 2 but we don't store it separately
-                        $results->{"acc{$accNum}_total_gain"} = $totalGain;
-                        $results->{"acc{$accNum}_balance"} = $balance;
-                        $results->{"acc{$accNum}_monthly"} = $monthly;
-                        $results->{"acc{$accNum}_drawdown"} = $drawdown;
-                        $results->{"acc{$accNum}_chart_labels"} = $chartLabels;
-                        $results->{"acc{$accNum}_chart_data"} = $chartData;
-                        
-                        // Optional fields (columns 5, 7-9)
-                        if (isset($row[5]) && !empty($row[5])) {
-                            $results->{"acc{$accNum}_daily"} = $row[5];
-                        }
-                        if (isset($row[7]) && !empty($row[7])) {
-                            $results->{"acc{$accNum}_profit"} = $row[7];
-                        }
-                        if (isset($row[8]) && !empty($row[8])) {
-                            $results->{"acc{$accNum}_deposits"} = $row[8];
-                        }
-                        if (isset($row[9]) && !empty($row[9])) {
-                            $results->{"acc{$accNum}_platform"} = $row[9];
-                        }
-                        
-                        $rowCount++;
+                        $accounts[] = $this->processRow($row);
                     }
                 }
                 
+                $results->accounts = $accounts;
                 $results->save();
                 DB::commit();
             } catch (\Exception $e) {
@@ -331,6 +281,49 @@ class ResultsSectionController extends Controller
         } catch (\Exception $e) {
             throw new \Exception('Error reading Excel file: ' . $e->getMessage());
         }
+    }
+
+    private function processRow($row)
+    {
+        // Parse chart labels and data
+        $chartLabels = !empty(trim($row[3] ?? '')) 
+            ? array_map('trim', explode(',', trim($row[3]))) 
+            : null;
+        
+        $chartData = !empty(trim($row[4] ?? '')) 
+            ? array_map(function($val) {
+                return floatval(trim($val));
+            }, explode(',', trim($row[4]))) 
+            : null;
+        
+        // Calculate values from chart data
+        $totalGain = $this->calculateTotalGain($chartData);
+        $monthly = $this->calculateMonthly($chartData, $chartLabels);
+        $balance = $this->calculateBalance($chartData);
+        
+        // Drawdown: Use from Excel if provided (column 6), otherwise calculate
+        $drawdown = null;
+        if (isset($row[6]) && !empty(trim($row[6]))) {
+            $drawdown = trim($row[6]);
+        } else {
+            $drawdown = $this->calculateDrawdown($chartData);
+        }
+
+        // Construct account object
+        return [
+            'name' => trim($row[0] ?? ''),
+            'subtext' => trim($row[1] ?? 'Verified'),
+            'total_gain' => $totalGain,
+            'balance' => $balance,
+            'monthly' => $monthly,
+            'drawdown' => $drawdown,
+            'daily' => trim($row[5] ?? ''),
+            'profit' => trim($row[7] ?? ''),
+            'deposits' => trim($row[8] ?? ''),
+            'platform' => trim($row[9] ?? ''),
+            'chart_labels' => $chartLabels,
+            'chart_data' => $chartData,
+        ];
     }
 
     private function calculateTotalGain($chartData)

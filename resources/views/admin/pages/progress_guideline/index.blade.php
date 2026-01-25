@@ -52,25 +52,35 @@
                         </div>
 
                         <div class="mb-4">
-                            <h5 class="mb-3">Guidelines</h5>
-                            @for($i = 1; $i <= 7; $i++)
-                            <div class="card mb-3">
-                                <div class="card-header bg-light">
-                                    <h6 class="mb-0">Guideline {{ $i }}</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Guidelines</h5>
+                                <button type="button" class="btn btn-success btn-sm" id="add-guideline-btn">+ Add Guideline</button>
+                            </div>
+                            
+                            <div id="guidelines-container">
+                                <!-- Guidelines injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Template for Guideline -->
+                        <template id="guideline-template">
+                            <div class="card mb-3 guideline-card" data-index="{index}">
+                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Guideline <span class="guideline-number"></span></h6>
+                                    <button type="button" class="btn btn-danger btn-sm remove-guideline-btn">Remove</button>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label class="form-label">Title</label>
-                                        <input type="text" name="guideline{{ $i }}_title" class="form-control" value="{{ $guideline->{"guideline{$i}_title"} ?? '' }}">
+                                        <input type="text" name="guidelines[{index}][title]" class="form-control guideline-title">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Description</label>
-                                        <textarea name="guideline{{ $i }}_text" class="form-control" rows="2">{{ $guideline->{"guideline{$i}_text"} ?? '' }}</textarea>
+                                        <textarea name="guidelines[{index}][text]" class="form-control guideline-text" rows="2"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            @endfor
-                        </div>
+                        </template>
 
                         <div class="mb-3">
                             <div class="form-check">
@@ -90,4 +100,60 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('guidelines-container');
+        const addBtn = document.getElementById('add-guideline-btn');
+        const template = document.getElementById('guideline-template').innerHTML;
+        
+        let counter = 1000;
+        const existingData = @json($guideline->guidelines ?? []);
+
+        // Initial Render
+        if (Array.isArray(existingData)) {
+            existingData.forEach((item, index) => {
+                addToDOM(item, index);
+                if(index >= counter) counter = index + 1;
+            });
+        }
+
+        // Add Button
+        addBtn.addEventListener('click', function() {
+            addToDOM({}, counter++);
+        });
+
+        function addToDOM(data, index) {
+            let html = template.replace(/{index}/g, index);
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = html;
+            const card = wrapper.firstElementChild;
+
+            // Populate Data
+            if(data.title) card.querySelector('.guideline-title').value = data.title;
+            if(data.text) card.querySelector('.guideline-text').value = data.text;
+            
+            card.querySelector('.guideline-number').textContent = index + 1;
+
+            // Remove Button
+            card.querySelector('.remove-guideline-btn').addEventListener('click', function() {
+                if(confirm('Remove this guideline?')) {
+                    card.remove();
+                    updateNumbers();
+                }
+            });
+
+            container.appendChild(card);
+            updateNumbers();
+        }
+
+        function updateNumbers() {
+            const cards = container.querySelectorAll('.guideline-card');
+            cards.forEach((card, i) => {
+                card.querySelector('.guideline-number').textContent = i + 1;
+            });
+        }
+    });
+</script>
 @endsection

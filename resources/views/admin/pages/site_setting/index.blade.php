@@ -86,7 +86,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Legal Disclaimer</label>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label mb-0">Legal Disclaimer</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="show_legal_disclaimer" value="1" id="showLegalDisclaimer" {{ old('show_legal_disclaimer', $setting->show_legal_disclaimer ?? true) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="showLegalDisclaimer">Show on Frontend</label>
+                                </div>
+                            </div>
                             <textarea name="legal_disclaimer" class="form-control summernote @error('legal_disclaimer') is-invalid @enderror" rows="5">{{ old('legal_disclaimer', $setting->legal_disclaimer) }}</textarea>
                             @error('legal_disclaimer')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>

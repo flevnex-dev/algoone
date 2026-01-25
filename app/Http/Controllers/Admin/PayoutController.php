@@ -138,6 +138,36 @@ class PayoutController extends Controller
             ->with('success', 'Payout created successfully');
     }
 
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6', // Defaults to 123456
+            'country' => 'nullable|string|max:255',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'country' => $validated['country'],
+            'role' => 'trader',
+            'status' => 'active', // Default status
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Trader user created successfully!',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'country' => $user->country
+            ]
+        ]);
+    }
+
     public function update(Request $request, Payout $payout)
     {
         $validated = $request->validate([

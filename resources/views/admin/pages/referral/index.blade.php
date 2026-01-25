@@ -176,9 +176,12 @@
         const summernoteConfig = {
             height: 100,
             toolbar: [
+                ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                ['view', ['codeview']]
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['codeview', 'help']]
             ]
         };
 

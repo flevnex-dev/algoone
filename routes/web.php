@@ -43,6 +43,8 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->name('admin.')->grou
     Route::get('/results', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'index'])->name('results.index');
     Route::post('/results', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'update'])->name('results.update');
     Route::post('/results/import', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'import'])->name('results.import');
+    Route::delete('/results/account/{index}', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'deleteAccount'])->name('results.delete-account');
+    Route::get('/results/template', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'downloadTemplate'])->name('results.template');
 
     Route::get('/why-choose', [\App\Http\Controllers\Admin\WhyChooseSectionController::class, 'index'])->name('why-choose.index');
     Route::post('/why-choose', [\App\Http\Controllers\Admin\WhyChooseSectionController::class, 'update'])->name('why-choose.update');
@@ -90,6 +92,7 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->name('admin.')->grou
     Route::get('/payouts/{payout}', [\App\Http\Controllers\Admin\PayoutController::class, 'show'])->name('payouts.show');
     Route::post('/payouts', [\App\Http\Controllers\Admin\PayoutController::class, 'store'])->name('payouts.store');
     Route::put('/payouts/{payout}', [\App\Http\Controllers\Admin\PayoutController::class, 'update'])->name('payouts.update');
+    Route::post('/payouts/store-user', [\App\Http\Controllers\Admin\PayoutController::class, 'storeUser'])->name('payouts.store-user');
     Route::delete('/payouts/{payout}', [\App\Http\Controllers\Admin\PayoutController::class, 'destroy'])->name('payouts.destroy');
 
     Route::get('/live-results', [\App\Http\Controllers\Admin\LiveResultController::class, 'index'])->name('live-results.index');

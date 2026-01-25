@@ -24,6 +24,12 @@ class User extends Authenticatable
         'role',
         'status',
         'referral_code',
+        'country',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'zip',
     ];
 
     /**
