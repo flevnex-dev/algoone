@@ -340,14 +340,14 @@
                     @endif
 
                     @if($signal->title)
-                    <h2 class="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4 md:mb-6"
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-gray-900 mb-2 md:mb-3"
                         data-admin="signals-title">
                         {!! $signal->title !!}
                     </h2>
                     @endif
 
                     @if($signal->description)
-                    <p class="text-sm md:text-base text-gray-700 mb-4 md:mb-6 md:max-w-3xl mx-auto"
+                    <p class="text-sm md:text-base text-gray-700 mb-2 md:mb-3 md:max-w-3xl mx-auto"
                         data-admin="signals-description">
                         {!! $signal->description !!}
                     </p>
@@ -392,7 +392,7 @@
                     </div>
                     <div
                         class="relative bg-white/80 backdrop-blur-xl border-2 border-blue-200 p-6 md:p-10 rounded-3xl shadow-2xl">
-                        <h3 class="text-2xl md:text-4xl font-bold text-gray-900 mb-5 md:mb-7 text-center"
+                        <h3 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3 text-center"
                             data-admin="why-different-title">{{ $signal->why_different_title }}</h3>
                         <p class="leading-relaxed text-sm md:text-base lg:text-lg text-justify text-gray-700"
                             data-admin="why-different-text">
@@ -514,9 +514,9 @@
                         <img src="{{ asset('assets/image/verified (1).png') }}" alt="" class="w-4 md:w-7 h-4 md:h-7">
                         <span data-admin="performance-badge">{{ $results->badge_text }}</span>
                     </div>
-                    <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-4 md:mb-8" data-admin="track-record-title">
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-3" data-admin="track-record-title">
                         {{ $results->title }}</h2>
-                    <p class="text-base md:text-xl text-white/70 mb-4 md:mb-6" data-admin="track-record-subtitle">
+                    <p class="text-base md:text-xl text-white/70 mb-2 md:mb-3" data-admin="track-record-subtitle">
                         {{ $results->subtitle }}
                     </p>
                     <p class="text-sm text-white/60 italic" data-admin="track-record-disclaimer">
@@ -614,7 +614,7 @@
                                 <span class="text-xs md:text-sm font-bold text-blue-400 uppercase tracking-wider">Performance
                                     Summary</span>
                             </div>
-                            <h3 class="text-2xl md:text-4xl font-extrabold text-white mb-4 md:mb-6"
+                            <h3 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-3"
                                 data-admin="performance-summary-title">
                                 {!! $results->summary_title !!}
                             </h3>
@@ -624,7 +624,7 @@
                             </div>
                         </div>
                         <a href="{{ $results->view_results_link }}"
-                            class="accent-gradient text-white px-4 md:px-6 py-2 md:py-3.5 rounded-2xl font-semibold md:font-bold text-base md:text-lg shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2.5 md:gap-4 group hover:scale-105">
+                            class="accent-gradient text-white px-4 md:px-6 py-2 md:py-3.5 rounded-2xl font-semibold text-base md:text-lg shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2.5 md:gap-4 group hover:scale-105">
                             <span data-admin="view-results-button">{{ $results->view_results_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow"
                                 class="w-3 md:w-5 h-3 md:h-5">
@@ -663,8 +663,8 @@
     <section class="py-16 md:py-24 relative">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-16">
-                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-4 md:mb-6 leading-tight" data-admin="why-choose-title">
+                <div class="text-center mb-6 md:mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-3 leading-tight" data-admin="why-choose-title">
                         {{ $whyChoose->title }}
                     </h2>
                     <p class="text-base md:text-xl text-white/70 leading-relaxed" data-admin="why-choose-subtitle">
@@ -699,8 +699,8 @@
         <div class="absolute right-0 top-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-8 md:mb-16">
-                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-5 md:mb-7 leading-tight" data-admin="referral-title">
+                <div class="text-center mb-6 md:mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight" data-admin="referral-title">
                         {{ $referral->title }}</h2>
                     <p class="text-base md:text-lg text-gray-700 leading-relaxed" data-admin="referral-subtitle">{{ $referral->subtitle }}</p>
                 </div>
@@ -749,8 +749,9 @@
                             class="w-full sm:w-auto"
                         >
                             <button
-                                class="sm:w-auto bg-black text-white border-2 border-gray-700 px-6 md:px-8 py-3 md:py-3.5 rounded-2xl 
-                                font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
+                                class="sm:w-auto bg-black text-white border-2 border-gray-700 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl 
+                                font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl
+                                 hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
                             >
                                 <span data-admin="learn-referrals-button">{{ $referral->button_text }}</span>
                                 <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-6 h-4  md:h-6">
@@ -765,20 +766,20 @@
 
     <!-- Ready to Start Trading Section - Full Width Banner -->
     @if($cta && $cta->is_active)
-    <section class="py-16 md:py-24 relative overflow-hidden">
+    <section class="py-12 md:py-20 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600"></div>
         <div class="absolute inset-0 bg-black/20"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-5xl mx-auto text-center">
-                <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-4 md:mb-6" data-admin="cta-section-title">{{ $cta->title }}</h2>
-                <p class="text-base md:text-xl text-white/90 mb-6 md:mb-8" data-admin="cta-section-description">
+                <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-2 md:mb-4" data-admin="cta-section-title">{{ $cta->title }}</h2>
+                <p class="text-base md:text-xl text-white/90 mb-4 md:mb-6" data-admin="cta-section-description">
                     {{ $cta->description }}
                 </p>
                 <a href="{{ $cta->button_link ?? '#' }}" target="_blank" class="w-full sm:w-auto inline-block">
                     <button
                         class=" sm:w-auto accent-gradient text-white px-4 py-2.5 md:py-3 rounded-2xl font-semibold
-                         text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl hover:scale-105
-                        transition-all border-2 border-white/20 pulse-glow mx-auto"
+                         text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-xl border-2 
+                         border-white/20 mx-auto"
                     >
                         <span data-admin="create-account-button text-sm md:text-base">{{ $cta->button_text }}</span>
                         <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-5 h-4 md:h-5">
