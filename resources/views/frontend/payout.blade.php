@@ -63,7 +63,7 @@
                             <img src="{{ asset('assets/image/logo.png') }}" alt="Logo"/>
                         @endif
                     </div>
-                    <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">

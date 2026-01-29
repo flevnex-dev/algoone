@@ -58,7 +58,7 @@
                             class="" decoding="async" loading="eager" />
                     </div>
                 </div>
-                <h2 class="text-5xl font-extrabold text-white mb-2" >{{ $setting->site_title ?? 'AlgoOne' }}</h2>
+                <h2 class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white mb-2" >{{ $setting->site_title ?? 'AlgoOne' }}</h2>
                 <p class="text-blue-400/80 font-medium">Reset your password</p>
             </div>
 
