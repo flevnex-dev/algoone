@@ -491,7 +491,7 @@
                     <div class="flex justify-center mt-6 md:mt-10">
                         <a href="{{ $howItWorks->cta_link ?? '#' }}" target="_blank">
                             <button
-                                class="accent-gradient text-white px-4 md:px-7 py-3 md:py-4 rounded-2xl font-semibold text-base md:text-lg shadow-xl flex items-center gap-3 md:gap-4 mx-auto">
+                                class="accent-gradient text-white px-4 md:px-6 py-2.5 md:py-3.5 rounded-2xl font-semibold text-base md:text-lg shadow-xl flex items-center gap-1 md:gap-2 mx-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 md:w-7 h-5 md:h-7">
                                     <path d="M13 2L3 14h7v8l9-12h-7V2z"></path>
                                 </svg>
@@ -678,13 +678,15 @@
                         <!-- Card {{ $i }} -->
                         <div
                             class="glass-effect border-2 border-blue-500/20 rounded-3xl shadow-2xl p-8 hover:shadow-blue-500/30 hover:border-blue-500/50 transition-all transform hover:-translate-y-2">
-                            <div
-                                class="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
-                                <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-9 h-9">
+                            <div class="flex flex-row md:flex-col gap-3 md:gap-0">
+                                <div
+                                    class="w-9 h-9 md:w-16 md:h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-6 border-2 border-blue-500/30 pulse-glow">
+                                    <img src="{{ asset($whyChoose->{"card{$i}_image"}) }}" alt="check icon" class="w-5 h-5 md:w-9 md:h-9">
+                                </div>
+                                <h3 class="text-lg md:text-2xl font-semibold md:font-bold text-white mb-1 md:mb-4" data-admin="feature{{ $i }}-title">{{ $whyChoose->{"card{$i}_title"} }}
                             </div>
-                            <h3 class="text-2xl font-bold text-white mb-4" data-admin="feature{{ $i }}-title">{{ $whyChoose->{"card{$i}_title"} }}
                             </h3>
-                            <p class="text-base text-white/70 leading-relaxed" data-admin="feature{{ $i }}-description">
+                            <p class="text-sm md:text-base text-white/70 leading-relaxed -mt-2 md:-mt-1" data-admin="feature{{ $i }}-description">
                                 {{ $whyChoose->{"card{$i}_description"} }}
                             </p>
                         </div>
