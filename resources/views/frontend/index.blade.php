@@ -145,7 +145,7 @@
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
                         class="" decoding="async" loading="eager" />
                 </div>
-                <span class="text-lg md:text-xl lg:text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
+                <span class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
             </div>
             <div class="hidden md:flex items-center space-x-3">
                 <a href="{{ route('frontend.past-performance') }}"
