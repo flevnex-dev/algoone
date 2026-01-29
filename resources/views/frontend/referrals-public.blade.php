@@ -51,7 +51,7 @@
                     <div class="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg ">
                         <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" />
                     </div>
-                    <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">

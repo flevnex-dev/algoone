@@ -62,7 +62,7 @@
                             <img src="{{ asset('assets/image/logo.png') }}" alt="Logo" class="w-10 h-10 object-contain" />
                         @endif
                     </div>
-                    <span class="text-2xl font-bold text-white" data-admin="pageHeader">{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white" data-admin="pageHeader">{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <a href="{{ route('frontend.index') }}" class="text-blue-300 hover:text-blue-100 text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-600/10 transition-all border border-blue-500/30 flex items-center gap-2">
