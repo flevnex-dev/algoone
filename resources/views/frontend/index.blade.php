@@ -145,7 +145,7 @@
                     <img src="{{ isset($setting) && $setting->logo ? asset($setting->logo) : asset('assets/image/logo.png') }}" alt=""
                         class="" decoding="async" loading="eager" />
                 </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
+                <span class="text-lg md:text-xl lg:text-2xl font-extrabold text-white tracking-tight" >{{ $setting->site_title ?? '' }}</span>
             </div>
             <div class="hidden md:flex items-center space-x-3">
                 <a href="{{ route('frontend.past-performance') }}"
@@ -697,23 +697,23 @@
 
     @if($referral && $referral->is_active)
     <!-- Referral Program Section -->
-    <section class="relative py-16 md:py-24 bg-gradient-to-br from-white via-blue-50/50 to-white overflow-hidden">
+    <section class="relative py-16 md:py-24 bg-gradient-to-br from-blue-900/40 via-black to-black overflow-hidden">
         <div class="absolute right-0 top-0 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-6 md:mb-12">
-                    <h2 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-3 leading-tight" data-admin="referral-title">
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-3 leading-tight" data-admin="referral-title">
                         {{ $referral->title }}</h2>
-                    <p class="text-base md:text-lg text-gray-700 leading-relaxed" data-admin="referral-subtitle">{{ $referral->subtitle }}</p>
+                    <p class="text-base md:text-lg text-white leading-relaxed" data-admin="referral-subtitle">{{ $referral->subtitle }}</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach($referral->tiers ?? [] as $tier)
-                        <article class="relative bg-white/80 backdrop-blur-xl border-2 border-gray-300 rounded-3xl shadow-2xl px-6 py-8 md:px-10 md:py-12 hover:shadow-3xl transition-all transform hover:scale-105 flex flex-col h-full">
+                        <article class="relative bg-blue-600/10 backdrop-blur-xl border-2 border-blue-500/40 rounded-3xl shadow-2xl px-6 py-8 md:px-10 md:py-12 hover:shadow-3xl transition-all transform hover:scale-105 flex flex-col h-full">
                             
                             <!-- Dynamic Badge -->
                             @if(!empty($tier['badge_text']))
-                            <span class="absolute -top-5 right-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-5 py-2.5 md:px-6 md:py-3 text-xs md:text-sm font-bold rounded-full shadow-xl flex items-center gap-2">
+                            <span class="absolute -top-5 right-6 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold rounded-full shadow-xl flex items-center gap-2">
                                 @if(!empty($tier['badge_icon']))
                                     <img src="{{ asset($tier['badge_icon']) }}" alt="" class="w-5 h-5 md:w-6 md:h-6">
                                 @endif
@@ -722,18 +722,18 @@
                             @endif
 
                             <div class="flex items-center gap-4 md:gap-5 mb-5 md:mb-8">
-                                <div class="w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-blue-100 flex items-center justify-center border-2 border-blue-200">
-                                    <img src="{{ asset($tier['icon'] ?? '') }}" alt="" class="w-8 h-8 md:w-12 md:h-12">
+                                <div class="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-2xl bg-blue-100 flex items-center justify-center border-2 border-blue-200">
+                                    <img src="{{ asset($tier['icon'] ?? '') }}" alt="" class="w-6 h-6 md:w-12 md:h-12">
                                 </div>
                                 <div>
-                                    <h3 class="text-base md:text-2xl font-bold text-gray-900">{{ $tier['name'] ?? '' }}</h3>
-                                    <p class="text-xs md:text-sm text-gray-600 font-medium">{{ $tier['range'] ?? '' }}</p>
+                                    <h3 class="text-base md:text-2xl font-bold text-white">{{ $tier['name'] ?? '' }}</h3>
+                                    <p class="text-xs md:text-sm text-white font-medium">{{ $tier['range'] ?? '' }}</p>
                                 </div>
                             </div>
                             
-                            <ul class="space-y-4 md:space-y-5 text-gray-700 font-medium">
+                            <ul class="space-y-4 md:space-y-5 text-white font-medium">
                                 @foreach($tier['benefits'] ?? [] as $benefit)
-                                <li class="flex items-start gap-3 md:gap-4">
+                                <li class="flex items-center gap-3 md:gap-4">
                                     <img src="{{ asset($benefit['icon'] ?? '') }}" alt="" class="w-6 h-6 md:w-8 md:h-8 mt-1 flex-shrink-0">
                                     <span class="text-xs md:text-base">{!! $benefit['text'] ?? '' !!}</span>
                                 </li>
@@ -753,7 +753,7 @@
                             <button
                                 class="sm:w-auto bg-black text-white border-2 border-gray-700 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl 
                                 font-semibold text-base md:text-lg shadow-2xl flex items-center justify-center gap-3 hover:shadow-3xl
-                                 hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
+                                hover:scale-105 transition-all mt-5 md:mt-10 mb-0 mx-auto"
                             >
                                 <span data-admin="learn-referrals-button">{{ $referral->button_text }}</span>
                                 <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow" class="w-4 md:w-6 h-4  md:h-6">
