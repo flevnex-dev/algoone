@@ -75,7 +75,7 @@
                         class="w-10 h-10 rounded-lg flex items-center justify-center border border-blue-500/30">
                         <img src="{{ asset($setting->logo ?? 'assets/image/logo.png') }}" alt="Logo" class="w-8 h-8" />
                     </div>
-                    <span class="text-2xl font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
+                    <span class="text-lg md:text-xl lg:text-2xl font-semibold md:font-bold text-white" >{{ $setting->site_title ?? 'AlgoOne' }}</span>
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-4">
