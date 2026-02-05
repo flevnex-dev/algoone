@@ -9,6 +9,7 @@ class LiveResult extends Model
 {
     protected $fillable = [
         'user_id',
+        'custom_name',
         'message',
         'amount',
         'status',
@@ -26,5 +27,13 @@ class LiveResult extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    
+    /**
+     * Get the display name for the result
+     */
+    public function getDisplayNameAttribute()
+    {
+        return $this->user ? $this->user->name : ($this->custom_name ?? 'Anonymous');
     }
 }

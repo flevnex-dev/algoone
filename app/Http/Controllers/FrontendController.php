@@ -169,14 +169,14 @@ class FrontendController extends Controller
             'user_id' => auth()->id(),
             'message' => $validated['message'],
             'amount' => $validated['amount'],
-            'status' => 'approved', // Auto-approve for now, can be changed to 'pending' for moderation
+            'status' => 'pending', // Pending admin approval
         ]);
 
         // Clear pending message from session
         $request->session()->forget('pending_live_result_message');
 
         return redirect()->route('frontend.live-results')
-            ->with('success', 'Your success story has been submitted!');
+            ->with('success', 'Your success story has been submitted for approval!');
     }
 
     public function privacy()

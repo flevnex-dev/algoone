@@ -96,6 +96,12 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->name('admin.')->grou
     Route::delete('/payouts/{payout}', [\App\Http\Controllers\Admin\PayoutController::class, 'destroy'])->name('payouts.destroy');
 
     Route::get('/live-results', [\App\Http\Controllers\Admin\LiveResultController::class, 'index'])->name('live-results.index');
+    Route::get('/live-results/create', [\App\Http\Controllers\Admin\LiveResultController::class, 'create'])->name('live-results.create');
+    Route::post('/live-results', [\App\Http\Controllers\Admin\LiveResultController::class, 'store'])->name('live-results.store');
+    Route::put('/live-results/{id}/approve', [\App\Http\Controllers\Admin\LiveResultController::class, 'approve'])->name('live-results.approve');
+    Route::put('/live-results/{id}/reject', [\App\Http\Controllers\Admin\LiveResultController::class, 'reject'])->name('live-results.reject');
+    Route::get('/live-results/{id}', [\App\Http\Controllers\Admin\LiveResultController::class, 'show'])->name('live-results.show');
+    Route::delete('/live-results/{id}', [\App\Http\Controllers\Admin\LiveResultController::class, 'destroy'])->name('live-results.destroy');
 
     Route::post('/trading-weeks/import', [\App\Http\Controllers\Admin\TradingWeekController::class, 'import'])->name('trading-weeks.import');
     Route::resource('trading-weeks', \App\Http\Controllers\Admin\TradingWeekController::class);

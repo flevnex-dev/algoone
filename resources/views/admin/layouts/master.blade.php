@@ -79,6 +79,9 @@
             font-weight: 600 !important;    
             font-size: 18px !important;
         }
+        .btn-light{
+            color: #000 !important;
+        }
     </style>
     
     <!-- Add this before your own styles -->

@@ -90,11 +90,11 @@
             <div class="message-card rounded-2xl p-6 shadow-xl relative">
                 <div class="flex gap-5">
                     <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 shadow-lg border-2 border-blue-400/30">
-                        {{ strtoupper(substr($result->user->name ?? 'U', 0, 1)) }}
+                        {{ strtoupper(substr($result->display_name ?? 'U', 0, 1)) }}
                     </div>
                     <div class="flex-1">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <h3 class="font-bold text-white text-lg">{{ $result->user->name ?? 'Anonymous' }}</h3>
+                            <h3 class="font-bold text-white text-lg">{{ $result->display_name }}</h3>
                             @if($result->amount)
                             <span class="amount-badge text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
                                 <i class="fas fa-dollar-sign mr-1"></i>{{ number_format($result->amount, 0) }}
@@ -180,13 +180,6 @@
                 <div data-admin="disclaimer">
                     {!! $setting->legal_disclaimer !!}
                 </div>
-            </div>
-            @else
-            <div class="max-w-5xl mx-auto flex items-start gap-3 text-xs text-blue-200/70 leading-relaxed">
-                <span class="text-yellow-400 text-lg mt-1">⚠</span>
-                <p data-admin="disclaimer">
-                    <strong class="text-blue-200/90">LEGAL DISCLAIMER</strong> — All quantitative performance indicators, statistical analyses, trading results, and any associated data visualizations or informational content displayed are presented for demonstration purposes only and are not indicative of future performance.
-                </p>
             </div>
             @endif
         </div>
