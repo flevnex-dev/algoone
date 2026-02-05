@@ -343,7 +343,7 @@
 
                 <div class="text-center mt-10">
                     <a href="#"
-                        class="inline-flex items-center gap-3 bg-white text-blue-600 px-3 lg:px-6 py-2 lg:py-2.5 rounded-lg font-semibold lg:font-bold hover:scale-[1.02] transition">
+                        class="inline-flex items-center gap-3 bg-white text-blue-600 px-3 lg:px-4 py-2 lg:py-2.5 rounded-lg font-semibold lg:font-bold hover:scale-[1.02] transition">
                         <span>For More Results Press Here</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -363,7 +363,7 @@
                 </p>
 
                 <a href="#"
-                    class="inline-flex items-center gap-3 bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 hover:scale-[1.02] transition">
+                    class="inline-flex items-center gap-3 bg-white text-blue-600 px-3 lg:px-4 py-2 lg:py-2.5 rounded-lg font-bold hover:bg-gray-100 hover:scale-[1.02] transition">
                     <span>Get Started Today</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
