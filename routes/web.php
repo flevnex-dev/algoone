@@ -46,6 +46,7 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->name('admin.')->grou
     Route::post('/results/import', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'import'])->name('results.import');
     Route::delete('/results/account/{index}', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'deleteAccount'])->name('results.delete-account');
     Route::get('/results/template', [\App\Http\Controllers\Admin\ResultsSectionController::class, 'downloadTemplate'])->name('results.template');
+    Route::resource('result-items', \App\Http\Controllers\Admin\ResultItemController::class);
 
     Route::get('/why-choose', [\App\Http\Controllers\Admin\WhyChooseSectionController::class, 'index'])->name('why-choose.index');
     Route::post('/why-choose', [\App\Http\Controllers\Admin\WhyChooseSectionController::class, 'update'])->name('why-choose.update');

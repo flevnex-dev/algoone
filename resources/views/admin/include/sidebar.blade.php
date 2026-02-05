@@ -41,6 +41,9 @@
                     <a class="" href="{{ route('admin.results.index') }}">Results Section</a>
                 </li>
                 <li class="">
+                    <a class="" href="{{ route('admin.result-items.index') }}">Result Items</a>
+                </li>
+                <li class="">
                     <a class="" href="{{ route('admin.why-choose.index') }}">Why Choose Us</a>
                 </li>
                 <li class="">

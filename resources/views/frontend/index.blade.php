@@ -625,7 +625,7 @@
                                 {!! $results->summary_description !!}
                             </div>
                         </div>
-                        <a href="{{ $results->view_results_link }}"
+                        <a href="{{ url('results')}}"
                             class="accent-gradient text-white px-4 md:px-6 py-2 md:py-3.5 rounded-2xl font-semibold text-base md:text-lg shadow-2xl hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2.5 md:gap-4 group hover:scale-105">
                             <span data-admin="view-results-button">{{ $results->view_results_text }}</span>
                             <img src="{{ asset('assets/image/right-arrow.png') }}" alt="right arrow"

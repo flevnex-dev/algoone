@@ -214,6 +214,10 @@
                         
                         <!-- Header Section -->
                         <h5 class="mb-3 text-primary">Header Information</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Top Banner Text - <small>Displays at the very top</small></label>
+                            <textarea name="banner_text" class="form-control" rows="2">{{ $results->banner_text }}</textarea>
+                        </div>
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Badge Text</label>
@@ -227,9 +231,17 @@
                                 <label class="form-label">Subtitle</label>
                                 <textarea name="subtitle" class="form-control" rows="2">{{ $results->subtitle }}</textarea>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 mb-3">
                                 <label class="form-label">Disclaimer</label>
                                 <input type="text" name="disclaimer" class="form-control" value="{{ $results->disclaimer }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Primary CTA Button Text</label>
+                                <input type="text" name="primary_cta_text" class="form-control" value="{{ $results->primary_cta_text }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Primary CTA Button Link</label>
+                                <input type="text" name="primary_cta_link" class="form-control" value="{{ $results->primary_cta_link }}">
                             </div>
                         </div>
 
@@ -295,6 +307,29 @@
                              <div class="col-md-6 mb-3">
                                 <label class="form-label">Payout Button Link</label>
                                 <input type="text" name="payout_link" class="form-control" value="{{ $results->payout_link }}">
+                            </div>
+                         </div>
+
+                        <hr>
+
+                        <!-- Final CTA Section -->
+                         <h5 class="mb-3 text-primary">Final Call to Action (Bottom of Page)</h5>
+                         <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="final_cta_title" class="form-control" value="{{ $results->final_cta_title }}">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="final_cta_description" class="form-control" rows="2">{{ $results->final_cta_description }}</textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Button Text</label>
+                                <input type="text" name="final_cta_btn_text" class="form-control" value="{{ $results->final_cta_btn_text }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Button Link</label>
+                                <input type="text" name="final_cta_btn_link" class="form-control" value="{{ $results->final_cta_btn_link }}">
                             </div>
                          </div>
 

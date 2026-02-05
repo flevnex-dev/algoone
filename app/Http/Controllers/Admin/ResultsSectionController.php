@@ -18,10 +18,13 @@ class ResultsSectionController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'banner_text' => 'nullable|string',
             'badge_text' => 'nullable|string',
             'title' => 'nullable|string',
             'subtitle' => 'nullable|string',
             'disclaimer' => 'nullable|string',
+            'primary_cta_text' => 'nullable|string',
+            'primary_cta_link' => 'nullable|string',
             
             'accounts' => 'nullable|array',
             'accounts.*.name' => 'nullable|string',
@@ -46,6 +49,11 @@ class ResultsSectionController extends Controller
             'myfxbook_link' => 'nullable|string',
             'payout_text' => 'nullable|string',
             'payout_link' => 'nullable|string',
+
+            'final_cta_title' => 'nullable|string',
+            'final_cta_description' => 'nullable|string',
+            'final_cta_btn_text' => 'nullable|string',
+            'final_cta_btn_link' => 'nullable|string',
 
             'is_active' => 'boolean',
         ]);

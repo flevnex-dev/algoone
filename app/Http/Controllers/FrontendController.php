@@ -121,7 +121,24 @@ class FrontendController extends Controller
     public function results(Request $request)
     {
         $setting = \App\Models\SiteSetting::first();
-        return view('frontend.results', compact('setting'));
+        $results = \App\Models\ResultsSection::where('is_active', true)->first();
+        
+        $testimonials = \App\Models\ResultItem::where('type', 'testimonial')
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        $streams = \App\Models\ResultItem::where('type', 'stream')
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        $proofs = \App\Models\ResultItem::where('type', 'proof')
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        return view('frontend.results', compact('setting', 'results', 'testimonials', 'streams', 'proofs'));
     }
     public function liveResults(Request $request)
     {
