@@ -10,6 +10,7 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/sign-in', [FrontendController::class, 'signIn'])->name('frontend.sign-in');
 Route::get('/sign-up', [FrontendController::class, 'signUp'])->name('frontend.sign-up');
 Route::get('/buy-funding', [FrontendController::class, 'buyFunding'])->name('frontend.buy-funding');
+Route::get('/results', [FrontendController::class, 'results'])->name('frontend.results');
 Route::get('/live-results', [FrontendController::class, 'liveResults'])->name('frontend.live-results');
 Route::post('/live-results', [FrontendController::class, 'storeLiveResult'])->name('frontend.live-results.store');
 Route::get('/privacy', [FrontendController::class, 'privacy'])->name('frontend.privacy');
