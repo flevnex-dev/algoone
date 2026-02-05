@@ -129,7 +129,7 @@
 
                 <!-- Heading -->
                 <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
-                    {{ $results->title ?? 'Real Traders. Real Payouts' }}
+                    {{ $results->title ?? '' }}
                 </h1>
 
                 <!-- Highlight text -->
