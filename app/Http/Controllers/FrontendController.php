@@ -118,7 +118,11 @@ class FrontendController extends Controller
         
         return view('frontend.buy-funding', compact('setting', 'buyFunding'));
     }
-
+    public function results(Request $request)
+    {
+        $setting = \App\Models\SiteSetting::first();
+        return view('frontend.results', compact('setting'));
+    }
     public function liveResults(Request $request)
     {
         $setting = \App\Models\SiteSetting::first();
